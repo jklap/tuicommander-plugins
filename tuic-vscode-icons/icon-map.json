@@ -641,7 +641,8 @@
     "bz2": "file_type_zip",
     "whl": "file_type_zip",
     "zipx": "file_type_zip",
-    "br": "file_type_zip"
+    "br": "file_type_zip",
+    "xlsx": "file_type_excel"
   },
   "fileNames": {
     ".all-contributorsrc": "file_type_allcontributors",

@@ -25,7 +25,8 @@ const removeExtensions = new Set([
   "accdb", "accda", "accdc", "accde", "accdp", "accdr", "accdt", "accdu",
   "ade", "adp", "laccdb", "ldb", "mam", "maq", "mdw", "mdb",
   "doc", "docm", "docx", "dot", "dotm", "dotx",
-  "xls", "xlsb", "xlsm", "xlsx", "xsf", "xsn", "xlf", "xliff",
+  // "xlsx" stays: xlsx-preview opens it in the app, so it earns an icon.
+  "xls", "xlsb", "xlsm", "xsf", "xsn", "xlf", "xliff",
   "ppt", "pptm", "pptx", "ppa", "ppam", "pps", "ppsm", "ppsx",
   "potm", "potx", "slddc", "sldm", "sldx", "slx",
   "one", "onepkg", "onetoc", "onetoc2",
