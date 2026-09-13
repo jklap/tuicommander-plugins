@@ -23,6 +23,17 @@
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/docx-preview.zip"
   },
   {
+    "id": "xlsx-preview",
+    "name": "XLSX Preview",
+    "description": "Preview Excel .xlsx/.xlsm/.xlsb/.xls and OpenDocument .ods spreadsheets as sortable tables using SheetJS.",
+    "author": "sstraus",
+    "repo": "sstraus/tuicommander-plugins",
+    "latestVersion": "1.0.0",
+    "minAppVersion": "1.5.2",
+    "capabilities": ["ui:file-preview", "ui:panel", "fs:read"],
+    "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/xlsx-preview.zip"
+  },
+  {
     "id": "mdkb-dashboard",
     "name": "mdkb Dashboard",
     "description": "View mdkb knowledge base status, collections, memories, and configuration in an interactive panel.",
@@ -39,7 +50,7 @@
     "description": "1500+ file and folder icons from the vscode-icons project (CC BY-SA 4.0)",
     "author": "sstraus",
     "repo": "sstraus/tuicommander-plugins",
-    "latestVersion": "1.0.0",
+    "latestVersion": "1.0.1",
     "minAppVersion": "0.9.8",
     "capabilities": ["ui:file-icons"],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/tuic-vscode-icons.zip"
@@ -100,5 +111,27 @@
     "minAppVersion": "1.7.5",
     "capabilities": ["fs:read", "fs:list", "fs:watch", "fs:write", "fs:rename", "ui:panel", "ui:markdown", "pty:write", "ui:context-menu"],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/wiz-kanban.zip"
+  },
+  {
+    "id": "plan",
+    "name": "Plan Tracker",
+    "description": "Tracks plan files emitted by agents and opens active plans in background tabs.",
+    "author": "sstraus",
+    "repo": "sstraus/tuicommander-plugins",
+    "latestVersion": "1.0.0",
+    "minAppVersion": "1.7.7",
+    "capabilities": ["fs:read", "fs:list", "fs:watch", "ui:markdown"],
+    "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/plan.zip"
+  },
+  {
+    "id": "stories-ticker",
+    "name": "Stories Ticker",
+    "description": "Shows the active repository's open story count in the status bar.",
+    "author": "sstraus",
+    "repo": "sstraus/tuicommander-plugins",
+    "latestVersion": "1.0.0",
+    "minAppVersion": "1.7.7",
+    "capabilities": ["fs:list", "fs:watch", "ui:ticker"],
+    "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/stories-ticker.zip"
   }
 ]

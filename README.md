@@ -10,9 +10,12 @@ Community plugin registry and distributable plugins for [TUICommander](https://g
 | [cache-keepalive](cache-keepalive/) | Prevents Claude API prompt cache expiry during idle periods | `pty:write`, `ui:ticker` |
 | [docx-preview](docx-preview/) | Preview Word `.docx`/`.dotx` files as clean HTML with Mammoth.js | `ui:file-preview`, `ui:panel`, `fs:read` |
 | [mdkb-dashboard](mdkb-dashboard/) | mdkb knowledge base status, memories, config | `exec:cli`, `fs:read`, `ui:panel`, `ui:ticker` |
+| [plan](plan/) | Tracks agent plan files and opens active plans in background tabs | `fs:read`, `fs:list`, `fs:watch`, `ui:markdown` |
+| [stories-ticker](stories-ticker/) | Shows the active repository's open story count | `fs:list`, `fs:watch`, `ui:ticker` |
 | [tuic-vscode-icons](tuic-vscode-icons/) | 1500+ file and folder icons from vscode-icons | `ui:file-icons` |
 | [tuic-voice](tuic-voice/) | Reads an agent's prose aloud while it streams, skipping tool calls, diffs and terminal chrome | `pty:read`, `ui:context-menu`, `ui:panel` |
 | [wiz-kanban](wiz-kanban/) | Wiz framework workflow kanban for plans, stories, and reviews | `fs:read`, `fs:write`, `ui:panel`, `pty:write` |
+| [xlsx-preview](xlsx-preview/) | Preview Excel `.xlsx`/`.xlsm`/`.xlsb`/`.xls` and OpenDocument `.ods` spreadsheets as sortable tables with SheetJS | `ui:file-preview`, `ui:panel`, `fs:read` |
 
 ## registry.json
 
