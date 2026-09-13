@@ -609,8 +609,11 @@ function renderBoard(storyList, filters) {
   });
 
   // ── Drag and Drop ──
-  // Uses mouse events on document with a movement threshold to
-  // distinguish clicks from drags.
+  // Uses Pointer Events with pointer capture so the drag keeps receiving
+  // move/up events for its pointerId even if the pointer leaves the card
+  // (or the WKWebView's hit-tested element) mid-drag — plain mouse events
+  // have no capture concept and WKWebView can otherwise swallow the
+  // completing mouseup, leaving the drag stuck.
   const DRAG_THRESHOLD = 5;
   let drag = null;
 
@@ -631,11 +634,12 @@ function renderBoard(storyList, filters) {
   }
 
   document.querySelectorAll(".card").forEach((card) => {
-    card.addEventListener("mousedown", (e) => {
+    card.addEventListener("pointerdown", (e) => {
       if (e.button !== 0) return;
       e.preventDefault();
       drag = {
         card,
+        pointerId: e.pointerId,
         ghost: null,
         data: {
           storyId: card.dataset.storyId,
@@ -650,8 +654,8 @@ function renderBoard(storyList, filters) {
     });
   });
 
-  document.addEventListener("mousemove", (e) => {
-    if (!drag) return;
+  document.addEventListener("pointermove", (e) => {
+    if (!drag || e.pointerId !== drag.pointerId) return;
     const dx = e.clientX - drag.startX;
     const dy = e.clientY - drag.startY;
 
@@ -659,6 +663,7 @@ function renderBoard(storyList, filters) {
       if (Math.abs(dx) + Math.abs(dy) < DRAG_THRESHOLD) return;
       drag.started = true;
       drag.card.classList.add("dragging");
+      drag.card.setPointerCapture(drag.pointerId);
       const ghost = drag.card.cloneNode(true);
       ghost.classList.add("drag-ghost");
       ghost.classList.remove("dragging");
@@ -677,8 +682,8 @@ function renderBoard(storyList, filters) {
     }
   });
 
-  document.addEventListener("mouseup", (e) => {
-    if (!drag) return;
+  function endDrag(e) {
+    if (!drag || e.pointerId !== drag.pointerId) return;
 
     if (!drag.started) {
       const filename = drag.data.filename;
@@ -686,6 +691,8 @@ function renderBoard(storyList, filters) {
       window.parent.postMessage({ type: "open-story", filename }, "*");
       return;
     }
+
+    drag.card.releasePointerCapture(drag.pointerId);
 
     const col = getColumnAt(e.clientX, e.clientY);
     if (col) {
@@ -701,6 +708,14 @@ function renderBoard(storyList, filters) {
         }, "*");
       }
     }
+    cleanupDrag();
+  }
+
+  document.addEventListener("pointerup", endDrag);
+  // The UA implicitly releases capture before firing pointercancel, so this
+  // path only ever needs to clean up local drag state — never emit a change.
+  document.addEventListener("pointercancel", (e) => {
+    if (!drag || e.pointerId !== drag.pointerId) return;
     cleanupDrag();
   });
 
