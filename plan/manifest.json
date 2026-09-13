@@ -1,0 +1,10 @@
+{
+  "id": "plan",
+  "name": "Plan Tracker",
+  "version": "1.0.0",
+  "minAppVersion": "1.7.7",
+  "main": "main.js",
+  "description": "Tracks plan files emitted by agents and opens active plans in background tabs.",
+  "author": "sstraus",
+  "capabilities": ["fs:read", "fs:list", "fs:watch", "ui:markdown"]
+}

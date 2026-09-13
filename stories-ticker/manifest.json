@@ -1,0 +1,10 @@
+{
+  "id": "stories-ticker",
+  "name": "Stories Ticker",
+  "version": "1.0.0",
+  "minAppVersion": "1.7.7",
+  "main": "main.js",
+  "description": "Shows the active repository's open story count in the status bar.",
+  "author": "sstraus",
+  "capabilities": ["fs:list", "fs:watch", "ui:ticker"]
+}
