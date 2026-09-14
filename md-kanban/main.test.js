@@ -209,6 +209,92 @@ test("Add Board reads the picked file once, persists it, and renders the board",
 	assert.equal(persisted.activeBoardId, persisted.boards[0].id);
 });
 
+test("falls back to an empty board list when the persisted data is corrupt JSON", async (t) => {
+	const host = makeHost();
+	t.after(() => plugin.onunload());
+	host.pluginData.set("boards.json", "{not valid json");
+
+	const panel = await openBoard(host);
+
+	assert.match(lastHtml(panel), /No boards yet/);
+});
+
+test("falls back to an empty board list when the persisted shape is malformed", async (t) => {
+	const host = makeHost();
+	t.after(() => plugin.onunload());
+	// Valid JSON, but not the expected shape (boards is not an array).
+	host.pluginData.set("boards.json", JSON.stringify({ version: 1, boards: "oops" }));
+
+	const panel = await openBoard(host);
+
+	assert.match(lastHtml(panel), /No boards yet/);
+});
+
+test("Add Board does nothing when the user cancels the file picker", async (t) => {
+	const host = makeHost();
+	t.after(() => plugin.onunload());
+	host.pickFileResult = null;
+
+	const panel = await openBoard(host);
+	panel.options.onMessage({ type: "add-board" });
+	await flush();
+
+	assert.match(lastHtml(panel), /No boards yet/);
+	assert.equal(host.pluginData.has("boards.json"), false, "cancelling must not persist an empty write");
+});
+
+test("Add Board toasts a friendly message and adds nothing when the picked file can't be read", async (t) => {
+	const host = makeHost();
+	t.after(() => plugin.onunload());
+	host.pickFileResult = "/outside/home/board.md"; // deliberately never added to host.files
+	// pre-seed persisted state so we can assert it is untouched by the failed add
+	host.pluginData.set("boards.json", JSON.stringify({ version: 1, activeBoardId: null, boards: [] }));
+
+	const panel = await openBoard(host);
+	panel.options.onMessage({ type: "add-board" });
+	await flush();
+
+	assert.match(lastHtml(panel), /No boards yet/);
+	assert.ok(panel.sent.some((m) => m.type === "toast" && m.level === "error"));
+	const persisted = JSON.parse(host.pluginData.get("boards.json"));
+	assert.equal(persisted.boards.length, 0, "a failed add must not be persisted");
+});
+
+test("a thrown pickFile error is caught and toasted rather than crashing the plugin", async (t) => {
+	const host = makeHost();
+	t.after(() => plugin.onunload());
+	host.pickFileError = new Error("dialog plugin unavailable");
+
+	const panel = await openBoard(host);
+	panel.options.onMessage({ type: "add-board" });
+	await flush();
+
+	assert.ok(panel.sent.some((m) => m.type === "toast" && m.level === "error"));
+	assert.match(lastHtml(panel), /No boards yet/);
+});
+
+test("Add Board switches to an already-added board instead of duplicating it", async (t) => {
+	const host = makeHost();
+	t.after(() => plugin.onunload());
+	const panel = await openBoardWithOneTask(host, "- [ ] hello");
+
+	const secondPath = "/home/user/other/second.md";
+	host.files.set(secondPath, "- [ ] second\n");
+	host.pickFileResult = secondPath;
+	panel.options.onMessage({ type: "add-board" });
+	await flush();
+
+	// Re-picking the FIRST board's path must switch back to it, not add a
+	// second entry for the same file.
+	host.pickFileResult = BOARD_PATH;
+	panel.options.onMessage({ type: "add-board" });
+	await flush();
+
+	const persisted = JSON.parse(host.pluginData.get("boards.json"));
+	assert.equal(persisted.boards.length, 2, "re-adding an existing path must not duplicate it");
+	assert.match(lastHtml(panel), /hello/);
+});
+
 test("does not re-render while the panel is hidden", async (t) => {
 	const host = makeHost();
 	t.after(() => plugin.onunload());
