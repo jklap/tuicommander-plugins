@@ -78,6 +78,19 @@ export const PROGRESS_RANK = { pending: 0, ready: 1, in_progress: 2, done: 3, wo
 
 const ID_ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789";
 
+/** Mirrors host.openExternalUrl's own allowlist (src/utils/openUrl.ts). Any
+ *  other scheme is silently dropped there with no signal back to the caller
+ *  — checking it here first lets the plugin show the user a toast instead
+ *  of a link click doing nothing with no explanation. */
+const ALLOWED_EXTERNAL_SCHEMES = new Set(["http:", "https:", "mailto:"]);
+export function isSupportedExternalScheme(target) {
+  try {
+    return ALLOWED_EXTERNAL_SCHEMES.has(new URL(target).protocol);
+  } catch {
+    return false;
+  }
+}
+
 const TASK_LINE_RE = /^(\s*)([-*+])\s\[(.)\]\s?(.*)$/;
 const LINK_RE = /\[([^\]\n]*)\]\(\s*(<[^>\n]*>|[^()\s]*)(?:\s+(?:"[^"\n]*"|'[^'\n]*'))?\s*\)/g;
 const FIELD_RE =
@@ -126,7 +139,12 @@ export function resolveRelativePath(baseDir, rel) {
     if (part === "..") baseParts.pop();
     else baseParts.push(part);
   }
-  return `/${baseParts.join("/")}`;
+  // A POSIX-style path needs its leading "/" rebuilt (split via filter(Boolean)
+  // above drops it); a Windows one already starts with a drive letter like
+  // "C:" and must NOT get one prepended, or "C:/Users/..." becomes the
+  // invalid "/C:/Users/...".
+  const isWindowsDrive = /^[a-zA-Z]:$/.test(baseParts[0] || "");
+  return isWindowsDrive ? baseParts.join("/") : `/${baseParts.join("/")}`;
 }
 
 /** Basename without extension, or the frontmatter title when present. */
@@ -241,9 +259,9 @@ function extractSpans(body) {
  *  collapse to a single space, everything else is display text. Whitespace
  *  runs are then collapsed and trimmed, same as a browser would render
  *  adjacent text nodes. */
-function buildDisplaySpans(body, classifiedLinks, masked) {
+function buildDisplaySpans(body, links, masked) {
   const PLACEHOLDER = "\u0000";
-  const sorted = [...classifiedLinks].sort((a, b) => a.start - b.start);
+  const sorted = [...links].sort((a, b) => a.start - b.start);
   let out = "";
   let i = 0;
   let li = 0;
@@ -269,7 +287,7 @@ function buildDisplaySpans(body, classifiedLinks, masked) {
       if (text) spans.push({ type: "text", text });
     }
     const link = sorted[Number(m[1])];
-    spans.push({ type: "link", label: link.label, target: link.target, external: link.kind === "external" });
+    spans.push({ type: "link", label: link.label, target: link.target, external: link.external, absPath: link.absPath });
     last = re.lastIndex;
     m = re.exec(out);
   }
@@ -299,10 +317,19 @@ export function parseBoard(content, boardPath) {
   const headingStack = [];
   const tasks = [];
 
+  // A leading "---" only counts as frontmatter if it's ever actually closed.
+  // Without this check, a document that merely opens with a "---" horizontal
+  // rule (and never closes it) would swallow every remaining line as
+  // pseudo-frontmatter, silently discarding the whole document's tasks.
+  const opensWithFrontmatter =
+    lines.length > 0 &&
+    lines[0].trim() === "---" &&
+    lines.slice(1).some((l) => l.trim() === "---" || l.trim() === "...");
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    if (i === 0 && line.trim() === "---") {
+    if (i === 0 && opensWithFrontmatter) {
       inFrontmatter = true;
       continue;
     }
@@ -359,15 +386,21 @@ export function parseBoard(content, boardPath) {
       start: f.start + bodyStart,
       end: f.end + bodyStart,
     }));
-    const classifiedLinks = extracted.links.map((l) => ({ ...l, ...classifyLinkTarget(l.target) }));
-    const links = classifiedLinks.map((l) => ({
-      label: l.label,
-      target: l.target,
-      external: l.kind === "external",
-      absPath:
-        l.kind === "file" ? (/^[/\\]|^[a-zA-Z]:[\\/]/.test(l.target) ? l.target : resolveRelativePath(boardDir, l.target)) : undefined,
-    }));
-    const spans = buildDisplaySpans(body, classifiedLinks, extracted.masked);
+    // One resolved link object per match, carrying everything a consumer
+    // needs (including start/end for buildDisplaySpans' positioning) — task
+    // rendering reads `spans`, not this array, so absPath/external MUST be
+    // computed here rather than only on a second, separately-built array
+    // renderSpan() never sees.
+    const links = extracted.links.map((l) => {
+      const external = classifyLinkTarget(l.target).kind === "external";
+      const absPath = external
+        ? undefined
+        : /^[/\\]|^[a-zA-Z]:[\\/]/.test(l.target)
+          ? l.target
+          : resolveRelativePath(boardDir, l.target);
+      return { label: l.label, target: l.target, start: l.start, end: l.end, external, absPath };
+    });
+    const spans = buildDisplaySpans(body, links, extracted.masked);
     const text = spans
       .map((s) => (s.type === "link" ? s.label || s.target : s.text))
       .join(" ")
@@ -416,7 +449,10 @@ export function parseBoard(content, boardPath) {
       danglingDeps: [],
       completion,
       cancelled,
-      headingPath: headingStack.slice(),
+      // A skipped heading level (H1 then H3, no H2) leaves a sparse hole at
+      // the un-set intermediate index — filter it rather than rendering a
+      // blank "FOO /  / BAR" segment for it.
+      headingPath: headingStack.filter((h) => h !== undefined),
       key: id || `L${i}`,
       upstream: [],
       downstream: [],
@@ -448,6 +484,7 @@ export function buildDependencyGraph(tasks) {
         t.danglingDeps.push(depId);
         continue;
       }
+      if (up === t) continue; // a task listing its own id: not an error, just a no-op
       t.upstream.push(up);
     }
   }
@@ -573,7 +610,13 @@ export function upsertField(line, key, value) {
     const trimmed = line.replace(/[ \t]+$/, "");
     return `${trimmed}  [${key}:: ${value}]`;
   }
-  const [keeper, ...dupes] = matches;
+  // If the field is duplicated, keep the LAST occurrence — matching
+  // parseBoard's own "last occurrence wins" rule for a task's typed
+  // properties. Keeping a different occurrence here than parsing reads would
+  // let e.g. archivability (read from the last `completion` field) silently
+  // diverge from which occurrence a status-drag rewrite actually updates.
+  const keeper = matches[matches.length - 1];
+  const dupes = matches.slice(0, -1);
   const edits = dupes.map((m) => removalEdit(line, m));
   const newField = keeper.bracket === "[" ? `[${key}:: ${value}]` : `(${key}:: ${value})`;
   edits.push({ start: keeper.start, end: keeper.end, replacement: newField });
@@ -1177,12 +1220,18 @@ async function startWatching() {
 
   const dir = dirnameOf(board.path);
   if (!dir) return;
+  // The host canonicalizes the watched directory (resolving symlinks) before
+  // watching it, so an emitted event's path can differ from board.path's own
+  // prefix even for the same file (e.g. macOS /tmp -> /private/tmp). Compare
+  // basenames instead of the full path — safe because the watch is scoped to
+  // this one directory, non-recursive, so no other file can share the name.
+  const boardBasename = board.path.split(/[\\/]/).pop();
 
   try {
     watchDisposable = await hostRef.watchPath(
       dir,
       (events) => {
-        if (!events.some((e) => e.path === board.path)) return;
+        if (!events.some((e) => e.path.split(/[\\/]/).pop() === boardBasename)) return;
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(refreshBoard, 500);
       },
@@ -1279,8 +1328,15 @@ async function handleAssignId(data) {
 
 function handleOpenLink(target, external) {
   if (!target) return;
-  if (external) hostRef.openExternalUrl(target);
-  else hostRef.openMarkdownFile(target);
+  if (external) {
+    if (!isSupportedExternalScheme(target)) {
+      toast("error", "This link's type isn't supported.");
+      return;
+    }
+    hostRef.openExternalUrl(target);
+  } else {
+    hostRef.openMarkdownFile(target);
+  }
 }
 
 function handleOpenBoardFile() {
@@ -1312,7 +1368,10 @@ async function handleAddBoard() {
   try {
     content = await hostRef.readFile(picked);
   } catch (err) {
-    toast("error", "md-kanban can only open files inside your home directory.");
+    // Show the real reason (outside $HOME, deleted between pick and read,
+    // permission denied, over the size cap, ...) rather than assuming which
+    // one it was.
+    toast("error", `Could not read this file: ${err}`);
     hostRef.log("warn", `md-kanban: could not read newly added board "${picked}"`, String(err));
     return;
   }
