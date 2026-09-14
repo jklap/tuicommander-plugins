@@ -16,6 +16,7 @@ Community plugin registry and distributable plugins for [TUICommander](https://g
 | [tuic-vscode-icons](tuic-vscode-icons/) | 1500+ file and folder icons from vscode-icons | `ui:file-icons` |
 | [wiz-kanban](wiz-kanban/) | Wiz framework workflow kanban for plans, stories, and reviews | `fs:read`, `fs:write`, `ui:panel`, `pty:write` |
 | [xlsx-preview](xlsx-preview/) | Preview Excel `.xlsx`/`.xlsm`/`.xlsb`/`.xls` and OpenDocument `.ods` spreadsheets as sortable tables with SheetJS | `ui:file-preview`, `ui:panel`, `fs:read` |
+| [md-kanban](md-kanban/) | Kanban board over checkbox tasks in a single markdown file, with inline priority/tag/dependency metadata | `fs:read`, `fs:write`, `fs:watch`, `ui:panel`, `ui:markdown`, `ui:context-menu`, `ui:external-link`, `ui:file-picker` |
 
 The former Voice plugin has been retired. Native voice conversation is planned
 in TUICommander’s Dictation settings; it is not available from this registry.
