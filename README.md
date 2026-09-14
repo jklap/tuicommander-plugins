@@ -16,6 +16,7 @@ Community plugin registry and distributable plugins for [TUICommander](https://g
 | [tuic-voice](tuic-voice/) | Reads an agent's prose aloud while it streams, skipping tool calls, diffs and terminal chrome | `pty:read`, `ui:context-menu`, `ui:panel` |
 | [wiz-kanban](wiz-kanban/) | Wiz framework workflow kanban for plans, stories, and reviews | `fs:read`, `fs:write`, `ui:panel`, `pty:write` |
 | [xlsx-preview](xlsx-preview/) | Preview Excel `.xlsx`/`.xlsm`/`.xlsb`/`.xls` and OpenDocument `.ods` spreadsheets as sortable tables with SheetJS | `ui:file-preview`, `ui:panel`, `fs:read` |
+| [md-kanban](md-kanban/) | Kanban board over checkbox tasks in a single markdown file, with inline priority/tag/dependency metadata | `fs:read`, `fs:write`, `fs:watch`, `ui:panel`, `ui:markdown`, `ui:context-menu`, `ui:external-link`, `ui:file-picker` |
 
 ## registry.json
 
