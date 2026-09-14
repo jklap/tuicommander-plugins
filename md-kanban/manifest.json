@@ -1,0 +1,19 @@
+{
+  "id": "md-kanban",
+  "name": "Markdown Kanban",
+  "version": "1.0.0",
+  "minAppVersion": "1.7.6",
+  "main": "main.js",
+  "description": "Kanban board over markdown checkbox tasks: status characters as columns, inline priority/tag/dependency metadata, drag-to-update.",
+  "author": "sstraus",
+  "capabilities": [
+    "fs:read",
+    "fs:write",
+    "fs:watch",
+    "ui:panel",
+    "ui:markdown",
+    "ui:context-menu",
+    "ui:external-link",
+    "ui:file-picker"
+  ]
+}
