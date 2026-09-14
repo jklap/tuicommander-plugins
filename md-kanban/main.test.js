@@ -182,6 +182,16 @@ function unescapeHtml(s) {
 	return s.replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
 }
 
+/** Pull the first rendered link's data-target/data-ext off the real HTML —
+ *  the whole point being to drive the message the real iframe script would
+ *  actually send, not an assumed value. */
+function findLink(html) {
+	const re = /data-target="([^"]*)" data-ext="([^"]*)"/;
+	const m = re.exec(html);
+	if (!m) return null;
+	return { target: unescapeHtml(m[1]), external: m[2] === "1" };
+}
+
 test("first open with no persisted boards renders the empty state and issues no readFile", async (t) => {
 	const host = makeHost();
 	t.after(() => plugin.onunload());
@@ -388,6 +398,25 @@ test("watch debounce coalesces rapid events into one re-read", async (t) => {
 	assert.equal(readCount, 1);
 });
 
+test("a watch event still matches when its path has a different prefix than board.path (symlink canonicalization)", async (t) => {
+	// The host canonicalizes the watched directory (resolving symlinks) before
+	// watching it, so an emitted event's path can carry a different prefix
+	// than board.path itself (e.g. macOS /tmp -> /private/tmp) even for the
+	// exact same file. Matching must tolerate that, not require exact equality.
+	const host = makeHost();
+	t.after(() => plugin.onunload());
+	const panel = await openBoardWithOneTask(host, "- [ ] hello");
+	const watcher = host.watchers[0];
+
+	host.files.set(BOARD_PATH, "- [x] hello  [completion:: 2026-09-14]\n");
+	panel.updates.length = 0;
+	watcher.callback([{ type: "modify", path: "/private/home/user/vault/board.md" }]);
+	await new Promise((resolve) => setTimeout(resolve, 600));
+	await flush();
+
+	assert.match(lastHtml(panel), /\[x\] hello/, "the differently-prefixed event must still trigger a refresh");
+});
+
 test("a status-change write does not trigger a second render from its own echo", async (t) => {
 	const host = makeHost();
 	t.after(() => plugin.onunload());
@@ -468,14 +497,33 @@ test("an external link opens via openExternalUrl and never openMarkdownFile", as
 	assert.equal(host.openMarkdownFileCalls.length, 0);
 });
 
+test("an unsupported external scheme toasts instead of silently doing nothing", async (t) => {
+	const host = makeHost();
+	t.after(() => plugin.onunload());
+	const panel = await openBoardWithOneTask(host, "- [ ] see [ide](vscode://file/x)");
+
+	panel.options.onMessage({ type: "open-link", target: "vscode://file/x", external: true });
+	await flush();
+
+	assert.equal(host.openExternalUrlCalls.length, 0, "an unsupported scheme must never reach openExternalUrl");
+	assert.ok(panel.sent.some((m) => m.type === "toast" && m.level === "error"));
+});
+
 test("a file link opens via openMarkdownFile with the resolved absolute path", async (t) => {
 	const host = makeHost();
 	t.after(() => plugin.onunload());
 	const panel = await openBoardWithOneTask(host, "- [ ] see [doc](../notes/x.md)");
 
-	// The plugin's render already resolved this to an absolute path — the
-	// message contract carries that resolved path, not the raw relative one.
-	panel.options.onMessage({ type: "open-link", target: "/home/user/notes/x.md", external: false });
+	// Read the target the real render actually produced (not an assumed
+	// value) — a prior version of the render forgot to carry the resolved
+	// absPath onto the link span, so this link rendered its raw, unresolved
+	// relative target; this is the exact regression that would have caught.
+	const link = findLink(lastHtml(panel));
+	assert.ok(link, "the board must render a link element");
+	assert.equal(link.target, "/home/user/notes/x.md");
+	assert.equal(link.external, false);
+
+	panel.options.onMessage({ type: "open-link", target: link.target, external: link.external });
 	await flush();
 
 	assert.deepEqual(host.openMarkdownFileCalls, ["/home/user/notes/x.md"]);
