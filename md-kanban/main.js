@@ -935,9 +935,14 @@ ${body}
     badge.addEventListener("mouseleave", clearHl);
   });
 
-  // ── Drag and drop (mousedown/mousemove/mouseup — HTML5 DnD is unreliable
-  //    inside a sandboxed srcdoc iframe). A plain click on the card body
-  //    does nothing; only a link or the Get-ID button acts. ──
+  // ── Drag and drop (Pointer Events with pointer capture — HTML5 DnD is
+  //    unreliable inside a sandboxed srcdoc iframe). Pointer capture keeps
+  //    move/up events routed to this pointerId even if the pointer leaves
+  //    the card (or the WKWebView's hit-tested element) mid-drag; plain
+  //    mouse events have no capture concept and WKWebView can otherwise
+  //    swallow the completing mouseup, leaving the drag stuck. A plain
+  //    click on the card body does nothing; only a link or the Get-ID
+  //    button acts. ──
   var DRAG_THRESHOLD = 5;
   var drag = null;
 
@@ -959,26 +964,27 @@ ${body}
   }
 
   document.querySelectorAll(".card").forEach(function (card) {
-    card.addEventListener("mousedown", function (e) {
+    card.addEventListener("pointerdown", function (e) {
       if (e.button !== 0) return;
       if (e.target.closest(".lnk, .get-id-btn")) return;
       e.preventDefault();
       drag = {
-        card: card, ghost: null,
+        card: card, pointerId: e.pointerId, ghost: null,
         data: { key: card.dataset.key, status: card.dataset.status, rawLine: card.dataset.raw },
         startX: e.clientX, startY: e.clientY, started: false,
       };
     });
   });
 
-  document.addEventListener("mousemove", function (e) {
-    if (!drag) return;
+  document.addEventListener("pointermove", function (e) {
+    if (!drag || e.pointerId !== drag.pointerId) return;
     var dx = e.clientX - drag.startX;
     var dy = e.clientY - drag.startY;
     if (!drag.started) {
       if (Math.abs(dx) + Math.abs(dy) < DRAG_THRESHOLD) return;
       drag.started = true;
       drag.card.classList.add("dragging");
+      drag.card.setPointerCapture(drag.pointerId);
       var ghost = drag.card.cloneNode(true);
       ghost.classList.add("drag-ghost");
       ghost.classList.remove("dragging");
@@ -993,13 +999,14 @@ ${body}
     if (col && col.dataset.status !== drag.data.status) col.classList.add("drop-target");
   });
 
-  document.addEventListener("mouseup", function (e) {
-    if (!drag) return;
+  function endDrag(e) {
+    if (!drag || e.pointerId !== drag.pointerId) return;
     if (!drag.started) {
       // A plain click on the card body does nothing, per spec.
       cleanupDrag();
       return;
     }
+    drag.card.releasePointerCapture(drag.pointerId);
     var col = getColumnAt(e.clientX, e.clientY);
     if (col) {
       var toStatus = col.dataset.status;
@@ -1007,6 +1014,14 @@ ${body}
         window.parent.postMessage({ type: "status-change", key: drag.data.key, rawLine: drag.data.rawLine, toStatus: toStatus }, "*");
       }
     }
+    cleanupDrag();
+  }
+
+  document.addEventListener("pointerup", endDrag);
+  // The UA implicitly releases capture before firing pointercancel, so this
+  // path only ever needs to clean up local drag state — never emit a change.
+  document.addEventListener("pointercancel", function (e) {
+    if (!drag || e.pointerId !== drag.pointerId) return;
     cleanupDrag();
   });
 
