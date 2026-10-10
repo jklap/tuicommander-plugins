@@ -133,5 +133,16 @@
     "minAppVersion": "1.7.7",
     "capabilities": ["ui:file-preview", "ui:panel", "fs:read", "fs:write"],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/sqlite-viewer.zip"
+  },
+  {
+    "id": "jira",
+    "name": "Jira",
+    "description": "Jira Cloud and Data Center work items in core Tasks. Requires account HTTP integration.",
+    "author": "sstraus",
+    "repo": "sstraus/tuicommander-plugins",
+    "latestVersion": "1.0.0",
+    "minAppVersion": "1.8.0",
+    "capabilities": [],
+    "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/jira.zip"
   }
 ]
