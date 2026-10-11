@@ -56,22 +56,31 @@ the tested activation seam for that step; it also registers the URL resolver.
 
 ## Fixtures
 
-`fixtures/unrecorded.json` is **not a recording**: it is hand-authored from the
-GitLab REST v4 documentation with synthetic values. Recording from GitLab CE in a
-container was planned (story 1695-9f3a); the container could not be started. A
-recording must confirm, and replace the fixture with scrubbed responses for:
+`fixtures/recorded.json` holds responses **recorded from a GitLab CE container**
+(version and image digest in its `_provenance` block) and scrubbed: instance origin
+and hostname become `gitlab.example.invalid:8443`, avatar URLs and e-mail addresses
+are replaced; no token is ever stored. Every test derives ids, paths and expected
+values from it.
 
-1. `/user`, issue and MR detail (`references`, `diff_refs`, `detailed_merge_status`,
-   `user.can_merge`, `head_pipeline`), `/approvals`, project `merge_method` and
-   `squash_option`.
-2. `/discussions` with system notes, a normal note and a diff-note thread.
-3. MR pipelines, jobs, a job trace with sections, pipeline and job retry.
-4. Merge with and without squash, 409 on a stale `sha`, 405/406/422 blockers, rebase.
-5. Board with label lists, `not[labels]` on the Open lane, a move and a close.
-6. To-do list with Issue, MergeRequest and Commit targets; `x-next-page` paging.
-7. A 429 with `Retry-After` (application setting throttle on the CE instance).
+Recorded: `/user`, issue and MR detail, approvals, project merge settings, MR
+pipelines, jobs, a job trace, MR and issue discussions (system notes, a `<details>`
+note, a two-note diff thread), labels, members, a board with label lists, pending
+to-dos (Issue and Commit targets), a 409 for a merge pinned to a stale `sha`, and an
+issues page with `x-next-page`.
 
-Scrub tokens, email addresses, hostnames and user ids before committing.
+Not recorded, still written in the tests: 429 `Retry-After`, the write responses
+(`{iid}` stubs), the 405/406/422 merge blockers (the tests set
+`detailed_merge_status` on a recorded MR), and the assignee list of a board
+(Premium only; one hand-added row in `board_move_changes_label`).
+
+Re-record: start `gitlab/gitlab-ce`, create group `demo`, project `widgets`
+(merge method `merge`, squash `default_off`), labels `bug`, `To Do`, `Doing`; issues
+#1 (labels `bug`,`To Do`, assigned to root) and #2 (closed); user `dev`; MR !1 from a
+branch with a `.gitlab-ci.yml` of two jobs (`build` success, `test` failed, set
+through the Rails console because no runner runs; the trace comes from the real
+endpoint); a diff note plus reply; a board with the two label lists; then
+`GITLAB_URL=... GITLAB_TOKEN=... node fixtures/record.mjs`. The token comes from the
+environment only.
 
 ## Validation
 

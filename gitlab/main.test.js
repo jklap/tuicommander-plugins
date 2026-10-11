@@ -3,15 +3,18 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import plugin, { registerGitLabAccounts } from './main.js';
 
-const fixture = JSON.parse(readFileSync(new URL('./fixtures/unrecorded.json', import.meta.url), 'utf8'));
+// Recorded from GitLab CE and scrubbed (fixtures/recorded.json, provenance inside).
+const fixture = JSON.parse(readFileSync(new URL('./fixtures/recorded.json', import.meta.url), 'utf8'));
+const HOST = 'https://gitlab.example.invalid:8443';
+const IID = fixture.issue.iid;
 const accounts = [
-  { id: 'work', provider: 'gitlab', host: 'https://gitlab.example.invalid:8443', label: 'Work' },
+  { id: 'work', provider: 'gitlab', host: HOST, label: 'Work' },
   { id: 'home', provider: 'gitlab', host: 'https://gitlab.com', label: 'Home' },
   { id: 'gh', provider: 'github', host: 'https://github.com' },
 ];
 const fetchFor = () => async (req) => {
   const path = new URL(req.url).pathname;
-  const json = { '/api/v4/projects/demo%2Fwidgets/issues/12': fixture.issue, '/api/v4/projects/demo%2Fwidgets/issues/12/discussions': [] }[path] ?? [];
+  const json = { [`/api/v4/projects/demo%2Fwidgets/issues/${IID}`]: fixture.issue, [`/api/v4/projects/demo%2Fwidgets/issues/${IID}/discussions`]: fixture.issueDiscussions }[path] ?? [];
   return { status: 200, headers: {}, json };
 };
 
@@ -51,10 +54,10 @@ test('pasted_issue_url_links_and_drafts_start_work', async () => {
   const host = fakeHost();
   registerGitLabAccounts(host, accounts, fetchFor);
   const resolved = await host.live.resolvers[0](fixture.issue.web_url, new AbortController().signal);
-  assert.deepEqual(resolved.link.reference, { providerId: 'gitlab', accountId: 'work', id: 'demo/widgets#12' });
-  assert.equal(resolved.startWork.branch, '12-login-fails-on-a-custom-port');
+  assert.deepEqual(resolved.link.reference, { providerId: 'gitlab', accountId: 'work', id: fixture.issue.references.full });
+  assert.equal(resolved.startWork.branch, `${IID}-login-fails-on-a-custom-port`);
   assert.equal(resolved.startWork.delivery, 'draft');
-  assert.equal(await host.live.resolvers[0]('https://gitlab.example.invalid/demo/widgets/-/issues/12', new AbortController().signal), null);
+  assert.equal(await host.live.resolvers[0](`https://gitlab.example.invalid/demo/widgets/-/issues/${IID}`, new AbortController().signal), null);
 });
 
 // Catches: the shipped plugin activating with an unauthenticated or token-bearing path

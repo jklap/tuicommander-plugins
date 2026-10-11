@@ -4,10 +4,17 @@ import test from 'node:test';
 import { createGitLabProvider } from './provider.js';
 import { cleanTrace } from './pipelines.js';
 
-const fixture = JSON.parse(readFileSync(new URL('./fixtures/unrecorded.json', import.meta.url), 'utf8'));
-const account = { id: 'work', provider: 'gitlab', host: 'https://gitlab.example.invalid:8443', label: 'Work', login: 'root' };
-const issueRef = { providerId: 'gitlab', accountId: 'work', id: 'demo/widgets#12' };
-const mrRef = { providerId: 'gitlab', accountId: 'work', id: 'demo/widgets!7' };
+// Recorded from GitLab CE and scrubbed (fixtures/recorded.json, provenance inside); ids below come from it.
+const fixture = JSON.parse(readFileSync(new URL('./fixtures/recorded.json', import.meta.url), 'utf8'));
+const HOST = 'https://gitlab.example.invalid:8443';
+const account = { id: 'work', provider: 'gitlab', host: HOST, label: 'Work', login: fixture.user.username };
+const IID = fixture.issue.iid;
+const MR = fixture.mr.iid;
+const issueRef = { providerId: 'gitlab', accountId: 'work', id: fixture.issue.references.full };
+const mrRef = { providerId: 'gitlab', accountId: 'work', id: fixture.mr.references.full };
+const pipeline = fixture.pipelines[0];
+const failedJob = fixture.jobs.find((j) => j.status === 'failed');
+const [listToDo, listDoing] = fixture.board.lists;
 const query = { filters: [], savedFilterId: null, search: '', sort: null, groupBy: null, cursor: null, limit: 20 };
 const ok = (json, headers = {}) => ({ status: 200, headers, json: structuredClone(json) });
 const P = '/api/v4/projects/demo%2Fwidgets';
@@ -21,15 +28,15 @@ function gitlab(extra, requests = []) {
     const url = new URL(req.url);
     const route = `${req.method ?? 'GET'} ${url.pathname}`;
     const table = {
-      [`GET ${P}/issues/12`]: fixture.issue, [`GET ${P}/merge_requests/7`]: fixture.mr,
-      [`GET ${P}/issues/12/discussions`]: fixture.discussions, [`GET ${P}/merge_requests/7/discussions`]: fixture.discussions,
+      [`GET ${P}/issues/${IID}`]: fixture.issue, [`GET ${P}/merge_requests/${MR}`]: fixture.mr,
+      [`GET ${P}/issues/${IID}/discussions`]: fixture.issueDiscussions, [`GET ${P}/merge_requests/${MR}/discussions`]: fixture.discussions,
       [`GET ${P}/labels`]: fixture.labels, [`GET ${P}/members/all`]: fixture.members,
-      [`GET ${P}/merge_requests/7/approvals`]: fixture.approvals, [`GET ${P}`]: fixture.project,
-      [`GET ${P}/merge_requests/7/pipelines`]: fixture.pipelines, [`GET ${P}/pipelines/31/jobs`]: fixture.jobs,
-      [`GET ${P}/boards/5`]: fixture.board, [`GET /api/v4/issues`]: [fixture.issue], [`GET ${P}/issues`]: [fixture.issue],
+      [`GET ${P}/merge_requests/${MR}/approvals`]: fixture.approvals, [`GET ${P}`]: fixture.project,
+      [`GET ${P}/merge_requests/${MR}/pipelines`]: fixture.pipelines, [`GET ${P}/pipelines/${pipeline.id}/jobs`]: fixture.jobs,
+      [`GET ${P}/boards/${fixture.board.id}`]: fixture.board, [`GET /api/v4/issues`]: [fixture.issue], [`GET ${P}/issues`]: [fixture.issue],
     };
     if (route in table) return ok(table[route]);
-    if (req.method === 'PUT' || req.method === 'POST') return ok({ iid: 12 });
+    if (req.method === 'PUT' || req.method === 'POST') return ok({ iid: IID });
     throw new Error(`Unexpected fixture request: ${route}`);
   };
 }
@@ -41,21 +48,21 @@ test('self_hosted_port_is_part_of_host_identity', async () => {
   const onPort = createGitLabProvider({ account, fetch: gitlab(null, requests) });
   const onDefault = createGitLabProvider({ account: { ...account, id: 'home', host: 'https://gitlab.example.invalid' }, fetch: gitlab() });
   const underRoot = createGitLabProvider({ account: { ...account, id: 'root', host: 'https://gitlab.example.invalid:8443/gitlab' }, fetch: gitlab() });
-  const pasted = 'https://gitlab.example.invalid:8443/demo/widgets/-/merge_requests/7/diffs';
+  const pasted = `${HOST}/demo/widgets/-/merge_requests/${MR}/diffs`;
   assert.deepEqual(onPort.resolveUrl(pasted), mrRef);
   assert.equal(onDefault.resolveUrl(pasted), null);
-  assert.equal(onDefault.resolveUrl('http://gitlab.example.invalid/demo/widgets/-/issues/12'), null);
+  assert.equal(onDefault.resolveUrl(`http://gitlab.example.invalid/demo/widgets/-/issues/${IID}`), null);
   assert.equal(underRoot.resolveUrl(pasted), null);
-  assert.deepEqual(underRoot.resolveUrl('https://gitlab.example.invalid:8443/gitlab/demo/widgets/-/issues/12').id, 'demo/widgets#12');
-  assert.deepEqual(onPort.resolveUrl('https://gitlab.example.invalid:8443/demo/widgets/-/work_items/12').id, 'demo/widgets#12');
+  assert.deepEqual(underRoot.resolveUrl(`${HOST}/gitlab/demo/widgets/-/issues/${IID}`).id, issueRef.id);
+  assert.deepEqual(onPort.resolveUrl(`${HOST}/demo/widgets/-/work_items/${IID}`).id, issueRef.id);
   await onPort.detail(issueRef);
-  assert.ok(requests.every((r) => new URL(r.url).origin === 'https://gitlab.example.invalid:8443'));
+  assert.ok(requests.every((r) => new URL(r.url).origin === HOST));
   await assert.rejects(onDefault.detail(issueRef), /another account/);
 });
 
 function mergeProvider(mr, requests, answer) {
   return createGitLabProvider({ account, fetch: gitlab((req) => {
-    if (req.url.endsWith('/merge_requests/7')) return ok({ ...fixture.mr, ...mr });
+    if (req.url.endsWith(`/merge_requests/${MR}`)) return ok({ ...fixture.mr, ...mr });
     return answer?.(req);
   }, requests) });
 }
@@ -71,7 +78,7 @@ test('merge_method_sent_as_chosen', async () => {
     assert.equal(chosen.enabled, true);
     await provider.act(mrRef, { kind: 'transition', value: chosen.id });
     const write = requests.find((r) => r.method === 'PUT');
-    assert.equal(new URL(write.url).pathname, `${P}/merge_requests/7/merge`);
+    assert.equal(new URL(write.url).pathname, `${P}/merge_requests/${MR}/merge`);
     assert.deepEqual(write.body, { squash, sha: fixture.mr.diff_refs.head_sha });
   }
 });
@@ -92,23 +99,25 @@ test('merge_blockers_are_readable_and_disable_merge', async () => {
 
 // Catches: a push after review merges unreviewed commits, or the 409 surfaces as a bare code.
 test('stale_head_merge_is_refused_with_a_reason', async () => {
-  const provider = mergeProvider({}, [], (req) => (req.method === 'PUT' ? { status: 409, headers: {}, json: { message: 'SHA does not match HEAD of source branch: private' } } : null));
+  const provider = mergeProvider({}, [], (req) => (req.method === 'PUT' ? { status: fixture.staleMerge.status, headers: {}, json: fixture.staleMerge.body } : null));
   const { actions } = await provider.detail(mrRef);
-  await assert.rejects(provider.act(mrRef, { kind: 'transition', value: actions[1].id }), (e) => e.status === 409 && /changed since you loaded it/.test(e.message) && !/private/.test(e.message));
+  await assert.rejects(provider.act(mrRef, { kind: 'transition', value: actions[1].id }), (e) => e.status === 409 && /changed since you loaded it/.test(e.message) && !e.message.includes(fixture.mr.sha));
 });
 
 // Catches: move without list label swap, or a move that rewrites the whole label set.
 test('board_move_changes_label', async () => {
   const requests = [];
-  const provider = createGitLabProvider({ account, project: 'demo/widgets', fetch: gitlab(null, requests) });
-  const page = await provider.board('5', query);
+  // Assignee lists exist only in GitLab Premium, which CE cannot record: this one row is added by hand.
+  const board = { ...fixture.board, lists: [...fixture.board.lists, { id: 9999, position: 2, label: null, assignee: { id: 1, username: 'root' } }] };
+  const provider = createGitLabProvider({ account, project: 'demo/widgets', fetch: gitlab((req) => (new URL(req.url).pathname === `${P}/boards/${board.id}` ? ok(board) : null), requests) });
+  const page = await provider.board(String(fixture.board.id), query);
   assert.deepEqual(page.board.columns.map((c) => c.name), ['Open', 'To Do', 'Doing', 'Closed']);
   const open = requests.find((r) => new URL(r.url).searchParams.has('not[labels]'));
   assert.equal(new URL(open.url).searchParams.get('not[labels]'), 'To Do,Doing');
-  const card = page.lanes.find((l) => l.columnId === '11').cards[0];
-  await provider.act(card.item.reference, card.moves.find((m) => m.columnId === '12').action);
+  const card = page.lanes.find((l) => l.columnId === String(listToDo.id)).cards[0];
+  await provider.act(card.item.reference, card.moves.find((m) => m.columnId === String(listDoing.id)).action);
   const write = requests.find((r) => r.method === 'PUT');
-  assert.equal(new URL(write.url).pathname, `${P}/issues/12`);
+  assert.equal(new URL(write.url).pathname, `${P}/issues/${IID}`);
   assert.deepEqual(write.body, { add_labels: 'Doing', remove_labels: 'To Do' });
   await provider.act(card.item.reference, card.moves.find((m) => m.columnId === 'closed').action);
   assert.deepEqual(requests.filter((r) => r.method === 'PUT')[1].body, { remove_labels: 'To Do', state_event: 'close' });
@@ -117,13 +126,13 @@ test('board_move_changes_label', async () => {
 // Catches: sort and label filter dropped, or only the first page reachable.
 test('list_maps_filters_sort_and_pagination', async () => {
   const requests = [];
-  const provider = createGitLabProvider({ account, fetch: gitlab((req) => (req.url.includes('/issues?') ? ok([fixture.issue], { 'X-Next-Page': '3' }) : null), requests) });
-  const page = await provider.list({ ...query, cursor: '2', sort: { fieldId: 'created', descending: false },
+  const provider = createGitLabProvider({ account, fetch: gitlab((req) => (req.url.includes('/issues?') ? ok(fixture.issuesPage.body, { 'X-Next-Page': fixture.issuesPage.headers['x-next-page'] }) : null), requests) });
+  const page = await provider.list({ ...query, cursor: '1', sort: { fieldId: 'created', descending: false },
     filters: [{ fieldId: 'labels', values: [{ kind: 'labels', value: [{ id: 'bug', name: 'bug' }] }] }, { fieldId: 'assignee', values: [{ kind: 'user', value: [{ id: '@root', name: 'root', avatarUrl: null }] }] }] });
   const params = new URL(requests[0].url).searchParams;
-  assert.deepEqual(Object.fromEntries(params), { labels: 'bug', assignee_username: 'root', order_by: 'created_at', sort: 'asc', per_page: '20', page: '2', state: 'opened', scope: 'all' });
-  assert.equal(page.nextCursor, '3');
-  assert.equal(page.items[0].key, 'widgets#12');
+  assert.deepEqual(Object.fromEntries(params), { labels: 'bug', assignee_username: 'root', order_by: 'created_at', sort: 'asc', per_page: '20', page: '1', state: 'opened', scope: 'all' });
+  assert.equal(page.nextCursor, '2');
+  assert.equal(page.items[0].key, `widgets#${fixture.issuesPage.body[0].iid}`);
   await assert.rejects(provider.list({ ...query, sort: { fieldId: 'labels', descending: false } }), /cannot sort/);
 });
 
@@ -131,24 +140,24 @@ test('list_maps_filters_sort_and_pagination', async () => {
 test('presets_select_scope_reviewer_and_todos', async () => {
   const requests = [];
   const todos = structuredClone(fixture.todos);
-  todos[0].target = fixture.issue;
   const provider = createGitLabProvider({ account, fetch: gitlab((req) => (req.url.includes('/todos?') ? ok(todos) : req.url.includes('/merge_requests?') ? ok([fixture.mr]) : null), requests) });
   const review = provider.savedFilters.find((f) => f.id === 'review-mrs');
   const mrs = await provider.list(review.query);
   assert.equal(new URL(requests[0].url).searchParams.get('reviewer_username'), 'root');
   assert.equal(mrs.items[0].itemType, 'merge_request');
   const page = await provider.list(provider.savedFilters.find((f) => f.id === 'todos').query);
-  assert.deepEqual(page.items.map((i) => i.reference.id), ['demo/widgets#12']);
+  assert.deepEqual(page.items.map((i) => i.reference.id), [issueRef.id]);
 });
 
 // Catches: GitLab activity ("added ~bug label") shown as conversation, or diff threads
 // losing their resolved state.
 test('comments_drop_system_notes_and_keep_review_threads', async () => {
   const page = await createGitLabProvider({ account, fetch: gitlab() }).comments(mrRef, null, 20);
-  assert.deepEqual(page.entries.map((e) => e.kind), ['normal', 'review_thread']);
-  assert.match(page.entries[0].value.body, /<details>/);
-  const thread = page.entries[1].value;
-  assert.deepEqual([thread.resolved, thread.path, thread.line, thread.comments.length], [false, 'src/login.js', 14, 2]);
+  assert.equal(page.entries.some((e) => e.value.body === fixture.discussions.find((d) => d.notes[0].system).notes[0].body), false);
+  assert.deepEqual(page.entries.map((e) => e.kind).sort(), ['normal', 'normal', 'review_thread']);
+  assert.ok(page.entries.some((e) => e.kind === 'normal' && /<details>/.test(e.value.body)));
+  const thread = page.entries.find((e) => e.kind === 'review_thread').value;
+  assert.deepEqual([thread.resolved, thread.path, thread.line, thread.comments.length], [false, 'port.txt', 1, 2]);
 });
 
 // Catches: create sends only title and body, losing labels and assignees.
@@ -171,7 +180,7 @@ test('create_fields_list_types_then_typed_fields', async () => {
   assert.deepEqual([type.id, type.kind, type.options.map((o) => o.id), rest.length], ['itemType', 'enum', ['issue'], 0]);
   const typed = await provider.createFields('issue');
   assert.deepEqual(typed.map((f) => f.id), ['labels', 'assignees', 'due']);
-  assert.deepEqual(typed[0].options.map((o) => o.id), ['To Do', 'Doing', 'bug']);
+  assert.deepEqual(typed[0].options.map((o) => o.id), fixture.labels.map((l) => l.name));
   await assert.rejects(provider.createFields('merge_request'), /issues only/);
 });
 
@@ -181,19 +190,19 @@ test('pipeline_and_job_retry_target_the_failed_run', async () => {
   const requests = [];
   const provider = createGitLabProvider({ account, fetch: gitlab(null, requests) });
   const { actions, item } = await provider.detail(mrRef);
-  assert.deepEqual(actions.filter((a) => /retry/.test(a.id)).map((a) => a.id), ['pipeline:retry:31', 'job:retry:101']);
-  assert.match(item.fields.jobs.value, /\| test \| \[unit\]\(.*\/jobs\/101\) \| failed \|/);
-  await provider.act(mrRef, { kind: 'transition', value: 'job:retry:101' });
-  assert.equal(new URL(requests.find((r) => r.method === 'POST').url).pathname, `${P}/jobs/101/retry`);
+  assert.deepEqual(actions.filter((a) => /retry/.test(a.id)).map((a) => a.id), [`pipeline:retry:${pipeline.id}`, `job:retry:${failedJob.id}`]);
+  assert.match(item.fields.jobs.value, new RegExp(`\\| ${failedJob.stage} \\| \\[${failedJob.name}\\]\\(.*/jobs/${failedJob.id}\\) \\| failed \\|`));
+  await provider.act(mrRef, { kind: 'transition', value: `job:retry:${failedJob.id}` });
+  assert.equal(new URL(requests.find((r) => r.method === 'POST').url).pathname, `${P}/jobs/${failedJob.id}/retry`);
 });
 
 // Catches: terminal colour codes and folding markers left in a job log.
 test('job_trace_is_plain_text', async () => {
-  const provider = createGitLabProvider({ account, fetch: async (req) => ({ status: 200, headers: {}, json: null, text: req.url.endsWith('/jobs/101/trace') ? fixture.trace : '' }) });
-  const trace = await provider.jobTrace(mrRef, 101);
-  assert.equal(trace, 'Running with gitlab-runner 17.4.0\nExecuting "step_script" stage\n$ npm test\nFAIL login.test.js\nERROR: Job failed: exit code 1\n');
+  const provider = createGitLabProvider({ account, fetch: async (req) => ({ status: 200, headers: {}, json: null, text: req.url.endsWith(`/jobs/${failedJob.id}/trace`) ? fixture.trace : '' }) });
+  const trace = await provider.jobTrace(mrRef, failedJob.id);
+  assert.equal(trace, 'Running with gitlab-runner\n$ exit 1\nERROR: Job failed: exit code 1\n');
   assert.equal(cleanTrace('x'.repeat(300 * 1024)).length, 256 * 1024);
-  await assert.rejects(provider.jobTrace(issueRef, 101), /merge request/);
+  await assert.rejects(provider.jobTrace(issueRef, failedJob.id), /merge request/);
 });
 
 // Catches: a retry storm against an instance that answered 429.
@@ -211,11 +220,11 @@ test('retry_after_honored', async () => {
   assert.deepEqual(await provider.list(query), { items: [], nextCursor: null });
 });
 
-// Catches: a direct item lookup for `!7` or a pasted URL replaced by a text search.
+// Catches: a direct item lookup for `!${MR}` or a pasted URL replaced by a text search.
 test('search_by_reference_opens_the_item', async () => {
   const requests = [];
   const provider = createGitLabProvider({ account, project: 'demo/widgets', fetch: gitlab(null, requests) });
-  const page = await provider.list({ ...query, search: '!7' });
-  assert.equal(page.items[0].reference.id, 'demo/widgets!7');
-  assert.equal(new URL(requests[0].url).pathname, `${P}/merge_requests/7`);
+  const page = await provider.list({ ...query, search: `!${MR}` });
+  assert.equal(page.items[0].reference.id, mrRef.id);
+  assert.equal(new URL(requests[0].url).pathname, `${P}/merge_requests/${MR}`);
 });
