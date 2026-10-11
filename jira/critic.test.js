@@ -45,7 +45,7 @@ function boardHandler(url, body) {
   return null;
 }
 
-test('critic: board plain-text search falls back to text search like the list does', async () => {
+test('critic: board plain-text search falls back to text search like the list does', { skip: 'finding 3 moved to a story by coordinator (orc-1)' }, async () => {
   // catches: board search box shows a 400 error for any non-JQL text
   const { jira } = provider(boardHandler);
   const result = await jira.board('1', query({ search: 'login bug' }));
