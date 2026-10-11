@@ -606,7 +606,7 @@ async function verifyFollowUp(sessionId, repoPath, busyStartMs) {
 async function composerIsEmpty(sessionId) {
   try {
     const buffer = await hostRef.invoke("get_input_buffer_content", { sessionId });
-    return !buffer || buffer.trim().length === 0;
+    return buffer === "";
   } catch {
     return false;
   }
@@ -927,8 +927,7 @@ export default {
     // ── Authoritative awaiting state from the backend ─────────────
     // A parked question or permission dialog must not receive a keepalive.
     host.registerStructuredEventHandler("awaiting", (payload, sessionId) => {
-      const session = sessions.get(sessionId);
-      if (!session) return;
+      const session = getSession(sessionId);
       session.backendAwaiting = !!payload?.awaiting;
     });
 
