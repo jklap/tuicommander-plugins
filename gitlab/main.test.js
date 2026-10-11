@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import plugin, { registerGitLabAccounts } from './main.js';
+import { accountFetch } from './runtime.js';
 
 // Recorded from GitLab CE and scrubbed (fixtures/recorded.json, provenance inside).
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/recorded.json', import.meta.url), 'utf8'));
@@ -60,12 +61,50 @@ test('pasted_issue_url_links_and_drafts_start_work', async () => {
   assert.equal(await host.live.resolvers[0](`https://gitlab.example.invalid/demo/widgets/-/issues/${IID}`, new AbortController().signal), null);
 });
 
-// Catches: the shipped plugin activating with an unauthenticated or token-bearing path
-// before the core account HTTP integration exists.
-test('onload_registers_nothing_without_account_http', () => {
+// Catches: the plugin sending the request without the account (anonymous call), a non-string body
+// (Rust expects a string), or a non-JSON body (job trace) throwing inside the adapter.
+test('account_fetch_sends_account_serialised_body_and_keeps_text', async () => {
+  const calls = [];
+  const host = { httpFetch: async (url, options) => { calls.push({ url, options }); return { status: 200, headers: {}, body: calls.length === 1 ? '{"a":1}' : 'plain trace' }; } };
+  const fetch = accountFetch(host, 'work');
+  const first = await fetch({ url: `${HOST}/api/v4/x`, method: 'POST', body: { a: 1 }, headers: { 'Content-Type': 'application/json' } });
+  assert.equal(calls[0].options.account, 'work');
+  assert.equal(calls[0].options.body, '{"a":1}');
+  assert.deepEqual(first.json, { a: 1 });
+  const second = await fetch({ url: `${HOST}/api/v4/job/trace` });
+  assert.equal(second.json, undefined);
+  assert.equal(second.text, 'plain trace');
+});
+
+// Catches: the manifest missing the descriptor/net:http, which makes Rust refuse every account request.
+test('manifest_declares_gitlab_account_use', () => {
+  const manifest = JSON.parse(readFileSync(new URL('./manifest.json', import.meta.url), 'utf8'));
+  assert.equal(manifest.id, plugin.id);
+  assert.ok(manifest.capabilities.includes('net:http'));
+  assert.deepEqual(manifest.providers.map((p) => p.id), ['gitlab']);
+  assert.deepEqual(manifest.providers[0].kinds, ['bearer']);
+});
+
+// Catches: activation without configuration registering anything, or staying silent about why.
+test('onload_without_config_registers_nothing_and_says_why', async () => {
   const logs = [];
-  const host = { ...fakeHost(), log: (level, message) => logs.push([level, message]) };
-  plugin.onload(host);
-  assert.equal(host.live.providers.length, 0);
+  const host = { ...fakeHost(), log: (level, message) => logs.push([level, message]), invoke: async () => null };
+  await plugin.onload(host);
+  assert.deepEqual(host.live, { providers: [], resolvers: [] });
   assert.equal(logs[0][0], 'warn');
+  assert.match(logs[0][1], /config\.json/);
+});
+
+// Catches: configured accounts not registered with their project, or leaked after unload.
+test('onload_registers_configured_accounts_and_unload_removes_them', async () => {
+  const config = { accounts: [{ id: 'work', host: HOST, project: 'demo/widgets', login: 'me' }] };
+  const host = { ...fakeHost(), log() {}, httpFetch: async () => ({ status: 200, headers: {}, body: '[]' }), invoke: async (cmd, args) => {
+    assert.deepEqual([cmd, args], ['read_plugin_data', { pluginId: 'gitlab', path: 'config.json' }]);
+    return JSON.stringify(config);
+  } };
+  await plugin.onload(host);
+  assert.deepEqual(host.live.providers.map((p) => p.accountId), ['work']);
+  assert.equal(host.live.resolvers.length, 1);
+  plugin.onunload();
+  assert.deepEqual(host.live, { providers: [], resolvers: [] });
 });

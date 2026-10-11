@@ -6,5 +6,13 @@
   "main": "main.js",
   "description": "GitLab issues, merge requests, boards and pipelines in core Tasks.",
   "author": "sstraus",
-  "capabilities": []
+  "capabilities": ["net:http"],
+  "providers": [
+    {
+      "id": "gitlab",
+      "label": "GitLab",
+      "kinds": ["bearer"],
+      "verify": { "path": "/api/v4/user", "loginPointer": "/username" }
+    }
+  ]
 }

@@ -23,10 +23,20 @@ pointer `/username`.
 references (`!7`, `#12`). Without it, lists use the instance-wide endpoints with
 `scope=all`, which on gitlab.com means every item the token can read.
 
-The shipped manifest has no HTTP capability and `onload` registers nothing until
-story 1697-4cdc wires `host.httpFetch({account})` and manifest provider
-declarations. `registerGitLabAccounts(host, accounts, fetchForAccount, config)` is
-the tested activation seam for that step; it also registers the URL resolver.
+The manifest declares `net:http` and the `gitlab` account descriptor; requests go through
+`host.httpFetch(url, {account})` (`runtime.js`), so Rust injects the PAT.
+
+Install by copying this directory to `~/Library/Application Support/com.tuic.commander/plugins/gitlab/`
+(macOS). The host gives plugins no account list, so add the account in Settings, then write
+`data/config.json` inside the plugin directory:
+
+```json
+{ "accounts": [{ "id": "<account id>", "host": "https://gitlab.com", "login": "me", "project": "group/project" }] }
+```
+
+`kind` defaults to `bearer`; `label`, `login`, `project` and `boards` are optional. Without the
+file `onload` logs a warning and registers nothing. The Tasks views are not mounted in the app
+shell yet: a registered provider serves the command-palette URL paste and the sidebar link badge.
 
 ## Behavior
 

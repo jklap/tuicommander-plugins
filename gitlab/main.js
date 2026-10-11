@@ -1,4 +1,5 @@
 import { createGitLabProvider } from './provider.js';
+import { accountFetch, readConfig } from './runtime.js';
 
 const slug = (title) => title.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40).replace(/-+$/, '');
 
@@ -47,12 +48,22 @@ export function registerGitLabAccounts(host, accounts, fetchForAccount, configur
   return { dispose() { for (const registration of registrations.splice(0).reverse()) registration.dispose(); } };
 }
 
+let active = null;
+
 export default {
   id: 'gitlab',
-  onload(host) {
-    // Account enumeration and authenticated HTTP belong to A1/A3c. Do not invent
-    // a token-bearing path while those APIs land.
-    host.log('warn', 'GitLab provider requires the account HTTP integration before activation.');
+  async onload(host) {
+    const config = await readConfig(host, 'gitlab');
+    if (!config?.accounts?.length) {
+      host.log('warn', 'gitlab has no accounts: write data/config.json with {"accounts":[{"id":"<account id>","host":"https://gitlab.com","project":"group/project"}]}.');
+      return;
+    }
+    const accounts = config.accounts.map(({ project, boards, ...account }) => ({ kind: 'bearer', ...account, provider: 'gitlab' }));
+    const configuration = Object.fromEntries(config.accounts.map(({ id, project, boards }) => [id, { project, boards }]));
+    active = registerGitLabAccounts(host, accounts, (id) => accountFetch(host, id), configuration);
   },
-  onunload() {},
+  onunload() {
+    active?.dispose();
+    active = null;
+  },
 };
