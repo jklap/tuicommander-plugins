@@ -1,4 +1,5 @@
 import { createJiraProvider } from './provider.js';
+import { accountFetch, readConfig } from './runtime.js';
 
 /** Host integration seam. A3c supplies fetchForAccount; tokens never enter JS. */
 export function registerJiraAccounts(host, accounts, fetchForAccount, configuration = {}) {
@@ -17,12 +18,22 @@ export function registerJiraAccounts(host, accounts, fetchForAccount, configurat
   return { dispose() { for (const registration of registrations.splice(0).reverse()) registration.dispose(); } };
 }
 
+let active = null;
+
 export default {
   id: 'jira',
-  onload(host) {
-    // Account enumeration + authenticated HTTP wiring belongs to A1/A3c. Do
-    // not invent a token-bearing compatibility path while those APIs land.
-    host.log('warn', 'Jira provider requires the account HTTP integration before activation.');
+  async onload(host) {
+    const config = await readConfig(host, 'jira');
+    if (!config?.accounts?.length) {
+      host.log('warn', 'jira has no accounts: write data/config.json with {"accounts":[{"id":"<account id>","host":"https://site.atlassian.net","kind":"basic"}]}.');
+      return;
+    }
+    const accounts = config.accounts.map(({ projectId, boards, ...account }) => ({ ...account, provider: 'jira' }));
+    const configuration = Object.fromEntries(config.accounts.map(({ id, projectId, boards }) => [id, { projectId, boards }]));
+    active = registerJiraAccounts(host, accounts, (id) => accountFetch(host, id), configuration);
   },
-  onunload() {},
+  onunload() {
+    active?.dispose();
+    active = null;
+  },
 };

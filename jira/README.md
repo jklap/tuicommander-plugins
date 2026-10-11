@@ -12,9 +12,19 @@ for Jira Data Center (PAT). The site may contain a context path and explicit por
 port. The port receives `{url, method, body, headers}` and returns
 `{status, headers, json}`. Authentication is injected by Rust; never pass a token
 to this module. Non-browser `User-Agent` must be forwarded by the host HTTP port.
-The shipped manifest has no HTTP capability until A3c wires account fetch and
-provider declarations. Its lifecycle currently reports the missing integration;
-`registerJiraAccounts` is the tested activation seam for that step.
+The manifest declares `net:http` and the `jira` account descriptor; requests go through
+`host.httpFetch(url, {account})` (`runtime.js`), so Rust injects the credential.
+
+Install by copying this directory to `~/Library/Application Support/com.tuic.commander/plugins/jira/`
+(macOS). The host gives plugins no account list, so add the account in Settings, then write
+`data/config.json` inside the plugin directory (`kind`: `basic` for Cloud, `bearer` for Data Center):
+
+```json
+{ "accounts": [{ "id": "<account id>", "host": "https://site.atlassian.net", "kind": "basic", "projectId": "10000" }] }
+```
+
+Without the file `onload` logs a warning and registers nothing. The Tasks views are not mounted
+in the app shell yet, and no URL resolver is registered for Jira.
 A 429 blocks further calls from this provider until `Retry-After` expires (numeric
 seconds or HTTP date); it does not automatically replay writes.
 
