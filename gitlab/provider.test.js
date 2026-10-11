@@ -164,6 +164,17 @@ test('create_sends_labels_and_assignees', async () => {
   assert.deepEqual(write.body, { title: 'New', description: 'Text', labels: 'bug,To Do', assignee_ids: [2] });
 });
 
+// Catches: the create form without a type picker, or Title/Body duplicated as schema fields.
+test('create_fields_list_types_then_typed_fields', async () => {
+  const provider = createGitLabProvider({ account, project: 'demo/widgets', fetch: gitlab() });
+  const [type, ...rest] = await provider.createFields();
+  assert.deepEqual([type.id, type.kind, type.options.map((o) => o.id), rest.length], ['itemType', 'enum', ['issue'], 0]);
+  const typed = await provider.createFields('issue');
+  assert.deepEqual(typed.map((f) => f.id), ['labels', 'assignees', 'due']);
+  assert.deepEqual(typed[0].options.map((o) => o.id), ['To Do', 'Doing', 'bug']);
+  await assert.rejects(provider.createFields('merge_request'), /issues only/);
+});
+
 // Catches: retry endpoints swapped (job id sent to the pipeline route) or retry offered
 // for a green pipeline.
 test('pipeline_and_job_retry_target_the_failed_run', async () => {

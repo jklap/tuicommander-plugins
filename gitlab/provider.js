@@ -75,7 +75,9 @@ export function createGitLabProvider(options) {
       ],
     };
   }
-  async function createFields(itemType = 'issue', signal) {
+  /** Untyped: the type picker. Typed: the fields besides the form's fixed Title and Body. */
+  async function createFields(itemType, signal) {
+    if (itemType == null) return [{ ...schema('itemType', 'Type', 'enum', [{ id: 'issue', name: 'Issue' }], true) }];
     if (itemType !== 'issue') throw new Error('GitLab creates issues only');
     if (!project) throw new Error('GitLab create needs a configured project');
     const choices = await projectOptions(encodeURIComponent(project), signal);
@@ -139,9 +141,8 @@ export function createGitLabProvider(options) {
   async function list(query, signal) {
     const direct = idFromUrl(base, query.search?.trim() ?? '') ?? idFromReference(query.search, project);
     if (direct && !query.cursor) {
-      const { mr, path } = parseId(direct);
       try {
-        return { items: [toItem((await request(path, { signal })).json, mr)], nextCursor: null };
+        return { items: [toItem((await request(itemPath(direct), { signal })).json, parseId(direct).mr)], nextCursor: null };
       } catch (error) {
         if (!(error instanceof GitLabError) || error.status !== 404) throw error;
       }
