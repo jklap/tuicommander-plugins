@@ -65,7 +65,9 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
         signal,
       );
     },
-    async createFields(itemType = "issue", signal) {
+    /** Untyped: the type picker. Typed: the fields besides the form's fixed Title and Body. */
+    async createFields(itemType, signal) {
+      if (itemType == null) return [{ ...field("itemType", "Type", "enum", true, [{ id: "issue", name: "Issue" }]), required: true }];
       if (itemType !== "issue") throw new Error("Pull requests are created through the core PR flow");
       const options = async (endpoint, map) => {
         const values = [];
@@ -86,12 +88,10 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
       const labels = await options("labels", (l) => ({ id: l.name, name: l.name }));
       const milestones = await options("milestones", (m) => ({ id: String(m.number), name: m.title }));
       return [
-        field("title", "Title", "text"),
-        field("body", "Description", "markdown"),
         field("labels", "Labels", "labels", true, labels),
         field("milestone", "Milestone", "enum", true, milestones),
         field("assignees", "Assignees", "user"),
-      ].map((f) => ({ ...f, required: f.id === "title" }));
+      ];
     },
     async detail(reference, signal) {
       const ref = parseReference(reference, accountId);

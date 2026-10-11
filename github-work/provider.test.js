@@ -190,6 +190,8 @@ test("create_result_comes_from_the_post_response", async () => {
   const { provider, requests } = setup([{ json: fixture("issue"), status: 201 }]);
   const result = await provider.act(null, { kind: "create", value: { title: "A bug", body: "", itemType: "issue", fields: {} } });
   assert.equal(requests.length, 1);
+  assert.equal(requests[0].url, "https://api.github.com/repos/sstraus/tuicommander/issues");
+  assert.equal(requests[0].method, "POST");
   assert.equal(result.value.item.key, "sstraus/tuicommander#125");
   assert.deepEqual(result.value.comments, { entries: [], nextCursor: null });
   assert.ok(result.value.actions.some((a) => a.id === "close:completed"));
@@ -229,11 +231,21 @@ test("merged_pull_request_in_project_keeps_merged_state", async () => {
 // Catches: create fields show no live labels/milestones, or allow direct PR creation.
 test("create_fields_use_recorded_repository_metadata", async () => {
   const { provider } = setup([{ json: fixture("labels") }, { json: fixture("milestones") }]);
-  const fields = await provider.createFields();
-  assert.equal(fields.find((f) => f.id === "title").required, true);
+  const fields = await provider.createFields("issue");
+  assert.deepEqual(fields.map((f) => f.id), ["labels", "milestone", "assignees"]);
   assert.ok(fields.find((f) => f.id === "labels").options.some((o) => o.id === "area: github"));
   assert.equal(fields.find((f) => f.id === "milestone").options.length, 2);
   await assert.rejects(provider.createFields("pull"), /core PR flow/);
+});
+
+// Catches: createFields undefined returns an issue schema, so core Tasks finds no itemType picker and Create stays disabled.
+test("create_fields_without_type_declare_an_item_type_picker_with_issue", async () => {
+  const { provider, requests } = setup([]);
+  const fields = await provider.createFields(undefined);
+  const picker = fields.find((f) => f.id === "itemType");
+  assert.equal(picker.kind, "enum");
+  assert.deepEqual(picker.options.map((o) => o.id), ["issue"]);
+  assert.equal(requests.length, 0);
 });
 
 // Catches: normal comments lose author, timestamp, pagination or their markdown body.
