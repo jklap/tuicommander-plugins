@@ -55,6 +55,8 @@ test('manifest_declares_jira_account_use', () => {
   const manifest = JSON.parse(readFileSync(new URL('./manifest.json', import.meta.url), 'utf8'));
   assert.equal(manifest.id, plugin.id);
   assert.ok(manifest.capabilities.includes('net:http'));
+  // Rust rejects net:http with an empty allowedUrls list, even when requests use an account.
+  assert.ok(manifest.allowedUrls.length > 0);
   assert.deepEqual(manifest.providers.map((p) => p.id), ['jira']);
   assert.deepEqual(manifest.providers[0].kinds, ['basic', 'bearer']);
 });

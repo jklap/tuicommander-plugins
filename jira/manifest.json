@@ -7,6 +7,7 @@
   "description": "Jira Cloud and Data Center work items in core Tasks.",
   "author": "sstraus",
   "capabilities": ["net:http"],
+  "allowedUrls": ["https://api.atlassian.com/*"],
   "providers": [
     {
       "id": "jira",
