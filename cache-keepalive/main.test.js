@@ -134,3 +134,27 @@ test("a session that turns busy while the composer is read gets no keepalive", a
   await elapse();
   assert.deepEqual(host.sent, []);
 });
+
+test("whitespace-only draft is not cleared by a keepalive", async (t) => {
+  // catches: trim treats a user's unsent spaces and multiline newline as empty
+  const host = await setup(t);
+  host.inputBuffer = "  \n ";
+  await elapse();
+  assert.deepEqual(host.sent, [], "a nonempty draft must not receive Ctrl-U or a noop");
+});
+
+test("awaiting received before the first shell state still blocks keepalive", async (t) => {
+  // catches: awaiting is discarded before shell-state creates the session tracker
+  mock.timers.enable({ apis: ["setInterval", "setTimeout", "Date"], now: 1_000_000 });
+  const host = makeHost();
+  plugin.onload(host);
+  t.after(() => {
+    plugin.onunload();
+    mock.timers.reset();
+  });
+  // Backend snapshots dispatch awaiting independently of the shell-state stream.
+  host.handlers.get("awaiting")({ awaiting: true }, SESSION);
+  host.handlers.get("shell-state")({ agent_type: "claude", state: "idle" }, SESSION);
+  await elapse();
+  assert.deepEqual(host.sent, [], "an already open dialog must not be answered by a noop");
+});
