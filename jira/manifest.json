@@ -13,7 +13,7 @@
       "id": "jira",
       "label": "Jira",
       "kinds": ["basic", "bearer"],
-      "verify": { "path": "/rest/api/3/myself", "loginPointer": "/displayName" }
+      "verify": { "path": "/rest/api/2/myself", "loginPointer": "/displayName" }
     }
   ]
 }

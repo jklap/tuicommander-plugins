@@ -4,7 +4,7 @@ Data-only provider for core Tasks. No plugin HTML, token storage, or CLI depende
 Each factory instance is bound to one core account: `{id, host, kind}`. Use `basic`
 for Jira Cloud (email metadata and API token held in the core vault), or `bearer`
 for Jira Data Center (PAT). The site may contain a context path and explicit port.
-`verify()` calls `/rest/api/3/myself` or `/rest/api/2/myself`.
+`verify()` calls `/rest/api/3/myself` or `/rest/api/2/myself`; the manifest login verify path is `/rest/api/2/myself` (Cloud and Data Center both serve it).
 
 ## Integration
 

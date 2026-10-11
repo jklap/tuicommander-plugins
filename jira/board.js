@@ -1,4 +1,4 @@
-import { buildJql, search } from './query.js';
+import { buildJql, presets, search } from './query.js';
 
 /** Four workers bound transition lookups for a page; no per-card cache can go stale. */
 async function mapCards(items, project) {
@@ -33,11 +33,21 @@ export function boardPort(client, toItem) {
   async function board(id, query) {
     const config = await configuration(id);
     // The board's saved filter owns membership; user's query only narrows it.
-    const jql = buildJql({ ...query, search: query.search || 'id IS NOT EMPTY' });
-    const orderAt = jql.search(/\s+ORDER\s+BY\s+/i);
-    const predicate = orderAt < 0 ? jql : jql.slice(0, orderAt);
-    const order = orderAt < 0 ? '' : jql.slice(orderAt);
-    const page = await search(client, { ...query, filters: [], search: `filter = ${Number(config.filter.id)} AND (${predicate})${order}` }, false);
+    // A selected preset supplies the narrowing; 'id IS NOT EMPTY' keeps resolved cards when neither is set.
+    const hasPreset = presets.some((p) => p.id === query.savedFilterId);
+    async function run(fallback) {
+      const jql = buildJql({ ...query, search: query.search || (hasPreset ? '' : 'id IS NOT EMPTY') }, fallback);
+      const orderAt = jql.search(/\s+ORDER\s+BY\s+/i);
+      const predicate = orderAt < 0 ? jql : jql.slice(0, orderAt);
+      const order = orderAt < 0 ? '' : jql.slice(orderAt);
+      return search(client, { ...query, filters: [], search: `filter = ${Number(config.filter.id)} AND (${predicate})${order}` }, false);
+    }
+    let page;
+    try { page = await run(false); }
+    catch (error) {
+      if (error.status !== 400 || !query.search.trim()) throw error;
+      page = await run(true);
+    }
     const cards = await mapCards(page.issues, async (issue) => {
       const available = await client.request(`${client.api}/issue/${encodeURIComponent(issue.key)}/transitions`);
       return {

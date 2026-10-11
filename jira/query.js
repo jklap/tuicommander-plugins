@@ -10,7 +10,7 @@ export const presets = [
 export function buildJql(query, textFallback = false) {
   const search = query.search.trim();
   let expression = search || presets.find((p) => p.id === query.savedFilterId)?.jql || 'resolution = Unresolved';
-  if (search && /^[a-z][a-z0-9_]*-\d+$/i.test(search)) expression = `key = ${quote(search.toUpperCase())}`;
+  if (search && !textFallback && /^[a-z][a-z0-9_]*-\d+$/i.test(search)) expression = `key = ${quote(search.toUpperCase())}`;
   else if (search && textFallback) expression = `text ~ ${quote(search)}`;
   const filters = query.filters.map(({ fieldId, values }) => {
     if (!FIELDS.has(fieldId)) throw new Error(`Unsupported Jira filter: ${fieldId}`);
