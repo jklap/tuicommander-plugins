@@ -7,6 +7,7 @@
   "description": "GitLab issues, merge requests, boards and pipelines in core Tasks.",
   "author": "sstraus",
   "capabilities": ["net:http"],
+  "allowedUrls": ["https://gitlab.com/api/v4/*"],
   "providers": [
     {
       "id": "gitlab",
