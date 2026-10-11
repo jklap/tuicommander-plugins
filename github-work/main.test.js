@@ -68,6 +68,8 @@ test("account_fetch_keeps_non_json_bodies_as_text", async () => {
 test("manifest_declares_github_account_use", () => {
   assert.deepEqual(manifest.providers, ["github"]);
   assert.ok(manifest.capabilities.includes("net:http"));
+  // Rust rejects net:http with an empty allowedUrls list, even when requests use an account.
+  assert.ok(manifest.allowedUrls.length > 0);
   assert.equal(manifest.id, plugin.id);
 });
 
