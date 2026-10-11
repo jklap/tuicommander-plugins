@@ -31,11 +31,15 @@ export function searchPath(repository, query) {
     if (!qualifier) throw new Error("Unsupported GitHub filter");
     const multi = ["labels", "assignees"].includes(filter.fieldId);
     if (multi) {
-      // Values are alternatives (ORed): GitHub ORs only inside one comma-joined qualifier.
+      // Values are alternatives (ORed). GitHub ORs labels inside one comma-joined qualifier, but ORs
+      // repeated assignee qualifiers and rejects an assignee comma list with 422.
       const groups = filter.values.map((v) => (["labels", "user"].includes(v.kind) ? v.value.map((x) => x.name) : [v.value]));
       const names = groups.flat();
       if (!names.length) {
         parts.push(`no:${qualifier}`); // An empty filter means "unset".
+      } else if (filter.fieldId === "assignees") {
+        if (groups.some((g) => g.length !== 1)) throw new Error("Unsupported GitHub filter: several assignees in one value");
+        for (const n of names) parts.push(`${qualifier}:${text(n)}`);
       } else if (groups.length === 1) {
         for (const n of names) parts.push(`${qualifier}:${text(n)}`); // One value = a set that must all match.
       } else if (groups.some((g) => g.length !== 1)) {
