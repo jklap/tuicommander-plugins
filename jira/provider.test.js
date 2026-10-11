@@ -123,8 +123,8 @@ test('detail_comments_and_create_keep_public_work_item_shapes', async () => {
   assert.equal(detail.item.reference.accountId, 'site-one');
   assert.equal(detail.item.state.tone, 'info');
   const fields = await provider.createFields('10004');
-  assert.equal(fields[0].required, true);
-  assert.deepEqual(fields[1].options, [{ id: '2', name: 'High' }]);
+  assert.deepEqual(fields.map((f) => f.id), ['priority']);
+  assert.deepEqual(fields[0].options, [{ id: '2', name: 'High' }]);
   await assert.rejects(provider.act(null, { kind: 'create', value: { title: 'Title', body: '', itemType: '', fields: {} } }), /issue type/);
   const result = await provider.act(null, { kind: 'create', value: { title: 'Title', body: '- First', itemType: '10004', fields: { project: { kind: 'enum', value: '10000' } } } });
   assert.equal(result.value.item.key, 'DEMO-7');
@@ -178,7 +178,8 @@ test('create_metadata_pages_and_type_changes_use_selected_issue_type', async () 
     return ok({ fields: [{ fieldId: 'customfield_123', name: 'Risk', required: true, schema: { type: 'string' }, operations: ['set'] }], total: 1 });
   } });
   assert.deepEqual((await provider.createFields())[0].options, [{ id: '10004', name: 'Task' }]);
-  assert.equal((await provider.createFields('10004')).length, 2);
+  assert.deepEqual((await provider.createFields())[0].id, 'itemType');
+  assert.deepEqual((await provider.createFields('10004')).map((f) => f.id), ['priority']);
   assert.equal((await provider.createFields('10005'))[0].id, 'customfield_123');
   await assert.rejects(provider.act(null, { kind: 'create', value: { title: 'Title', body: '', itemType: '10005', fields: {} } }), /required field: Risk/);
   assert.equal(requests.some((path) => path.includes('/10004?startAt=1')), true);

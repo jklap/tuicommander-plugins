@@ -13,7 +13,7 @@ export function creationPort(client, projectId) {
         types.push(...batch.map((t) => ({ id: String(t.id), name: t.name }))); start += batch.length;
         if (page.isLast === true || !batch.length || start >= page.total || (page.total == null && page.isLast == null)) break;
       }
-      return [{ id: 'issuetype', name: 'Issue type', kind: 'enum', required: true, editable: true, options: types }];
+      return [{ id: 'itemType', name: 'Issue type', kind: 'enum', required: true, editable: true, options: types }];
     }
     const fields = []; let start = 0;
     for (;;) {
@@ -23,6 +23,7 @@ export function creationPort(client, projectId) {
       fields.push(...batch.map(fieldSchema)); start += batch.length;
       if (page.isLast === true || !batch.length || start >= page.total || (page.total == null && page.isLast == null)) break;
     }
-    return fields;
+    // Title and body are fixed form inputs, not schema fields.
+    return fields.filter((f) => f.id !== 'summary' && f.id !== 'description');
   };
 }
