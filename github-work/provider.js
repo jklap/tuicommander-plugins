@@ -9,6 +9,29 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
     throw new Error("Account and fetch port are required");
   const client = createClient(fetch, apiUrl);
   const projects = new Projects(client, accountId);
+  const compose = (mapped, json, kind, comments) => {
+    const actions = [
+      { id: "comment", name: "Comment", kind: "comment" },
+      { id: "start-work", name: "Start work", kind: "start_work" },
+      ...(mapped.state.id === "open"
+        ? [
+            { id: "close:completed", name: "Close as completed", kind: "transition" },
+            ...(kind === "issue"
+              ? [{ id: "close:not_planned", name: "Close as not planned", kind: "transition" }]
+              : []),
+          ]
+        : json.merged_at
+          ? []
+          : [{ id: "reopen", name: "Reopen", kind: "transition" }]),
+    ].map((a) => ({ ...a, enabled: true, disabledReason: null }));
+    return {
+      item: mapped,
+      body: json.body ?? "",
+      fields: [...FIELDS, ...[...projects.fields.values()].map((v) => v.schema)],
+      actions,
+      comments,
+    };
+  };
   const provider = {
     providerId: "github",
     accountId,
@@ -76,27 +99,7 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
       const { json } = await client.request(path, "GET", undefined, signal);
       const mapped = item(json, accountId, ref.repository, ref.kind);
       if (mapped.reference.id !== reference.id) throw new Error("GitHub returned a different item");
-      const actions = [
-        { id: "comment", name: "Comment", kind: "comment" },
-        { id: "start-work", name: "Start work", kind: "start_work" },
-        ...(mapped.state.id === "open"
-          ? [
-              { id: "close:completed", name: "Close as completed", kind: "transition" },
-              ...(ref.kind === "issue"
-                ? [{ id: "close:not_planned", name: "Close as not planned", kind: "transition" }]
-                : []),
-            ]
-          : json.merged_at
-            ? []
-            : [{ id: "reopen", name: "Reopen", kind: "transition" }]),
-      ].map((a) => ({ ...a, enabled: true, disabledReason: null }));
-      return {
-        item: mapped,
-        body: json.body ?? "",
-        fields: [...FIELDS, ...[...projects.fields.values()].map((v) => v.schema)],
-        actions,
-        comments: await this.comments(reference, null, 50, signal),
-      };
+      return compose(mapped, json, ref.kind, await this.comments(reference, null, 50, signal));
     },
     async comments(reference, cursor, limit, signal) {
       const ref = parseReference(reference, accountId);
@@ -212,7 +215,8 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
         const body = { title: action.value.title, body: action.value.body, ...editFields(action.value.fields) };
         const { json } = await client.request(`repos/${repository}/issues`, "POST", body, signal);
         const created = item(json, accountId, repository, "issue");
-        return { kind: "item", value: await this.detail(created.reference, signal) };
+        // No reload after the write: a failed read would surface as a failed create and invite a duplicate.
+        return { kind: "item", value: compose(created, json, "issue", { entries: [], nextCursor: null }) };
       }
       const ref = parseReference(reference, accountId);
       if (action.kind === "start_work") {

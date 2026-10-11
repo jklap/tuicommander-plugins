@@ -77,7 +77,8 @@ test("rate_limit_preserves_retry_after_and_does_not_retry", async () => {
   ]);
   await assert.rejects(
     provider.list(emptyQuery()),
-    (error) => error.status === 429 && error.retryAfter === "37" && !error.message.includes("private"),
+    // TEST-CHANGE (#1693-a816): GitHub's own reason is now part of the message instead of a generic text.
+    (error) => error.status === 429 && error.retryAfter === "37" && error.message.includes("private remote text"),
   );
   assert.equal(requests.length, 1);
 });
@@ -147,7 +148,7 @@ test("invalid_mutations_and_cursors_do_not_reach_fetch", async () => {
 // Catches: Projects GraphQL errors look like an empty board and suppress missing permission.
 test("projects_scope_error_is_not_an_empty_board", async () => {
   const { provider } = setup([{ json: fixture("project-scope-error") }]);
-  await assert.rejects(provider.board("project-id-owned-by-consumer", emptyQuery()), /GraphQL request failed/);
+  await assert.rejects(provider.board("project-id-owned-by-consumer", emptyQuery()), /GraphQL request failed: .*read:project/);
 });
 
 // Catches: a pending/aborted search reaches the API after its consumer is gone.
@@ -161,12 +162,7 @@ test("aborted_query_does_not_fetch", async () => {
 
 // Catches: create drops metadata or chooses a duplicate automatically instead of returning candidates.
 test("create_preserves_metadata_and_duplicate_search_is_read_only", async () => {
-  const { provider, requests } = setup([
-    { json: fixture("search") },
-    { json: fixture("issue") },
-    { json: fixture("issue") },
-    { json: fixture("issue-comments") },
-  ]);
+  const { provider, requests } = setup([{ json: fixture("search") }, { json: fixture("issue") }]);
   const candidates = await provider.duplicates("window");
   assert.equal(candidates.items[0].key, "sstraus/tuicommander#125");
   assert.equal(requests[0].method, "GET");
@@ -185,6 +181,49 @@ test("create_preserves_metadata_and_duplicate_search_is_read_only", async () => 
   });
   assert.deepEqual(requests[1].body, { title: "A bug", body: "Details", labels: ["area: github"], milestone: 2 });
   assert.equal(result.value.item.reference.id, "sstraus/tuicommander/issue/125");
+  // TEST-CHANGE (#1693-a816): create no longer reloads detail after the write (2 requests, not 4).
+  assert.equal(requests.length, 2);
+});
+
+// Catches: a failing read after a successful POST surfaces as a failed create, so a retry duplicates the issue.
+test("create_result_comes_from_the_post_response", async () => {
+  const { provider, requests } = setup([{ json: fixture("issue"), status: 201 }]);
+  const result = await provider.act(null, { kind: "create", value: { title: "A bug", body: "", itemType: "issue", fields: {} } });
+  assert.equal(requests.length, 1);
+  assert.equal(result.value.item.key, "sstraus/tuicommander#125");
+  assert.deepEqual(result.value.comments, { entries: [], nextCursor: null });
+  assert.ok(result.value.actions.some((a) => a.id === "close:completed"));
+});
+
+// Catches: GitHub's 422/403 reason is dropped, leaving the user a generic failure.
+test("error_message_carries_the_github_reason", async () => {
+  const { provider } = setup([{ status: 422, json: { message: "Validation Failed", errors: [{ message: "title is too long" }] } }]);
+  await assert.rejects(provider.list(emptyQuery()), (e) => e.status === 422 && /Validation Failed/.test(e.message));
+  const second = setup([{ status: 422, json: { errors: [{ message: "title is too long" }] } }]);
+  await assert.rejects(second.provider.list(emptyQuery()), /title is too long/);
+});
+
+// Catches: a merged PR is listed as Closed because merged_at lives under pull_request in search results.
+test("merged_pull_request_in_search_is_listed_as_merged", async () => {
+  const { provider } = setup([{ json: fixture("pull-search") }]);
+  const [pull] = (await provider.list(emptyQuery())).items;
+  assert.equal(pull.state.name, "Merged");
+});
+
+// Catches: Projects collapses MERGED into a plain closed item.
+test("merged_pull_request_in_project_keeps_merged_state", async () => {
+  const content = {
+    number: 124, title: "t", url: "https://github.com/sstraus/tuicommander/pull/124", state: "MERGED",
+    updatedAt: "2026-10-05T17:31:56Z", repository: { nameWithOwner: "sstraus/tuicommander" },
+    assignees: { nodes: [] }, labels: { nodes: [] },
+  };
+  const project = {
+    id: "p", title: "P", fields: { nodes: [] },
+    items: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [{ id: "i", content, fieldValues: { nodes: [] } }] },
+  };
+  const { provider } = setup([{ json: { data: { node: project } } }]);
+  const page = await provider.projectItems("p", emptyQuery());
+  assert.equal(page.items[0].state.name, "Merged");
 });
 
 // Catches: create fields show no live labels/milestones, or allow direct PR creation.

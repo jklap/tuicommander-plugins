@@ -74,7 +74,7 @@ export function item(value, accountId, repository, kind) {
     itemType: type,
     state: {
       id: value.state,
-      name: value.state === "open" ? "Open" : value.merged_at ? "Merged" : "Closed",
+      name: value.state === "open" ? "Open" : (value.merged_at ?? value.pull_request?.merged_at) ? "Merged" : "Closed",
       tone: value.state === "open" ? "info" : "success",
     },
     assignees,

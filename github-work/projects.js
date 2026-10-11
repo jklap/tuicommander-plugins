@@ -49,6 +49,8 @@ export class Projects {
           title: c.title,
           html_url: c.url,
           state: c.state === "OPEN" ? "open" : "closed",
+          // Projects reports MERGED as a state; the item model reads merged_at.
+          merged_at: c.state === "MERGED" ? c.updatedAt : null,
           updated_at: c.updatedAt,
           labels: c.labels.nodes,
           assignees: c.assignees.nodes,

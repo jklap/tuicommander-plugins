@@ -23,14 +23,25 @@ export function createClient(fetch, apiUrl = "https://api.github.com") {
       signal?.throwIfAborted();
       const headers = Object.fromEntries(Object.entries(response.headers).map(([k, v]) => [k.toLowerCase(), v]));
       if (response.status < 200 || response.status >= 300) {
-        // Never reflect a remote body into an error: it may echo credentials or private text.
-        throw new GitHubError(response.status, headers["retry-after"] ?? null);
+        const reason = response.json?.message ?? response.json?.errors?.[0]?.message;
+        throw new GitHubError(
+          response.status,
+          headers["retry-after"] ?? null,
+          typeof reason === "string" && reason ? `GitHub request failed: ${reason}` : undefined,
+        );
       }
       return { json: response.json, headers };
     },
     async graphql(query, variables, signal) {
       const { json } = await this.request("graphql", "POST", { query, variables }, signal);
-      if (json?.errors?.length) throw new GitHubError(200, null, "GitHub GraphQL request failed");
+      if (json?.errors?.length) {
+        const reason = json.errors[0]?.message;
+        throw new GitHubError(
+          200,
+          null,
+          `GitHub GraphQL request failed${typeof reason === "string" && reason ? `: ${reason}` : ""}`,
+        );
+      }
       if (!json?.data) throw new Error("GitHub response has no GraphQL data");
       return json.data;
     },
