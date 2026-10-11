@@ -112,8 +112,8 @@ export async function search(request, query, options, signal) {
   const { json, headers } = await request(spec.path, { signal });
   if (!Array.isArray(json)) throw new Error('Invalid GitLab list response');
   const rows = spec.todos
-    ? json.filter((t) => (t.target_type === 'Issue' || t.target_type === 'MergeRequest') && t.target)
-      .map((t) => ({ raw: t.target, mr: t.target_type === 'MergeRequest' }))
+    ? [...new Map(json.filter((t) => (t.target_type === 'Issue' || t.target_type === 'MergeRequest') && t.target)
+      .map((t) => [`${t.target_type}:${t.target.id}`, { raw: t.target, mr: t.target_type === 'MergeRequest' }])).values()]
     : json.map((raw) => ({ raw, mr: spec.mr }));
   return { rows, nextCursor: nextCursor(headers) };
 }

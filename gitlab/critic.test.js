@@ -32,3 +32,13 @@ test('board_label_filter_applies_to_label_lanes — catches: a list lane replace
   const doing = lanes.find((lane) => (lane.searchParams.get('labels') ?? '').split(',').includes('Doing'));
   assert.ok(doing, 'the Doing lane still asks for its list label');
 });
+
+// Catches: several pending to-dos on one item (assigned, mentioned, ...) listing the item once per to-do.
+test('todo_list_shows_one_row_per_item — catches: duplicate rows with the same reference', async () => {
+  const issue = { id: 501, iid: 12, project_id: 7, title: 'Widget', state: 'opened', web_url: `${HOST}/demo/widgets/-/issues/12`, references: { full: 'demo/widgets#12' }, labels: [], assignees: [], author: { id: 1, username: 'root' } };
+  const todo = (id, action) => ({ id, action_name: action, target_type: 'Issue', target: issue });
+  const fetch = async () => ({ status: 200, headers: {}, json: [todo(1, 'assigned'), todo(2, 'mentioned')] });
+  const provider = createGitLabProvider({ account, fetch });
+  const page = await provider.list({ ...query([]), savedFilterId: 'todos' });
+  assert.deepEqual(page.items.map((i) => i.reference.id), ['demo/widgets#12']);
+});

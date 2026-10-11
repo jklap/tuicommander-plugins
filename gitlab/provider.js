@@ -1,6 +1,6 @@
 import { createClient, nextCursor, pageNumber, pageSize, GitLabError } from './client.js';
 import { parseId, itemPath, idFromUrl, idFromReference } from './refs.js';
-import { toItem as mapItem, user, discussionEntries } from './model.js';
+import { toItem as mapItem, discussionEntries } from './model.js';
 import { mergeActions, mergeBody } from './merge.js';
 import { latestPipeline, jobsMarkdown, pipelineActions, retryPath, cleanTrace } from './pipelines.js';
 import { boardPort } from './board.js';
@@ -170,8 +170,7 @@ export function createGitLabProvider(options) {
   return {
     providerId: 'gitlab', accountId: account.id, name: `GitLab · ${account.label ?? base}`,
     fields: listFields, savedFilters: presets(account.login), boards: options.boards ?? [],
-    list, grouped, detail, comments, act, createFields, board: boards.board, listBoards: boards.list,
-    async verify(signal) { return user((await request('user', { signal })).json); },
+    list, grouped, detail, comments, act, createFields, board: boards.board,
     /** Plain-text log of one job of a merge request pipeline; ANSI and folding markers removed. */
     async jobTrace(ref, jobId, signal) {
       const { mr, encoded } = checkRef(ref);
@@ -180,10 +179,6 @@ export function createGitLabProvider(options) {
     },
     resolveUrl(url) {
       const id = idFromUrl(base, url);
-      return id ? { providerId: 'gitlab', accountId: account.id, id } : null;
-    },
-    resolveReference(text) {
-      const id = idFromReference(text, project);
       return id ? { providerId: 'gitlab', accountId: account.id, id } : null;
     },
   };

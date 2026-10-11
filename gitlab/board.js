@@ -59,7 +59,7 @@ export function boardPort({ request, project, toItem, issueParams }) {
     const lanes = await Promise.all(cols.map(async (col) => {
       const params = new URLSearchParams(base);
       params.set('state', col.id === CLOSED ? 'closed' : 'opened');
-      if (col.label) params.set('labels', col.label);
+      if (col.label) params.set('labels', [base.labels, col.label].filter(Boolean).join(','));
       if (col.id === OPEN && listLabels.length) params.set('not[labels]', listLabels.join(','));
       const { json, headers } = await request(`projects/${projectPath()}/issues?${params}`, { signal });
       return { col, issues: json, more: nextCursor(headers) != null };
@@ -90,10 +90,5 @@ export function boardPort({ request, project, toItem, issueParams }) {
     await request(itemPath, { method: 'PUT', body: edit, signal });
     return true;
   }
-  async function list(signal) {
-    if (!project) return [];
-    const { json } = await request(`projects/${projectPath()}/boards`, { signal });
-    return json.map((b) => ({ id: String(b.id), name: b.name, fieldId: 'labels', columns: columns(b).map((c) => ({ id: c.id, name: c.name, action: null })) }));
-  }
-  return { board, move, list };
+  return { board, move };
 }

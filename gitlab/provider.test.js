@@ -218,6 +218,4 @@ test('search_by_reference_opens_the_item', async () => {
   const page = await provider.list({ ...query, search: '!7' });
   assert.equal(page.items[0].reference.id, 'demo/widgets!7');
   assert.equal(new URL(requests[0].url).pathname, `${P}/merge_requests/7`);
-  assert.deepEqual(provider.resolveReference('demo/widgets#12'), issueRef);
-  assert.equal(provider.resolveReference('../etc#1'), null);
 });
