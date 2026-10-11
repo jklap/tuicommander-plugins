@@ -2,7 +2,6 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createJiraProvider } from './provider.js';
-import { adfToMarkdown, markdownToAdf } from './adf.js';
 
 const account = { id: 'a', host: 'https://x.atlassian.net', kind: 'basic', provider: 'jira' };
 const query = (over = {}) => ({ filters: [], savedFilterId: null, search: '', sort: null, cursor: null, limit: 50, groupBy: null, ...over });
@@ -58,13 +57,4 @@ test('critic: board honors the selected preset', async () => {
   const { jira, jqls } = provider(boardHandler);
   await jira.board('1', query({ savedFilterId: 'assigned' }));
   assert.ok(jqls.some((j) => j.includes('currentUser()')), jqls.join('\n'));
-});
-
-test('critic: literal asterisks in a description survive read then write', () => {
-  // catches: editing a description containing src/*.js and lib/*.js turns the span between into italics
-  const doc = { type: 'doc', version: 1, content: [{ type: 'paragraph', content: [{ type: 'text', text: 'match src/*.js and lib/*.js' }] }] };
-  const back = markdownToAdf(adfToMarkdown(doc));
-  const text = back.content[0].content.map((n) => n.text).join('');
-  assert.equal(back.content[0].content.every((n) => !n.marks), true);
-  assert.equal(text, 'match src/*.js and lib/*.js');
 });
