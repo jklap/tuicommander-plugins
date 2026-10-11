@@ -1,8 +1,25 @@
-# GitHub Work provider — integration pending
+# GitHub Work provider
 
 This data-only adapter implements the A4 WorkItemProvider interface with an injected
 account-scoped fetch function. It has no iframe, credentials, independent request budget,
-or PTY execution. It is **not yet an installable plugin**.
+or PTY execution. `manifest.json` + `main.js` make it an installable plugin (`providers: ["github"]`, `net:http`).
+
+## Install and configure
+
+Copy this directory to `~/Library/Application Support/com.tuic.commander/plugins/github-work/`
+(macOS; `docs/plugins.md` → Build & Install). The host offers plugins no account list, so write
+`data/config.json` inside it:
+
+```json
+{ "accounts": [{ "id": "github.com", "repository": "owner/repo" }] }
+```
+
+`id` is the account id from Settings > Accounts (`github.com` for the ambient login); optional
+`apiUrl` and `webOrigin` select a GitHub Enterprise host. One provider is registered per account,
+so an account serves one repository. Without the file the plugin logs a warning and registers nothing.
+`runtime.js` adapts `fetch({url,method,body})` onto `host.httpFetch(url,{account})`.
+The Tasks views are not mounted in the app shell yet: today a registered provider serves the
+command-palette URL paste (link + drafted start work) and the sidebar link badge.
 
 ```js
 import { createGitHubProvider } from './provider.js';
@@ -41,8 +58,7 @@ use `updateProjectV2ItemFieldValue`, never issue close. Draft issues are exclude
 
 ## Integration tasks still open
 
-- Story 1697-4cdc: wire the real `host.httpFetch({account})` response to the fetch port;
-  add the runtime lifecycle/manifest and one registry entry. No unauthenticated fallback.
+- One registry entry (no release zip exists yet).
 - Bind B6/B7 core ports and expose their actions in the Tasks surface. Current
   `host.invoke` does not whitelist them; do not bypass the host.
 - Record successful Projects v2 reads with a credential that has `read:project`, then
