@@ -74,3 +74,31 @@ test("critic: alternative label values are ORed, not sent as two ANDed label qua
   }
   for (const q of searches) assert.ok((q.match(/(^|\s)label:/g) ?? []).length <= 1, q);
 });
+
+// Oracle: live github.com search probes on 2026-10-11 (critic-1693b, round 2):
+//   repo:microsoft/vscode assignee:"bpasero" -> 17513, assignee:"joaomoreno" -> 11580
+//   assignee:"bpasero" assignee:"joaomoreno" -> 28878 (repeated assignee qualifiers are ORed)
+//   assignee:"bpasero","joaomoreno" and assignee:bpasero,joaomoreno -> HTTP 422 "The listed users cannot be searched"
+const users = (...names) => ({ kind: "user", value: names.map((name) => ({ id: name, name, avatarUrl: null })) });
+
+test("critic: alternative assignees reach GitHub as repeated assignee qualifiers, never a comma list", async () => {
+  // catches: label comma-OR syntax reused for assignees; GitHub answers assignee:"a","b" with HTTP 422
+  const { provider, searches } = harness();
+  await provider.list(query([{ fieldId: "assignees", values: [users("alice"), users("bob")] }]));
+  const q = searches.at(-1);
+  assert.doesNotMatch(q, /assignee:[^ ]*,/, q);
+  assert.match(q, /(^|\s)assignee:"alice"(\s|$)/, q);
+  assert.match(q, /(^|\s)assignee:"bob"(\s|$)/, q);
+});
+
+test("critic: one value holding two assignees is never sent as qualifiers GitHub ORs", async () => {
+  // catches: a user set (all must match, as in validation::matches_filter) sent as assignee:"a" assignee:"b",
+  // which GitHub ORs -> the list silently widens to items assigned to either user
+  const { provider, searches } = harness();
+  try {
+    await provider.list(query([{ fieldId: "assignees", values: [users("alice", "bob")] }]));
+  } catch {
+    // Rejecting an inexpressible AND is acceptable; silently widening it is not.
+  }
+  for (const q of searches) assert.ok((q.match(/(^|\s)assignee:/g) ?? []).length <= 1, q);
+});
