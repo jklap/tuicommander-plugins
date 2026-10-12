@@ -6,3 +6,6 @@ at-capacity-retry/data/
 cache-keepalive/data/
 claude-wakeup/data/
 tuic-voice/data/
+github-work/data/
+gitlab/data/
+jira/data/
