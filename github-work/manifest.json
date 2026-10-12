@@ -1,0 +1,12 @@
+{
+  "id": "github-work",
+  "name": "GitHub Work",
+  "version": "1.0.0",
+  "minAppVersion": "1.8.0",
+  "main": "main.js",
+  "description": "GitHub issues, pull requests and Projects v2 as work items in core Tasks.",
+  "author": "sstraus",
+  "capabilities": ["net:http"],
+  "allowedUrls": ["https://api.github.com/*"],
+  "providers": ["github"]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 5471465390,
+    "node_id": "PRR_kwDODKw3uc8AAAABRh_vrg",
+    "user": {
+      "login": "williammartin",
+      "id": 1611510,
+      "node_id": "MDQ6VXNlcjE2MTE1MTA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1611510?u=1208184deacce6d59b31fb28f8464688c577ffdf&v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/williammartin",
+      "html_url": "https://github.com/williammartin",
+      "followers_url": "https://api.github.com/users/williammartin/followers",
+      "following_url": "https://api.github.com/users/williammartin/following{/other_user}",
+      "gists_url": "https://api.github.com/users/williammartin/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/williammartin/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/williammartin/subscriptions",
+      "organizations_url": "https://api.github.com/users/williammartin/orgs",
+      "repos_url": "https://api.github.com/users/williammartin/repos",
+      "events_url": "https://api.github.com/users/williammartin/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/williammartin/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": true
+    },
+    "body": "",
+    "state": "APPROVED",
+    "html_url": "https://github.com/cli/cli/pull/14634#pullrequestreview-5471465390",
+    "pull_request_url": "https://api.github.com/repos/cli/cli/pulls/14634",
+    "author_association": "MEMBER",
+    "_links": {
+      "html": {
+        "href": "https://github.com/cli/cli/pull/14634#pullrequestreview-5471465390"
+      },
+      "pull_request": {
+        "href": "https://api.github.com/repos/cli/cli/pulls/14634"
+      }
+    },
+    "submitted_at": "2026-10-09T14:33:25Z",
+    "commit_id": "424f38df651e0b178d752073859af7ee1d3d02c3"
+  }
+]
