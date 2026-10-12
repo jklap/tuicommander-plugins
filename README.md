@@ -52,3 +52,7 @@ Open a PR adding your entry to `registry.json`. Requirements:
 ## Plugin development
 
 See the [plugin docs](https://github.com/sstraus/tuicommander/blob/main/docs/plugins.md) for the full API reference and examples.
+
+Repository-aware scanners discard completions from a previous repository or plugin
+lifetime. The MDKB ticker refreshes when the active repository changes; dashboard
+requests cannot recreate a panel after it closes or the plugin unloads.

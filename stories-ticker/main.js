@@ -5,6 +5,7 @@ const CLOSED_STATUSES = ["-complete-", "-wontfix-"];
 let hostRef = null;
 let watchDisposable = null;
 let watchGeneration = 0;
+let refreshGeneration = 0;
 
 function joinPath(root, relative) {
   const separator = root.includes("\\") ? "\\" : "/";
@@ -18,30 +19,37 @@ function isMissing(error) {
 
 function stopWatch() {
   watchGeneration += 1;
+  refreshGeneration += 1;
   watchDisposable?.dispose();
   watchDisposable = null;
 }
 
 async function refresh(repoPath) {
-  if (!hostRef) return;
+  const host = hostRef;
+  const generation = ++refreshGeneration;
+  if (!host) return;
   try {
-    const names = await hostRef.listDirectory(joinPath(repoPath, "stories"), "*.md");
+    const names = await host.listDirectory(joinPath(repoPath, "stories"), "*.md");
+    if (hostRef !== host || generation !== refreshGeneration) return;
     const openCount = names.filter((name) => !CLOSED_STATUSES.some((status) => name.includes(status))).length;
     if (openCount > 0) {
-      hostRef.setTicker({ id: TICKER_ID, text: `${openCount} open`, label: "Stories", priority: 15, ttlMs: 0 });
+      host.setTicker({ id: TICKER_ID, text: `${openCount} open`, label: "Stories", priority: 15, ttlMs: 0 });
     } else {
-      hostRef.clearTicker(TICKER_ID);
+      host.clearTicker(TICKER_ID);
     }
   } catch (error) {
-    if (!isMissing(error)) hostRef.log("warn", "Failed to scan stories", String(error));
-    hostRef.clearTicker(TICKER_ID);
+    if (hostRef !== host || generation !== refreshGeneration) return;
+    if (!isMissing(error)) host.log("warn", "Failed to scan stories", String(error));
+    host.clearTicker(TICKER_ID);
   }
 }
 
 async function watchStories(repoPath) {
-  const generation = ++watchGeneration;
+  const generation = watchGeneration;
+  const host = hostRef;
+  if (!host) return;
   try {
-    const disposable = await hostRef.watchPath(joinPath(repoPath, "stories"), () => void refresh(repoPath));
+    const disposable = await host.watchPath(joinPath(repoPath, "stories"), () => { if (hostRef === host && generation === watchGeneration) void refresh(repoPath); });
     if (!hostRef || generation !== watchGeneration) disposable.dispose();
     else watchDisposable = disposable;
   } catch (error) {
