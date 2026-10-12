@@ -35,11 +35,20 @@ export function boardPort(client, toItem) {
     // The board's saved filter owns membership; user's query only narrows it.
     // A selected preset supplies the narrowing; 'id IS NOT EMPTY' keeps resolved cards when neither is set.
     const hasPreset = presets.some((p) => p.id === query.savedFilterId);
-    const jql = buildJql({ ...query, search: query.search || (hasPreset ? '' : 'id IS NOT EMPTY') });
-    const orderAt = jql.search(/\s+ORDER\s+BY\s+/i);
-    const predicate = orderAt < 0 ? jql : jql.slice(0, orderAt);
-    const order = orderAt < 0 ? '' : jql.slice(orderAt);
-    const page = await search(client, { ...query, filters: [], search: `filter = ${Number(config.filter.id)} AND (${predicate})${order}` }, false);
+    const searchPage = (textFallback) => {
+      const jql = buildJql({ ...query, search: query.search || (hasPreset ? '' : 'id IS NOT EMPTY') }, textFallback);
+      const orderAt = jql.search(/\s+ORDER\s+BY\s+/i);
+      const predicate = orderAt < 0 ? jql : jql.slice(0, orderAt);
+      const order = orderAt < 0 ? '' : jql.slice(orderAt);
+      return search(client, { ...query, filters: [], search: `filter = ${Number(config.filter.id)} AND (${predicate})${order}` }, false);
+    };
+    // Plain text is not JQL: Jira answers 400, so retry as text ~ like the list does.
+    let page;
+    try { page = await searchPage(false); }
+    catch (error) {
+      if (error.status !== 400 || !query.search.trim()) throw error;
+      page = await searchPage(true);
+    }
     const cards = await mapCards(page.issues, async (issue) => {
       const available = await client.request(`${client.api}/issue/${encodeURIComponent(issue.key)}/transitions`);
       return {

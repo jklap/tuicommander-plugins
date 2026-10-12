@@ -45,7 +45,7 @@ function boardHandler(url, body) {
   return null;
 }
 
-test('critic: board plain-text search falls back to text search like the list does', { skip: 'finding 3 moved to a story by coordinator (orc-1)' }, async () => {
+test('critic: board plain-text search falls back to text search like the list does', async () => {
   // catches: board search box shows a 400 error for any non-JQL text
   const { jira } = provider(boardHandler);
   const result = await jira.board('1', query({ search: 'login bug' }));
@@ -57,4 +57,25 @@ test('critic: board honors the selected preset', async () => {
   const { jira, jqls } = provider(boardHandler);
   await jira.board('1', query({ savedFilterId: 'assigned' }));
   assert.ok(jqls.some((j) => j.includes('currentUser()')), jqls.join('\n'));
+});
+
+test('board text fallback is sent as text ~ inside the board filter', async () => {
+  // catches: fallback drops the board filter and searches every issue on the site
+  const { jira, jqls } = provider(boardHandler);
+  await jira.board('1', query({ search: 'login bug' }));
+  assert.ok(jqls.at(-1).includes('filter = 10') && jqls.at(-1).includes('text ~ "login bug"'), jqls.join('\n'));
+});
+
+test('board search does not retry non-400 failures as text', async () => {
+  // catches: a 500 or 401 masked by a second text search
+  const { jira, jqls } = provider((url, body) => url.endsWith('/search/jql') ? { status: 500, headers: {}, json: {} } : boardHandler(url, body));
+  await assert.rejects(jira.board('1', query({ search: 'login bug' })));
+  assert.equal(jqls.length, 1);
+});
+
+test('board 400 without a user search is not retried', async () => {
+  // catches: fallback loop on a broken preset or board filter
+  const { jira, jqls } = provider((url, body) => url.endsWith('/search/jql') ? { status: 400, headers: {}, json: {} } : boardHandler(url, body));
+  await assert.rejects(jira.board('1', query()));
+  assert.equal(jqls.length, 1);
 });
