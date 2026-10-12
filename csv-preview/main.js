@@ -58,8 +58,10 @@ function parseCsv(raw, delimiter) {
 					}
 				}
 				row.push(field);
-				if (i < len && raw[i] === delimiter) i++;
-				else if (i < len && (raw[i] === "\n" || raw[i] === "\r")) {
+				if (i < len && raw[i] === delimiter) {
+					i++;
+					if (i === len) row.push("");
+				} else if (i < len && (raw[i] === "\n" || raw[i] === "\r")) {
 					if (raw[i] === "\r" && i + 1 < len && raw[i + 1] === "\n") i += 2;
 					else i++;
 					break;
@@ -69,8 +71,10 @@ function parseCsv(raw, delimiter) {
 				while (end < len && raw[end] !== delimiter && raw[end] !== "\n" && raw[end] !== "\r") end++;
 				row.push(raw.slice(i, end));
 				i = end;
-				if (i < len && raw[i] === delimiter) i++;
-				else if (i < len && (raw[i] === "\n" || raw[i] === "\r")) {
+				if (i < len && raw[i] === delimiter) {
+					i++;
+					if (i === len) row.push("");
+				} else if (i < len && (raw[i] === "\n" || raw[i] === "\r")) {
 					if (raw[i] === "\r" && i + 1 < len && raw[i + 1] === "\n") i += 2;
 					else i++;
 					break;
@@ -163,7 +167,7 @@ ${cappedNotice}
 <script>
 	let sortCol = -1;
 	let sortAsc = true;
-	const data = ${JSON.stringify(displayRows)};
+	const data = ${JSON.stringify(displayRows).replace(/</g, "\\u003c")};
 	const colCount = ${colCount};
 
 	function sortByCol(col) {
