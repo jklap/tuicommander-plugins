@@ -61,9 +61,9 @@
     "description": "Prevents Claude API prompt cache expiry by sending minimal keepalive messages during idle periods.",
     "author": "sstraus",
     "repo": "sstraus/tuicommander-plugins",
-    "latestVersion": "1.1.0",
+    "latestVersion": "1.1.1",
     "minAppVersion": "0.9.8",
-    "capabilities": ["pty:write", "ui:ticker", "fs:read", "fs:list"],
+    "capabilities": ["pty:write", "pty:read", "ui:ticker", "fs:read", "fs:list"],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/cache-keepalive.zip"
   },
   {

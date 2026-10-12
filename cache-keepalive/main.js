@@ -78,6 +78,8 @@ class SessionTracker {
     this.probingTtl = false;
     /** True once we confirm the Claude project dir doesn't exist for this repo — stop probing JSONL. */
     this.noClaudeJsonl = false;
+    /** Mirror of the backend awaiting_input flag (question, permission, picker) */
+    this.backendAwaiting = false;
   }
 }
 
@@ -596,13 +598,28 @@ async function verifyFollowUp(sessionId, repoPath, busyStartMs) {
 
 // ── Keepalive check ──────────────────────────────────────────────────
 
-function checkKeepalives() {
+/**
+ * True only when the composer is provably empty. sendAgentInput clears the
+ * input line with Ctrl-U, so an unsent draft — or an unreadable composer —
+ * must never receive a keepalive.
+ */
+async function composerIsEmpty(sessionId) {
+  try {
+    const buffer = await hostRef.invoke("get_input_buffer_content", { sessionId });
+    return buffer === "";
+  } catch {
+    return false;
+  }
+}
+
+async function checkKeepalives() {
   if (!hostRef) return;
   const now = Date.now();
   let activeCount = 0;
 
   for (const [sessionId, session] of sessions) {
     if (session.shellState !== "idle") continue;
+    if (session.backendAwaiting) continue;
     const interval = effectiveTtlMs(session) - effectiveMarginMs(session);
     if (session.keepaliveCount >= config.maxKeepalives) continue;
     if (session.lastIdleAt === 0) continue;
@@ -623,6 +640,14 @@ function checkKeepalives() {
 
     const idleMs = now - session.lastIdleAt;
     if (idleMs >= interval) {
+      if (!(await composerIsEmpty(sessionId))) {
+        activeCount++;
+        continue;
+      }
+      // State may have changed while the composer was read.
+      if (!hostRef || sessions.get(sessionId) !== session) continue;
+      if (session.shellState !== "idle" || session.backendAwaiting || session.pendingKeepalive) continue;
+
       session.pendingKeepalive = true;
       session.pendingKeepaliveAt = now;
       session.keepaliveCount++;
@@ -897,6 +922,13 @@ export default {
           session.lastIdleAt = Date.now();
         }
       }
+    });
+
+    // ── Authoritative awaiting state from the backend ─────────────
+    // A parked question or permission dialog must not receive a keepalive.
+    host.registerStructuredEventHandler("awaiting", (payload, sessionId) => {
+      const session = getSession(sessionId);
+      session.backendAwaiting = !!payload?.awaiting;
     });
 
     // ── Real user input — reset keepalive counter ─────────────────
