@@ -1,0 +1,19 @@
+{
+  "id": "gitlab",
+  "name": "GitLab",
+  "version": "1.0.0",
+  "minAppVersion": "1.8.0",
+  "main": "main.js",
+  "description": "GitLab issues, merge requests, boards and pipelines in core Tasks.",
+  "author": "sstraus",
+  "capabilities": ["net:http"],
+  "allowedUrls": ["https://gitlab.com/api/v4/*"],
+  "providers": [
+    {
+      "id": "gitlab",
+      "label": "GitLab",
+      "kinds": ["bearer"],
+      "verify": { "path": "/api/v4/user", "loginPointer": "/username" }
+    }
+  ]
+}
