@@ -144,5 +144,16 @@
     "minAppVersion": "1.8.0",
     "capabilities": [],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/gitlab.zip"
+  },
+  {
+    "id": "jira",
+    "name": "Jira",
+    "description": "Jira Cloud and Data Center work items in core Tasks. Needs a Jira account in Settings and data/config.json.",
+    "author": "sstraus",
+    "repo": "sstraus/tuicommander-plugins",
+    "latestVersion": "1.0.0",
+    "minAppVersion": "1.8.0",
+    "capabilities": ["net:http"],
+    "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/jira.zip"
   }
 ]

@@ -1,0 +1,19 @@
+{
+  "id": "jira",
+  "name": "Jira",
+  "version": "1.0.0",
+  "minAppVersion": "1.8.0",
+  "main": "main.js",
+  "description": "Jira Cloud and Data Center work items in core Tasks.",
+  "author": "sstraus",
+  "capabilities": ["net:http"],
+  "allowedUrls": ["https://api.atlassian.com/*"],
+  "providers": [
+    {
+      "id": "jira",
+      "label": "Jira",
+      "kinds": ["basic", "bearer"],
+      "verify": { "path": "/rest/api/2/myself", "loginPointer": "/displayName" }
+    }
+  ]
+}
