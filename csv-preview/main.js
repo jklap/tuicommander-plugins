@@ -6,16 +6,14 @@ export default {
 		host.registerFilePreview({
 			extensions: ["csv", "tsv", "psv", "ssv"],
 			async onOpen(ctx) {
-				const abs = ctx.fsRoot
-					? `${ctx.fsRoot}/${ctx.filePath}`
-					: ctx.filePath;
+				const abs = absolutePath(ctx.fsRoot, ctx.filePath);
 				const raw = await host.readFile(abs);
 				const ext = ctx.filePath.split(".").pop()?.toLowerCase();
 				const delimiter = ext === "tsv" ? "\t" : ext === "psv" ? "|" : ext === "ssv" ? ";" : ",";
 				const rows = parseCsv(raw, delimiter);
 				const html = buildTableHtml(rows, ctx.filePath);
 				host.openPanel({
-					id: `csv-${ctx.filePath}`,
+					id: `csv-${abs}`,
 					title: ctx.filePath.split("/").pop() || "CSV",
 					html,
 					onMessage(data) {
@@ -201,4 +199,11 @@ ${cappedNotice}
 		window.parent.postMessage(msg, "*");
 	}
 </script>`;
+}
+
+function absolutePath(root, filePath) {
+  if (/^[A-Za-z]:[\\/]/.test(filePath) || filePath.startsWith("/") || filePath.startsWith("\\\\")) return filePath;
+  if (!root) return filePath;
+  const sep = root.includes("\\") ? "\\" : "/";
+  return root.replace(/[\\/]+$/, "") + sep + filePath.replace(/^[\\/]+/, "");
 }

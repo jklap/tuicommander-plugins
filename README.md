@@ -60,3 +60,7 @@ requests cannot recreate a panel after it closes or the plugin unloads.
 Retry and wakeup plugins revalidate session state after composer inspection. State
 changes, awaiting dialogs, session closure and unload invalidate an outstanding
 decision. A failed retry composer read does not submit input.
+
+CSV, DOCX and XLSX preview panels use the full file path for identity. Equal file
+names in different repositories open separate panels; reopening the same file
+reuses its panel.

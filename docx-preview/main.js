@@ -11,12 +11,12 @@ export default {
 		host.registerFilePreview({
 			extensions: ["docx", "dotx"],
 			async onOpen(ctx) {
+				const abs = absolutePath(ctx.fsRoot, ctx.filePath);
 				try {
 					if (!mammothApi?.convertToHtml || !mammothApi?.extractRawText) {
 						throw new Error("Mammoth.js did not initialize");
 					}
 
-					const abs = absolutePath(ctx.fsRoot, ctx.filePath);
 					const base64 = await host.readFileBase64(abs);
 					const arrayBuffer = base64ToArrayBuffer(base64);
 					const fileName = basename(ctx.filePath);
@@ -38,7 +38,7 @@ export default {
 					]);
 
 					host.openPanel({
-						id: panelId(ctx.filePath),
+						id: panelId(abs),
 						title: shortTitle(fileName),
 						html: buildPanelHtml({
 							fileName,
@@ -54,7 +54,7 @@ export default {
 					});
 				} catch (error) {
 					host.openPanel({
-						id: panelId(ctx.filePath),
+						id: panelId(abs),
 						title: shortTitle(basename(ctx.filePath)),
 						html: buildErrorHtml(ctx.filePath, error),
 					});
