@@ -4,7 +4,7 @@ import retry from "./at-capacity-retry/main.js";
 import wake from "./claude-wakeup/main.js";
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
-function deferred() { let resolve; const promise = new Promise((done) => { resolve = done; }); return { promise, resolve }; }
+function deferred() { let resolve, reject; const promise = new Promise((done, fail) => { resolve = done; reject = fail; }); return { promise, resolve, reject }; }
 function host(pending) {
   const h = {
     events: new Map(), states: [], watchers: [], sent: [], reads: 0,
@@ -51,3 +51,22 @@ for (const [name, plugin] of [["retry", retry], ["wake", wake]]) {
     });
   }
 }
+
+// Catches: a rejected composer read after a state notification leaves an unsent
+// wake pending, suppressing subsequent eligible wakeups until timeout.
+test("wake releases an unsent decision after a changed-state composer read rejects", async (t) => {
+  mock.timers.enable({ apis: ["setTimeout", "setInterval", "Date"], now: 100000 });
+  const pending = deferred(); const h = host(pending);
+  wake.onload(h); await settle();
+  t.after(() => { wake.onunload(); mock.timers.reset(); });
+  h.state("agent-started"); h.emit("shell-state", { state: "idle" });
+  for (let i = 0; i < 4; i++) { mock.timers.tick(5000); await settle(); }
+  assert.equal(h.reads, 1, "eligible session reached composer inspection");
+  h.emit("awaiting", { awaiting: true });
+  pending.reject(new Error("temporary composer unavailable")); await settle();
+  const invoke = h.invoke;
+  h.invoke = async (cmd, ...args) => cmd === "get_input_buffer_content" ? "" : invoke(cmd, ...args);
+  h.emit("awaiting", { awaiting: false });
+  mock.timers.tick(5000); await settle();
+  assert.equal(h.sent.length, 1, "failed inspection must not leave an unsent wake pending");
+});
