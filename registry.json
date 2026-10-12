@@ -142,7 +142,7 @@
     "repo": "sstraus/tuicommander-plugins",
     "latestVersion": "1.0.0",
     "minAppVersion": "1.8.0",
-    "capabilities": [],
+    "capabilities": ["net:http"],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/gitlab.zip"
   },
   {
