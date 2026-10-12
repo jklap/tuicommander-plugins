@@ -56,3 +56,7 @@ See the [plugin docs](https://github.com/sstraus/tuicommander/blob/main/docs/plu
 Repository-aware scanners discard completions from a previous repository or plugin
 lifetime. The MDKB ticker refreshes when the active repository changes; dashboard
 requests cannot recreate a panel after it closes or the plugin unloads.
+
+Retry and wakeup plugins revalidate session state after composer inspection. State
+changes, awaiting dialogs, session closure and unload invalidate an outstanding
+decision. A failed retry composer read does not submit input.

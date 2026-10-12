@@ -44,6 +44,7 @@ const DEFAULTS = {
 class SessionTracker {
   constructor() {
     this.shellState = null;
+    this.revision = 0;
     this.lastIdleAt = 0;
     this.lastBusyAt = 0;
     this.lastUserInputAt = 0;
@@ -250,9 +251,22 @@ function checkWakeups() {
       ttlMs: 12000,
     });
 
-    hostRef
+    const host = hostRef;
+    const revision = session.revision;
+    host
       .invoke("get_input_buffer_content", { sessionId })
       .then((content) => {
+        if (hostRef !== host || sessions.get(sessionId) !== session) return;
+        if (session.revision !== revision || !session.pendingWake || session.pendingWakeAt !== now) {
+          if (session.pendingWake && session.pendingWakeAt === now) {
+            session.pendingWake = false;
+            session.pendingWakeAt = 0;
+            session.wakeBusySeen = false;
+            session.wakeCount--;
+            session.totalWakesEver--;
+          }
+          return;
+        }
         if (content && content.trim().length > 0) {
           hostRef.log("debug", `Wakeup skipped — user typing in ${sessionId.slice(0, 8)}`);
           session.pendingWake = false;
@@ -267,9 +281,10 @@ function checkWakeups() {
           session.lastUserInputAt = now;
           return;
         }
-        return hostRef.sendAgentInput(sessionId, WAKE_MESSAGE);
+        return host.sendAgentInput(sessionId, WAKE_MESSAGE);
       })
       .catch((err) => {
+        if (hostRef !== host || sessions.get(sessionId) !== session || session.revision !== revision) return;
         const msg = String(err);
         if (msg.includes("not found") || msg.includes("No such session")) {
           sessions.delete(sessionId);
@@ -387,6 +402,7 @@ export default {
       onMatch(match, sessionId) {
         const session = sessions.get(sessionId);
         if (!session) return;
+      session.revision++;
         if (session.disarmed) return;
         const sinceWake = Date.now() - (session.lastWakeSentAt || 0);
         if (!session.lastWakeSentAt || sinceWake > config.pendingTimeoutMs) return;
@@ -485,6 +501,7 @@ export default {
     host.registerStructuredEventHandler("shell-state", (payload, sessionId) => {
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       const prev = session.shellState;
       session.shellState = payload.state;
       const now = Date.now();
@@ -567,6 +584,7 @@ export default {
     host.registerStructuredEventHandler("question", (_payload, sessionId) => {
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       session.hasQuestionAt = Date.now();
     });
 
@@ -577,6 +595,7 @@ export default {
     host.registerStructuredEventHandler("awaiting", (payload, sessionId) => {
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       session.backendAwaiting = !!payload?.awaiting;
     });
 
@@ -584,6 +603,7 @@ export default {
     host.registerStructuredEventHandler("active-subtasks", (payload, sessionId) => {
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       session.activeSubtasks = payload?.count ?? 0;
     });
 
@@ -591,12 +611,14 @@ export default {
     host.registerStructuredEventHandler("choice-prompt", (_payload, sessionId) => {
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       session.choicePromptActive = true;
     });
 
     host.registerStructuredEventHandler("choice-cleared", (_payload, sessionId) => {
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       session.choicePromptActive = false;
     });
 
@@ -609,6 +631,7 @@ export default {
       if (isWakeMessage(content)) return;
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       session.lastUserInputAt = Date.now();
       session.hasQuestionAt = 0;
       session.choicePromptActive = false;
@@ -621,6 +644,7 @@ export default {
     host.registerStructuredEventHandler("usage-exhausted", (_payload, sessionId) => {
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       session.disarmed = true;
       session.disarmedAt = Date.now();
       session.pendingWake = false;
@@ -632,6 +656,7 @@ export default {
     host.registerStructuredEventHandler("tool-error", (_payload, sessionId) => {
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       if (session.disarmed) return;
 
       session.consecutiveErrors++;

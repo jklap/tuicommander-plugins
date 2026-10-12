@@ -68,6 +68,8 @@ class SessionState {
     this.blocked = false;
     this.blockedAt = 0;
     this.shellState = null;
+    this.revision = 0;
+    this.backendAwaiting = false;
   }
 }
 
@@ -263,6 +265,7 @@ function cancelRetry(sessionId, session, reason) {
 
 function scheduleRetry(sessionId, session, now) {
   session.detectedAt = now;
+  session.revision++;
   session.dueAt = now + config.retryDelayMs;
   session.timer = setTimeout(() => {
     fireRetry(sessionId).catch((err) => hostRef?.log("error", `Retry failed: ${err}`));
@@ -309,7 +312,7 @@ async function fireRetry(sessionId) {
     skipRetry(sessionId, session, `stale by ${Math.round((now - dueAt) / 1000)}s (sleep/wake)`);
     return;
   }
-  if (session.blocked) return;
+  if (session.blocked || session.backendAwaiting) return;
   // The agent restarted work on its own (self-retry, or the user resent the
   // turn). Only a busy transition that came *after* the detection proves this —
   // the at-capacity message itself arrives while the session is still busy, and
@@ -319,16 +322,23 @@ async function fireRetry(sessionId) {
     return;
   }
 
-  const buffer = await hostRef
+  const host = hostRef;
+  const revision = session.revision;
+  const buffer = await host
     .invoke("get_input_buffer_content", { sessionId })
-    .catch(() => "");
+    .catch(() => null);
+  if (hostRef !== host || sessions.get(sessionId) !== session || session.revision !== revision) return;
+  if (buffer === null) {
+    skipRetry(sessionId, session, "composer inspection failed");
+    return;
+  }
   if (buffer && buffer.trim().length > 0) {
     skipRetry(sessionId, session, "user is typing");
     return;
   }
 
   try {
-    await hostRef.sendAgentInput(sessionId, config.retryText);
+    await host.sendAgentInput(sessionId, config.retryText);
   } catch (err) {
     const msg = String(err);
     if (msg.includes("not found") || msg.includes("No such session")) {
@@ -499,8 +509,16 @@ export default {
     host.registerStructuredEventHandler("shell-state", (payload, sessionId) => {
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       session.shellState = payload?.state ?? null;
       if (session.shellState === "busy") session.lastBusyAt = Date.now();
+    });
+
+    host.registerStructuredEventHandler("awaiting", (payload, sessionId) => {
+      const session = sessions.get(sessionId);
+      if (!session) return;
+      session.revision++;
+      session.backendAwaiting = !!payload?.awaiting;
     });
 
     // ── Real user input — the human took over ───────────────────────
@@ -511,6 +529,7 @@ export default {
       if (content === config.retryText.trim()) return;
       const session = sessions.get(sessionId);
       if (!session) return;
+      session.revision++;
       cancelRetry(sessionId, session, "user input");
       unblock(sessionId, session, "user input");
       session.lastDetectAt = 0;
