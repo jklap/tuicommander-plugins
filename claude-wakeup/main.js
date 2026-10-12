@@ -284,18 +284,21 @@ function checkWakeups() {
         return host.sendAgentInput(sessionId, WAKE_MESSAGE);
       })
       .catch((err) => {
-        if (hostRef !== host || sessions.get(sessionId) !== session || session.revision !== revision) return;
-        const msg = String(err);
-        if (msg.includes("not found") || msg.includes("No such session")) {
-          sessions.delete(sessionId);
-          return;
+        if (hostRef !== host || sessions.get(sessionId) !== session) return;
+        if (!session.pendingWake || session.pendingWakeAt !== now) return;
+        if (session.revision === revision) {
+          const msg = String(err);
+          if (msg.includes("not found") || msg.includes("No such session")) {
+            sessions.delete(sessionId);
+            return;
+          }
+          host.log("error", `Wake send failed: ${err}`);
         }
-        hostRef.log("error", `Wake send failed: ${err}`);
         session.pendingWake = false;
         session.pendingWakeAt = 0;
         session.wakeBusySeen = false;
-        session.wakeCount--;
-        session.totalWakesEver--;
+        session.wakeCount = Math.max(0, session.wakeCount - 1);
+        session.totalWakesEver = Math.max(0, session.totalWakesEver - 1);
       });
   }
 }
