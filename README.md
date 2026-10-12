@@ -64,3 +64,9 @@ decision. A failed retry composer read does not submit input.
 CSV, DOCX and XLSX preview panels use the full file path for identity. Equal file
 names in different repositories open separate panels; reopening the same file
 reuses its panel.
+
+Catalogue entries must match the shipped manifest for version, app minimum,
+capabilities, agent targeting and CLI binaries. Dashboard plugins require at least
+v1.0.3 (`registerDashboard`, core commit `9a62e145b`). MDKB and RTK dashboard
+lifetime guards require v1.7.6 (panel `onClose`, core commit `26b9e6b99`). SQLite
+keeps its documented ES2022 panel-bundle target.

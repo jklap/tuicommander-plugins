@@ -2,7 +2,7 @@
   "id": "rtk-dashboard",
   "name": "RTK Token Savings Dashboard",
   "version": "1.0.0",
-  "minAppVersion": "0.3.0",
+  "minAppVersion": "1.7.6",
   "main": "main.js",
   "description": "Visualizes RTK token savings, command history, and missed optimization opportunities.",
   "author": "TUICommander",
