@@ -44,7 +44,9 @@ shell yet: a registered provider serves the command-palette URL paste and the si
   review requests (needs the account login), to-do list. Filters: type, state,
   labels, assignee, author, updated/created after. Sort by updated or created,
   either direction. Search text, or a reference/URL that opens the item directly.
-  Offset pagination from `x-next-page`.
+  Offset pagination from `x-next-page`; the page `total` is `x-total` (omitted for
+  the to-do list). The roadmap plots `start` (milestone start) to `target` (issue due
+  date, else milestone due date); both are display-only, not filters.
 - **Detail:** description, discussions (system notes dropped; diff notes become
   review threads with resolved state), inline edit of title, description, labels,
   assignees and due date, close/reopen, comment, start work.

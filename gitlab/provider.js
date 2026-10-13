@@ -4,7 +4,7 @@ import { toItem as mapItem, discussionEntries } from './model.js';
 import { mergeActions, mergeBody } from './merge.js';
 import { latestPipeline, jobsMarkdown, pipelineActions, retryPath, cleanTrace } from './pipelines.js';
 import { boardPort } from './board.js';
-import { listFields, presets, issueParams, search } from './query.js';
+import { listFields, roadmapFields, presets, issueParams, search } from './query.js';
 
 const transition = (id, name) => ({ id, name, kind: 'transition', enabled: true, disabledReason: null });
 const schema = (id, name, kind, options = [], required = false) => ({ id, name, kind, required, editable: true, sortable: false, groupable: false, filterable: false, options });
@@ -148,7 +148,7 @@ export function createGitLabProvider(options) {
       }
     }
     const page = await search(request, query, { project, login: account.login }, signal);
-    return { items: page.rows.map(({ raw, mr }) => toItem(raw, mr)), nextCursor: page.nextCursor };
+    return { items: page.rows.map(({ raw, mr }) => toItem(raw, mr)), nextCursor: page.nextCursor, ...(page.total === null ? {} : { total: page.total }) };
   }
   async function grouped(query, signal) {
     const page = await list({ ...query, groupBy: null }, signal);
@@ -169,7 +169,7 @@ export function createGitLabProvider(options) {
   }
   return {
     providerId: 'gitlab', accountId: account.id, name: `GitLab · ${account.label ?? base}`,
-    fields: listFields, savedFilters: presets(account.login), boards: options.boards ?? [],
+    fields: [...roadmapFields, ...listFields], savedFilters: presets(account.login), boards: options.boards ?? [],
     list, grouped, detail, comments, act, createFields, board: boards.board,
     /** Plain-text log of one job of a merge request pipeline; ANSI and folding markers removed. */
     async jobTrace(ref, jobId, signal) {

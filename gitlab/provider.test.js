@@ -272,3 +272,28 @@ test('recorded_detail_fields_retain_title_labels_and_assignees', async () => {
   assert.deepEqual(detail.item.fields.assignees, { kind: 'user', value: fixture.issue.assignees.map((u) => ({ id: String(u.id), name: u.name, avatarUrl: u.avatar_url ?? null })) });
 
 });
+
+// Catches: the roadmap plots Updated/Created (the first date fields) instead of planning dates.
+test('roadmap_dates_lead_the_schema_and_use_due_date_then_milestone', async () => {
+  const withStart = { ...fixture.issue, milestone: { ...fixture.issue.milestone, start_date: '2026-11-01' } };
+  const noDue = { ...fixture.issue, due_date: null, milestone: { ...fixture.issue.milestone, start_date: null } };
+  const loose = { ...fixture.issue, due_date: null, milestone: null };
+  const provider = createGitLabProvider({ account, project: 'demo/widgets', fetch: gitlab(async (req) => (
+    new URL(req.url).pathname === `${P}/issues` ? ok([withStart, noDue, loose]) : null)) });
+  assert.deepEqual(provider.fields.filter((f) => f.kind === 'date').slice(0, 2).map((f) => f.id), ['start', 'target']);
+  const { items } = await provider.list(query);
+  const dates = items.map((i) => [i.fields.start?.value ?? null, i.fields.target?.value ?? null]);
+  assert.deepEqual(dates, [['2026-11-01', '2026-11-15'], [null, '2026-12-31'], [null, null]]);
+});
+
+// Catches: a list that drops GitLab's x-total, or invents one for a todo-derived list.
+test('list_reports_the_x_total_header_when_gitlab_sends_it', async () => {
+  const answer = (headers) => async (req) => (new URL(req.url).pathname === `${P}/issues` ? ok([fixture.issue], headers) : null);
+  const counted = createGitLabProvider({ account, project: 'demo/widgets', fetch: gitlab(answer({ 'X-Total': '137' })) });
+  assert.equal((await counted.list(query)).total, 137);
+  const silent = createGitLabProvider({ account, project: 'demo/widgets', fetch: gitlab(answer({})) });
+  assert.equal((await silent.list(query)).total ?? null, null);
+  const garbled = createGitLabProvider({ account, project: 'demo/widgets', fetch: gitlab(answer({ 'X-Total': 'many' })) });
+  assert.equal((await garbled.list(query)).total ?? null, null);
+
+});

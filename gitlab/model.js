@@ -38,6 +38,9 @@ export function toItem(raw, account, mr) {
     created: raw.created_at ? { kind: 'date', value: raw.created_at } : null,
     milestone: raw.milestone ? { kind: 'text', value: raw.milestone.title } : null,
     due: raw.due_date ? { kind: 'date', value: raw.due_date } : null,
+    start: raw.milestone?.start_date ? { kind: 'date', value: raw.milestone.start_date } : null,
+    // The issue's own due date wins; a milestone due date is the fallback for planning.
+    target: raw.due_date || raw.milestone?.due_date ? { kind: 'date', value: raw.due_date ?? raw.milestone.due_date } : null,
   };
   if (mr) {
     fields.source_branch = { kind: 'text', value: raw.source_branch };

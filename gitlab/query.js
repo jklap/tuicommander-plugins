@@ -15,6 +15,15 @@ export const listFields = [
   { id: 'created', name: 'Created', kind: 'date', required: false, editable: false, options: [] },
 ].map((field) => ({ ...field, sortable: field.id in SORTS, groupable: ['state', 'type', 'labels', 'assignee', 'author'].includes(field.id), filterable: true }));
 
+/**
+ * Planning dates for the roadmap. The core roadmap plots the first two date fields of the
+ * schema, so these lead it. Display only: GitLab cannot filter or sort by them.
+ */
+export const roadmapFields = [
+  { id: 'start', name: 'Milestone start', kind: 'date', required: false, editable: false, options: [] },
+  { id: 'target', name: 'Due date', kind: 'date', required: false, editable: false, options: [] },
+];
+
 const emptyQuery = { filters: [], savedFilterId: null, search: '', sort: null, groupBy: null, cursor: null, limit: 50 };
 const preset = (id, name, filters) => ({ id, name, query: { ...emptyQuery, savedFilterId: id, filters } });
 const enumFilter = (fieldId, value) => ({ fieldId, values: [{ kind: 'enum', value }] });
@@ -115,5 +124,7 @@ export async function search(request, query, options, signal) {
     ? [...new Map(json.filter((t) => (t.target_type === 'Issue' || t.target_type === 'MergeRequest') && t.target)
       .map((t) => [`${t.target_type}:${t.target.id}`, { raw: t.target, mr: t.target_type === 'MergeRequest' }])).values()]
     : json.map((raw) => ({ raw, mr: spec.mr }));
-  return { rows, nextCursor: nextCursor(headers) };
+  // A todo list is rebuilt from targets, so its X-Total counts todos, not rows.
+  const total = spec.todos ? NaN : Number(headers['x-total']);
+  return { rows, nextCursor: nextCursor(headers), total: Number.isSafeInteger(total) && total >= 0 ? total : null };
 }
