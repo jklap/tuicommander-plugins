@@ -2,7 +2,9 @@
 import { formatId } from './refs.js';
 import { mergeBlocker } from './merge.js';
 
-export const user = (u) => ({ id: String(u.id), name: u.name || u.username, avatarUrl: u.avatar_url ?? null });
+// GitLab sends `bot` only on the full user entity; note authors (basic entity) omit it, so they read false.
+// DEFERRED (2026-10-13) — record a GitLab MR note by a review bot before inferring bot from the username.
+export const user = (u) => ({ id: String(u.id), name: u.name || u.username, avatarUrl: u.avatar_url ?? null, bot: u.bot === true });
 const label = (l) => (typeof l === 'string' ? { id: l, name: l } : { id: l.name, name: l.name });
 
 /** `references.full` is `group/project#12`; older payloads only carry the web URL path. */
@@ -84,8 +86,11 @@ export function discussionEntries(discussion) {
       value: {
         id: String(discussion.id),
         resolved: notes.every((note) => !note.resolvable || note.resolved),
+        // DEFERRED (2026-10-13) — the discussions API has no outdated flag; telling one needs the MR diff.
+        outdated: false,
         path: position.new_path ?? position.old_path ?? '',
         line: position.new_line ?? position.old_line ?? null,
+        originalLine: position.new_line ?? position.old_line ?? null,
         commitId: position.head_sha ?? '',
         comments: notes.map(comment),
       },

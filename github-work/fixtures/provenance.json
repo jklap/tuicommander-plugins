@@ -90,5 +90,19 @@
     "method": "GET",
     "url": "https://api.github.com/repos/cli/cli/issues/14618/comments?per_page=2",
     "recordedAt": "2026-10-11T03:41:09.727215+00:00"
+  },
+  {
+    "file": "bot-copilot-cp4.json",
+    "method": "GET",
+    "url": "https://api.github.com/repos/microsoft/vscode/pulls/341276 (+ /issues/341276/comments, /pulls/341276/reviews, /pulls/341276/comments)",
+    "recordedAt": "2026-10-13",
+    "note": "gh api -X GET; trimmed to identity, anchoring, timestamps, URL and body. Copilot line comments arrive as login 'Copilot', type Bot, no [bot] suffix."
+  },
+  {
+    "file": "bot-threads-cur-2833.json",
+    "method": "POST (read-only GraphQL query, no mutation)",
+    "url": "https://api.github.com/graphql \u2014 PrimeIntellect-ai/verifiers#2833 reviewThreads",
+    "recordedAt": "2026-10-13",
+    "note": "Selects isResolved, isOutdated, line, originalLine, path and the first comment author {__typename login}; no ids or bodies."
   }
 ]

@@ -28,10 +28,19 @@ export const LIST_FIELDS = [
   field("comments", "Comments", "number", false),
   field("itemType", "Type", "enum", false, [{ id: "issue", name: "Issue" }, { id: "pull", name: "Pull request" }]),
 ];
+
+/** REST `type` and GraphQL `__typename` say Bot; logins often lack `[bot]` (REST `Copilot`, every GraphQL bot). */
+export const isBot = (value) =>
+  value?.bot === true ||
+  value?.type === "Bot" ||
+  value?.__typename === "Bot" ||
+  /\[bot\]$/.test(value?.login ?? "");
+
 export const user = (value) => ({
   id: String(value?.id ?? value?.login ?? "deleted"),
   name: value?.login ?? "Deleted user",
   avatarUrl: value?.avatar_url ?? value?.avatarUrl ?? null,
+  bot: isBot(value),
 });
 export const comment = (value) => ({
   id: String(value.id),

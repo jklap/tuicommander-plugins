@@ -1,0 +1,74 @@
+{
+  "source": "https://github.com/microsoft/vscode/pull/341276",
+  "recorded": "2026-10-13",
+  "via": "gh api -X GET (REST v3)",
+  "pull": {
+    "number": 341276,
+    "state": "closed",
+    "head_sha": "515c506b75b8223b1efcdde6f7574dbc20f9f52b",
+    "user": "alexr00"
+  },
+  "issue_comments": [
+    {
+      "id": 6145057609,
+      "user": {
+        "login": "github-actions[bot]",
+        "type": "Bot"
+      },
+      "created_at": "2026-10-13T12:00:34Z",
+      "updated_at": "2026-10-13T12:00:34Z",
+      "html_url": "https://github.com/microsoft/vscode/pull/341276#issuecomment-6145057609",
+      "body": "<!-- screenshot-diff-report -->\n## Screenshot Changes\n\n**Base:** `0ea598a4` **Current:** `17734993`\n\n### Changed (1)\n\n<details open><summary><code>sessions/chatCompositeBar/OverflowingTabs/Light</code></summary>\n\n| Before | After |\n|--------|-------|\n| ![before](https://hediet-screenshots.azurewebsites.net/images/5dc292e475b1b93e9f7f226c783406e1f77deebd6819dbcfc6cfba67ffe119f9) | ![after](https://hediet-screenshots.azurewebsites.net/images/c352165a7011143b27d7d9a898d816c1b3d88995ee1ad862ae2820c06e6d0115) |\n\n</details>"
+    }
+  ],
+  "reviews": [
+    {
+      "id": 5501433608,
+      "user": {
+        "login": "copilot-pull-request-reviewer[bot]",
+        "type": "Bot"
+      },
+      "state": "COMMENTED",
+      "commit_id": "7708023d12e076953da26165b58da64bd2f461b3",
+      "submitted_at": "2026-10-13T09:23:51Z",
+      "html_url": "https://github.com/microsoft/vscode/pull/341276#pullrequestreview-5501433608",
+      "body": "<!-- ccr-overview-v2 -->\n\n### 🟢 Approval recommended\n\nThe intended test is disabled correctly; only a nonblocking simplification remains.\n\n<details open>\n<summary><strong>1 open finding</strong></summary>\n\n- <picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://github.githubassets.com/static/images/icons/copilot-code-review/low-v2-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://github.githubassets.com/static/images/icons/copilot-code-review/low-v2-light.svg\"><img src=\"https://github.githubassets.com/static/images/icons/copilot-code-review/low-v2-light.png\" alt=\"Low severity\" width=\"62\" height=\"18\" align=\"texttop\"></picture> [Remove dead platform condition around test.skip](https://github.com/microsoft/vscode/pull/341276#discussion_r4256900488) · New\n</details>\n\n<details>\n<summary><strong>What changed in this PR</strong></summary>\n\nDisables the flaky Windows-only disk filesystem rename test linked to #341275.\n\n**Changes:**\n- Skips the affected rename test on all platforms.\n\n| File | Description |\r\n| ---- | ----------- |\r\n| `src/​vs/​platform/​files/​test/​node/​diskFileSystemProvider.test.ts` | Disables the flaky rename test. |\n</details>\n\n🧠 **Review effort:** Balanced\n\n---\n\n💡 Configure MCP servers for context-aware, tailored reviews. <a href=\"https://docs.github.com/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review?tool=webui#mcp-servers-and-agent-skills\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more in the docs.</a>"
+    },
+    {
+      "id": 5503325718,
+      "user": {
+        "login": "ulugbekna",
+        "type": "User"
+      },
+      "state": "APPROVED",
+      "commit_id": "515c506b75b8223b1efcdde6f7574dbc20f9f52b",
+      "submitted_at": "2026-10-13T12:14:17Z",
+      "html_url": "https://github.com/microsoft/vscode/pull/341276#pullrequestreview-5503325718",
+      "body": ""
+    }
+  ],
+  "review_comments": [
+    {
+      "id": 4256900488,
+      "pull_request_review_id": 5501433608,
+      "in_reply_to_id": null,
+      "user": {
+        "login": "Copilot",
+        "type": "Bot"
+      },
+      "path": "src/vs/platform/files/test/node/diskFileSystemProvider.test.ts",
+      "line": 75,
+      "start_line": null,
+      "original_line": 75,
+      "original_start_line": null,
+      "side": "RIGHT",
+      "position": 5,
+      "commit_id": "515c506b75b8223b1efcdde6f7574dbc20f9f52b",
+      "original_commit_id": "7708023d12e076953da26165b58da64bd2f461b3",
+      "created_at": "2026-10-13T09:23:51Z",
+      "updated_at": "2026-10-13T09:23:51Z",
+      "html_url": "https://github.com/microsoft/vscode/pull/341276#discussion_r4256900488",
+      "body": "Both branches now select `test.skip`, so the platform condition is dead and misleading. Call `test.skip` directly to make the intentional disablement explicit and avoid suggesting that platform-specific behavior remains."
+    }
+  ]
+}

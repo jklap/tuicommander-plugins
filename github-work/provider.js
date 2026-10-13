@@ -121,8 +121,11 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
             value: {
               id: thread.id,
               resolved: thread.isResolved,
+              outdated: thread.isOutdated === true,
               path: thread.path,
-              line: thread.line ?? thread.originalLine ?? null,
+              // GitHub nulls `line` once the code moved; the stale position stays in originalLine.
+              line: thread.line ?? null,
+              originalLine: thread.originalLine ?? null,
               commitId: page.headSha,
               comments: thread.comments.nodes.map(comment),
             },
