@@ -282,3 +282,31 @@ test('due_date_maps_on_every_page_and_undated_items_stay', async () => {
   assert.equal(second.items[0].fields.duedate.value, recorded.pages[1].issues[0].fields.duedate);
 
 });
+
+// Catches: board query composition treats ORDER BY inside a quoted value as sorting.
+test('board_search_keeps_order_by_inside_literal_text', async () => {
+  for (const [search, expected] of [
+    ['text: Please ORDER BY priority', '(filter = 10010 AND ((text ~ "Please ORDER BY priority"))) ORDER BY updated DESC'],
+    ['jql: summary ~ "Please ORDER BY priority"', '(filter = 10010 AND ((summary ~ "Please ORDER BY priority"))) ORDER BY updated DESC'],
+  ]) {
+    let sent;
+    const provider = createJiraProvider({ account, fetch: fixtureFetch((req) => {
+      if (req.url.includes('/search')) sent = req.body.jql;
+    }) });
+    await provider.board('42', { ...query, search });
+    assert.equal(sent, expected, search);
+  }
+});
+
+// Catches: an exclamation mark in ordinary prose disables the legacy text fallback.
+test('plain_text_with_exclamation_keeps_text_search_fallback', async () => {
+  const requests = [];
+  const provider = createJiraProvider({ account, fetch: async (req) => {
+    requests.push(req);
+    return requests.length === 1 ? { status: 400 } : ok({ issues: [fixture.issue], isLast: true });
+  } });
+  const page = await provider.list({ ...query, search: 'Fix crash!' });
+  assert.equal(requests.at(-1).body.jql, '(text ~ "Fix crash!") ORDER BY updated DESC');
+  assert.equal(page.items[0].key, 'DEMO-7');
+
+});
