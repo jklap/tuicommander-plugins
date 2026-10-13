@@ -302,7 +302,9 @@ test('list_reports_the_x_total_header_when_gitlab_sends_it', async () => {
 // filter and sort that GitLab rejects ("Unsupported GitLab filter: target") the moment the user uses it.
 test('every_date_field_in_the_schema_works_as_a_list_filter_and_sort', async () => {
   const provider = createGitLabProvider({ account, fetch: gitlab() });
-  for (const field of provider.fields.filter((f) => f.kind === 'date')) {
+  const dates = provider.fields.filter((f) => f.kind === 'date' && f.queryable !== false);
+  assert.ok(dates.length > 0, 'the provider still exposes queryable dates');
+  for (const field of dates) {
     const filters = [{ fieldId: field.id, values: [{ kind: 'date', value: '2026-01-01' }] }];
     await provider.list({ ...query, filters }); // rejects when GitLab cannot filter by the advertised field
     await provider.list({ ...query, sort: { fieldId: field.id, descending: false } });

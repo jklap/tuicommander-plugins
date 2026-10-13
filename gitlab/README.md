@@ -66,6 +66,8 @@ shell yet: a registered provider serves the command-palette URL paste and the si
 - **429:** `Retry-After` blocks further calls of this provider; writes are never
   replayed automatically.
 
+Planning dates remain available to the roadmap. They set `queryable: false` so the core list does not offer unsupported date filters or grouping.
+
 ## Fixtures
 
 `fixtures/recorded.json` holds responses **recorded from a GitLab CE container**

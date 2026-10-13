@@ -20,8 +20,8 @@ export const listFields = [
  * schema, so these lead it. Display only: GitLab cannot filter or sort by them.
  */
 export const roadmapFields = [
-  { id: 'start', name: 'Milestone start', kind: 'date', required: false, editable: false, options: [] },
-  { id: 'target', name: 'Due date', kind: 'date', required: false, editable: false, options: [] },
+  { id: 'start', name: 'Milestone start', kind: 'date', required: false, editable: false, queryable: false, options: [] },
+  { id: 'target', name: 'Due date', kind: 'date', required: false, editable: false, queryable: false, options: [] },
 ];
 
 const emptyQuery = { filters: [], savedFilterId: null, search: '', sort: null, groupBy: null, cursor: null, limit: 50 };
