@@ -1,0 +1,112 @@
+{
+  "provenance": {
+    "recorded": true,
+    "source": "Jira Cloud POST /rest/api/3/search/jql, lansweeper site, 2026-10-13, read only",
+    "scrub": "summaries, status names, assignees, links and custom fields removed; keys, ids, dates kept"
+  },
+  "pages": [
+    {
+      "issues": [
+        {
+          "key": "LAN-21575",
+          "fields": {
+            "summary": "Recorded item with a due date A",
+            "issuetype": {
+              "id": "10002"
+            },
+            "status": {
+              "id": "10029",
+              "name": "Status 10029",
+              "statusCategory": {
+                "key": "new"
+              }
+            },
+            "assignee": null,
+            "labels": [],
+            "updated": "2026-10-13T12:33:01.783+0200",
+            "duedate": "2026-10-16",
+            "priority": {
+              "id": "10000"
+            }
+          }
+        },
+        {
+          "key": "LAN-23350",
+          "fields": {
+            "summary": "Recorded item without a due date",
+            "issuetype": {
+              "id": "10002"
+            },
+            "status": {
+              "id": "1",
+              "name": "Status 1",
+              "statusCategory": {
+                "key": "indeterminate"
+              }
+            },
+            "assignee": null,
+            "labels": [],
+            "updated": "2026-10-13T13:03:43.009+0200",
+            "duedate": null,
+            "priority": {
+              "id": "10000"
+            }
+          }
+        },
+        {
+          "key": "LAN-22579",
+          "fields": {
+            "summary": "Recorded item with a due date B",
+            "issuetype": {
+              "id": "10004"
+            },
+            "status": {
+              "id": "10032",
+              "name": "Status 10032",
+              "statusCategory": {
+                "key": "new"
+              }
+            },
+            "assignee": null,
+            "labels": [],
+            "updated": "2026-10-13T12:33:45.410+0200",
+            "duedate": "2026-10-04",
+            "priority": {
+              "id": "3"
+            }
+          }
+        }
+      ],
+      "nextPageToken": "cursor-2",
+      "isLast": false
+    },
+    {
+      "issues": [
+        {
+          "key": "LAN-20770",
+          "fields": {
+            "summary": "Recorded item with a due date C",
+            "issuetype": {
+              "id": "10002"
+            },
+            "status": {
+              "id": "10029",
+              "name": "Status 10029",
+              "statusCategory": {
+                "key": "new"
+              }
+            },
+            "assignee": null,
+            "labels": [],
+            "updated": "2026-10-13T12:33:01.289+0200",
+            "duedate": "2026-10-30",
+            "priority": {
+              "id": "4"
+            }
+          }
+        }
+      ],
+      "isLast": true
+    }
+  ]
+}

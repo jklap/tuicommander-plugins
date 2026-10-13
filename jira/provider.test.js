@@ -261,3 +261,24 @@ test('recorded_detail_retains_summary_assignee_and_option_names', async () => {
   assert.equal(detail.fields.find((f) => f.id === 'priority').options.find((o) => o.id === '10000').name, '[name redacted]');
 
 });
+
+const recorded = JSON.parse(readFileSync(new URL('./fixtures/recorded-duedate.json', import.meta.url), 'utf8'));
+const recordedFetch = () => async (req) => ok(req.body.nextPageToken ? recorded.pages[1] : recorded.pages[0]);
+
+// Catches: the fetched duedate is mapped onto items but never declared, so the host roadmap discards it.
+test('due_date_is_declared_as_a_date_field', () => {
+  const provider = createJiraProvider({ account, fetch: recordedFetch() });
+  const declared = provider.fields.find((f) => f.id === 'duedate');
+  assert.equal(declared?.kind, 'date');
+  assert.equal(declared?.name, 'Due date');
+});
+
+// Catches: the due date is lost on page two or when an undated issue shares a page with dated ones.
+test('due_date_maps_on_every_page_and_undated_items_stay', async () => {
+  const provider = createJiraProvider({ account, fetch: recordedFetch() });
+  const first = await provider.list(query);
+  assert.deepEqual(first.items.map((i) => i.fields.duedate ?? null), [{ kind: 'date', value: '2026-10-16' }, null, { kind: 'date', value: '2026-10-04' }]);
+  const second = await provider.list({ ...query, cursor: first.nextCursor });
+  assert.equal(second.items[0].fields.duedate.value, recorded.pages[1].issues[0].fields.duedate);
+
+});
