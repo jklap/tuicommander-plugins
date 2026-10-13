@@ -37,7 +37,7 @@ for (const kind of ['basic', 'bearer']) test(`user_search_${kind}_uses_provider_
 // Catches: allowed users become enums using an undefined ID instead of Cloud accountId.
 test('allowed_users_keep_user_kind_and_account_ids', () => {
  assert.deepEqual(fieldSchema({fieldId:'reporter',name:'Reporter',schema:{type:'user'},allowedValues:[{accountId:'cloud-user',displayName:'Reviewer'}]}), {
-  id:'reporter',name:'Reporter',kind:'user',required:false,editable:true,options:[{id:'cloud-user',name:'Reviewer'}],
+  sortable:false,groupable:false,filterable:false,id:'reporter',name:'Reporter',kind:'user',required:false,editable:true,options:[{id:'cloud-user',name:'Reviewer'}],
  });
 });
 
