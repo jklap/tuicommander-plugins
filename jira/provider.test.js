@@ -310,3 +310,13 @@ test('plain_text_with_exclamation_keeps_text_search_fallback', async () => {
   assert.equal(page.items[0].key, 'DEMO-7');
 
 });
+
+// Catches: the filter and group controls label Jira fields with raw JQL ids such as "issuetype".
+test('list_fields_have_readable_names', () => {
+  const provider = createJiraProvider({ account, fetch: fixtureFetch() });
+  assert.deepEqual(provider.fields.map((f) => [f.id, f.name]), [
+    ['project', 'Project'], ['status', 'Status'], ['assignee', 'Assignee'],
+    ['labels', 'Labels'], ['issuetype', 'Issue type'], ['priority', 'Priority'],
+  ]);
+
+});
