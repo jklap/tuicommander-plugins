@@ -43,3 +43,23 @@ test("outdated_thread_keeps_null_line_and_original_line", async () => {
   assert.deepEqual([current.value.outdated, current.value.originalLine], [false, 719]);
   assert.equal(current.value.comments[0].author.bot, true);
 });
+
+// Catches: the provider rebuilds the thread and drops the finding the core port parsed.
+test("thread_finding_passes_through_the_port", async () => {
+  const [thread] = fixture("bot-threads-cur-2833").data.repository.pullRequest.reviewThreads.nodes;
+  const finding = { tool: "cursor", title: "Sidecar timeout still scores isolated", severity: "high" };
+  const human = { ...thread, id: "human" };
+  const core = {
+    reviewThreads: async () => ({
+      headSha: "head",
+      threads: [{ ...thread, finding }, human],
+      hasNextPage: false,
+      endCursor: null,
+    }),
+  };
+  const page = await provider([], core).comments(prRef, "threads:first", 20);
+  assert.deepEqual(
+    page.entries.map((e) => e.value.finding),
+    [finding, null],
+  );
+});

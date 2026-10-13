@@ -159,7 +159,7 @@ test('comments_drop_system_notes_and_keep_review_threads', async () => {
   const thread = page.entries.find((e) => e.kind === 'review_thread').value;
   assert.deepEqual([thread.resolved, thread.path, thread.line, thread.comments.length], [false, 'port.txt', 1, 2]);
   // GitLab discussions carry no outdated flag and note authors no bot attribute (recorded fixture).
-  assert.deepEqual([thread.outdated, thread.originalLine, thread.comments[0].author.bot], [false, 1, false]);
+  assert.deepEqual([thread.outdated, thread.originalLine, thread.comments[0].author.bot, thread.finding], [false, 1, false, null]);
 });
 
 // Catches: create sends only title and body, losing labels and assignees.

@@ -128,6 +128,8 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
               originalLine: thread.originalLine ?? null,
               commitId: page.headSha,
               comments: thread.comments.nodes.map(comment),
+              // Parsed by the core port from untrusted bot text; passed through, never interpreted.
+              finding: thread.finding ?? null,
             },
           })),
           nextCursor: page.hasNextPage ? `threads:${encodeURIComponent(page.endCursor)}` : null,

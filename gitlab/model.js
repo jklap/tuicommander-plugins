@@ -93,6 +93,8 @@ export function discussionEntries(discussion) {
         originalLine: position.new_line ?? position.old_line ?? null,
         commitId: position.head_sha ?? '',
         comments: notes.map(comment),
+        // DEFERRED (2026-10-13) — the review-bot parser runs only on the GitHub thread port; GitLab DiffNotes need a host port too.
+        finding: null,
       },
     }];
   }
