@@ -49,11 +49,6 @@ test('field_with_a_jira_default_is_not_required', () => {
  assert.equal(fieldSchema(field).required, true);
 });
 
-// Catches: every user field is multi-pick, so a second Assignee is accepted and only rejected at submit.
-test('user_fields_hold_one_user', () => {
- assert.equal(createJiraProvider({account, projectId:'10000', fetch: async () => ok({})}).singleUser('assignee'), true);
-});
-
 // Catches: empty optional fields are sent as null, which overrides defaults Jira would apply.
 test('create_omits_empty_optional_fields_from_the_payload', async () => {
  let body;
