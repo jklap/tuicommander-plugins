@@ -13,7 +13,6 @@ export function issueToItem(issue, account, host) {
     updatedAt: f.updated ?? '', url: `${host}/browse/${encodeURIComponent(issue.key)}`,
     fields: {
       summary: { kind: 'text', value: f.summary },
-      description: { kind: 'markdown', value: adfToMarkdown(f.description) },
       assignee: { kind: 'user', value: f.assignee ? [user(f.assignee)] : [] },
       labels: { kind: 'labels', value: (f.labels ?? []).map((name) => ({ id: name, name })) },
       ...(f.issuetype ? { issuetype: { kind: 'enum', value: f.issuetype.id } } : {}),

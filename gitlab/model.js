@@ -29,7 +29,6 @@ export function toItem(raw, account, mr) {
   const labels = (raw.labels ?? []).map(label);
   const fields = {
     title: { kind: 'text', value: raw.title },
-    description: { kind: 'markdown', value: raw.description ?? '' },
     labels: { kind: 'labels', value: labels },
     assignees: { kind: 'user', value: assignees },
     project: { kind: 'text', value: project },
