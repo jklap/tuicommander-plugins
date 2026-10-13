@@ -90,7 +90,8 @@ export function discussionEntries(discussion) {
         outdated: false,
         path: position.new_path ?? position.old_path ?? '',
         line: position.new_line ?? position.old_line ?? null,
-        originalLine: position.new_line ?? position.old_line ?? null,
+        // The discussions API keeps no position from before the code moved.
+        originalLine: null,
         commitId: position.head_sha ?? '',
         comments: notes.map(comment),
         // DEFERRED (2026-10-13) — the review-bot parser runs only on the GitHub thread port; GitLab DiffNotes need a host port too.

@@ -1,7 +1,6 @@
 import { adfToMarkdown } from './adf.js';
 
-// Jira Cloud marks app (bot) users with `accountType: "app"`; the recorded fixture is scrubbed of it.
-export const user = (value) => ({ id: value?.accountId ?? value?.name ?? '', name: value?.displayName ?? 'Unknown', avatarUrl: value?.avatarUrls?.['48x48'] ?? null, bot: value?.accountType === 'app' });
+export const user = (value) => ({ id: value?.accountId ?? value?.name ?? '', name: value?.displayName ?? 'Unknown', avatarUrl: value?.avatarUrls?.['48x48'] ?? null, bot: false });
 export function issueToItem(issue, account, host) {
   if (!issue?.key || !issue.fields?.summary || !issue.fields?.status?.id) throw new Error('Invalid Jira issue response');
   const f = issue.fields;
