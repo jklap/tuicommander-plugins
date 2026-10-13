@@ -95,3 +95,5 @@ environment only.
 ## Validation
 
 From the TUIC checkout: `scripts/with-test-tmp.sh pnpm --dir plugins/gitlab test`.
+
+Detail field values project the recorded title, description, labels and assignees alongside the matching header metadata.

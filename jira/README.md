@@ -75,3 +75,5 @@ A live recording must confirm:
 Scrub tokens, email addresses, real user IDs and private issue content before
 replacing the unrecorded fixture. Desktop plugin loading waits for the core
 account fetch and provider registration integration; verify after Boss's restart.
+
+Detail values include Summary, Description, Assignee and Labels. Issue type uses its human name; priority and type field values retain request IDs, resolved through schema option labels by the core detail view.

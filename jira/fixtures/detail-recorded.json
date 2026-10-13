@@ -1,0 +1,388 @@
+{
+  "_provenance": {
+    "source": "Read-only Jira Cloud GET /rest/api/3/issue/LAN-23350?expand=names,schema,editmeta on 2026-10-13; scrubbed by jira-data peer; relevant fields extracted without changing values",
+    "evidence": "tasks-jira/fixtures/detail-raw.json"
+  },
+  "key": "LAN-23350",
+  "fields": {
+    "summary": "[private text redacted]",
+    "description": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "[private text redacted]"
+            },
+            {
+              "type": "text",
+              "text": "[private text redacted]",
+              "marks": [
+                {
+                  "type": "code"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "[private text redacted]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "[private text redacted]",
+              "marks": [
+                {
+                  "type": "strong"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "[private text redacted]"
+            },
+            {
+              "type": "text",
+              "text": "[private text redacted]",
+              "marks": [
+                {
+                  "type": "code"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "[private text redacted]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "[private text redacted]",
+              "marks": [
+                {
+                  "type": "strong"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "[private text redacted]",
+                      "marks": [
+                        {
+                          "type": "code"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "text": "[private text redacted]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "[private text redacted]"
+                    },
+                    {
+                      "type": "text",
+                      "text": "[private text redacted]",
+                      "marks": [
+                        {
+                          "type": "code"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "text": "[private text redacted]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "[private text redacted]",
+              "marks": [
+                {
+                  "type": "strong"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "[private text redacted]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "[private text redacted]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "[private text redacted]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "issuetype": {
+      "self": "[url redacted]",
+      "id": "10002",
+      "description": "[private text redacted]",
+      "iconUrl": "[url redacted]",
+      "name": "Task",
+      "subtask": false,
+      "avatarId": 10318,
+      "hierarchyLevel": 0
+    },
+    "status": {
+      "self": "[url redacted]",
+      "description": "[private text redacted]",
+      "iconUrl": "[url redacted]",
+      "name": "[name redacted]",
+      "id": "1",
+      "statusCategory": {
+        "self": "[url redacted]",
+        "id": 4,
+        "key": "indeterminate",
+        "colorName": "yellow",
+        "name": "In Progress"
+      }
+    },
+    "assignee": {
+      "self": "[url redacted]",
+      "accountId": "[user redacted]",
+      "emailAddress": "[user redacted]",
+      "avatarUrls": {
+        "48x48": "[url redacted]",
+        "24x24": "[url redacted]",
+        "16x16": "[url redacted]",
+        "32x32": "[url redacted]"
+      },
+      "displayName": "[user redacted]",
+      "active": true,
+      "timeZone": "[value redacted]",
+      "accountType": "[value redacted]"
+    },
+    "labels": [],
+    "priority": {
+      "self": "[url redacted]",
+      "iconUrl": "[url redacted]",
+      "name": "[name redacted]",
+      "id": "10000"
+    },
+    "updated": "2026-10-13T13:03:43.009+0200",
+    "duedate": null
+  },
+  "editmeta": {
+    "fields": {
+      "issuetype": {
+        "required": true,
+        "schema": {
+          "type": "issuetype",
+          "system": "issuetype"
+        },
+        "name": "[name redacted]",
+        "key": "issuetype",
+        "operations": [],
+        "allowedValues": [
+          {
+            "self": "[url redacted]",
+            "id": "10002",
+            "description": "[private text redacted]",
+            "iconUrl": "[url redacted]",
+            "name": "Task",
+            "subtask": false,
+            "avatarId": 10318,
+            "hierarchyLevel": 0
+          }
+        ]
+      },
+      "priority": {
+        "required": false,
+        "schema": {
+          "type": "priority",
+          "system": "priority"
+        },
+        "name": "[name redacted]",
+        "key": "priority",
+        "operations": [
+          "set"
+        ],
+        "allowedValues": [
+          {
+            "self": "[url redacted]",
+            "iconUrl": "[url redacted]",
+            "name": "[name redacted]",
+            "id": "1"
+          },
+          {
+            "self": "[url redacted]",
+            "iconUrl": "[url redacted]",
+            "name": "High",
+            "id": "2"
+          },
+          {
+            "self": "[url redacted]",
+            "iconUrl": "[url redacted]",
+            "name": "Medium",
+            "id": "3"
+          },
+          {
+            "self": "[url redacted]",
+            "iconUrl": "[url redacted]",
+            "name": "Low",
+            "id": "4"
+          },
+          {
+            "self": "[url redacted]",
+            "iconUrl": "[url redacted]",
+            "name": "Lowest",
+            "id": "5"
+          },
+          {
+            "self": "[url redacted]",
+            "iconUrl": "[url redacted]",
+            "name": "[name redacted]",
+            "id": "10000"
+          }
+        ]
+      },
+      "labels": {
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": "string",
+          "system": "labels"
+        },
+        "name": "[name redacted]",
+        "key": "labels",
+        "autoCompleteUrl": "[value redacted]",
+        "operations": [
+          "add",
+          "set",
+          "remove"
+        ]
+      },
+      "assignee": {
+        "required": false,
+        "schema": {
+          "type": "user",
+          "system": "assignee"
+        },
+        "name": "[name redacted]",
+        "key": "assignee",
+        "autoCompleteUrl": "[value redacted]",
+        "operations": [
+          "set"
+        ]
+      },
+      "description": {
+        "required": false,
+        "schema": {
+          "type": "string",
+          "system": "description"
+        },
+        "name": "[name redacted]",
+        "key": "description",
+        "operations": [
+          "set"
+        ]
+      },
+      "summary": {
+        "required": true,
+        "schema": {
+          "type": "string",
+          "system": "summary"
+        },
+        "name": "[name redacted]",
+        "key": "summary",
+        "operations": [
+          "set"
+        ]
+      },
+      "duedate": {
+        "required": false,
+        "schema": {
+          "type": "date",
+          "system": "duedate"
+        },
+        "name": "[name redacted]",
+        "key": "duedate",
+        "operations": [
+          "set"
+        ]
+      }
+    }
+  }
+}

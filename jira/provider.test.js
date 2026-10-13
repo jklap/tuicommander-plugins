@@ -244,3 +244,20 @@ test('declared_query_capabilities_never_offer_rejected_options', async () => {
     }
   }
 });
+
+// Catches: recorded summary/assignee disappear and option names become raw IDs.
+test('recorded_detail_retains_summary_assignee_and_option_names', async () => {
+  const recorded = JSON.parse(readFileSync(new URL('./fixtures/detail-recorded.json', import.meta.url), 'utf8'));
+  const provider = createJiraProvider({ account, fetch: async (req) => {
+    if (req.url.includes('/transitions')) return ok({ transitions: [] });
+    if (req.url.includes('/comment')) return ok({ comments: [], total: 0 });
+    return ok(recorded);
+  } });
+  const detail = await provider.detail({ ...ref, id: recorded.key });
+  assert.equal(detail.item.fields.summary?.value, '[private text redacted]');
+  assert.equal(detail.item.fields.assignee?.value[0].name, '[user redacted]');
+  assert.equal(detail.item.itemType, 'Task');
+  assert.deepEqual(detail.item.fields.priority, { kind: 'enum', value: '10000' });
+  assert.equal(detail.fields.find((f) => f.id === 'priority').options.find((o) => o.id === '10000').name, '[name redacted]');
+
+});

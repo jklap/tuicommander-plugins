@@ -261,3 +261,13 @@ test('offered_state_options_do_not_reject_the_default_issue_list', async () => {
     );
   }
 });
+
+// Catches: declared detail fields are omitted while header values remain populated.
+test('recorded_detail_fields_retain_title_labels_and_assignees', async () => {
+  const detail = await createGitLabProvider({ account, fetch: gitlab() }).detail(issueRef);
+  assert.deepEqual(detail.item.fields.title, { kind: 'text', value: fixture.issue.title });
+  assert.deepEqual(detail.item.fields.description, { kind: 'markdown', value: fixture.issue.description });
+  assert.deepEqual(detail.item.fields.labels, { kind: 'labels', value: fixture.issue.labels.map((name) => ({ id: name, name })) });
+  assert.deepEqual(detail.item.fields.assignees, { kind: 'user', value: fixture.issue.assignees.map((u) => ({ id: String(u.id), name: u.name, avatarUrl: u.avatar_url ?? null })) });
+
+});

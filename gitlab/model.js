@@ -25,7 +25,13 @@ function state(raw, mr) {
 export function toItem(raw, account, mr) {
   const project = projectPath(raw);
   const id = formatId(project, mr, raw.iid);
+  const assignees = (raw.assignees ?? (raw.assignee ? [raw.assignee] : [])).map(user);
+  const labels = (raw.labels ?? []).map(label);
   const fields = {
+    title: { kind: 'text', value: raw.title },
+    description: { kind: 'markdown', value: raw.description ?? '' },
+    labels: { kind: 'labels', value: labels },
+    assignees: { kind: 'user', value: assignees },
     project: { kind: 'text', value: project },
     author: raw.author ? { kind: 'user', value: [user(raw.author)] } : null,
     created: raw.created_at ? { kind: 'date', value: raw.created_at } : null,
@@ -48,8 +54,8 @@ export function toItem(raw, account, mr) {
     title: raw.title,
     itemType: mr ? 'merge_request' : 'issue',
     state: state(raw, mr),
-    assignees: (raw.assignees ?? (raw.assignee ? [raw.assignee] : [])).map(user),
-    labels: (raw.labels ?? []).map(label),
+    assignees,
+    labels,
     updatedAt: raw.updated_at,
     url: raw.web_url,
     fields,
