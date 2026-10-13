@@ -1,4 +1,4 @@
-import { buildJql, canFallbackToText, presets, search } from './query.js';
+import { buildJql, canFallbackToText, presets, search, splitOrder } from './query.js';
 
 /** Four workers bound transition lookups for a page; no per-card cache can go stale. */
 async function mapCards(items, project) {
@@ -37,9 +37,7 @@ export function boardPort(client, toItem) {
     const hasPreset = presets.some((p) => p.id === query.savedFilterId);
     const searchPage = (textFallback) => {
       const jql = buildJql({ ...query, search: query.search || (hasPreset ? '' : 'id IS NOT EMPTY') }, textFallback);
-      const orderAt = jql.search(/\s+ORDER\s+BY\s+/i);
-      const predicate = orderAt < 0 ? jql : jql.slice(0, orderAt);
-      const order = orderAt < 0 ? '' : jql.slice(orderAt);
+      const { predicate, order } = splitOrder(jql);
       return search(client, { ...query, filters: [], search: `filter = ${Number(config.filter.id)} AND (${predicate})${order}` }, false);
     };
     // Plain text is not JQL: Jira answers 400, so retry as text ~ like the list does.

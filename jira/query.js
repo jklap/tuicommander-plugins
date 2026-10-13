@@ -18,7 +18,13 @@ const unquoted = (value) => value.replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g
 // Lists and boards share the same rule: an intended predicate must never change meaning on 400.
 export function canFallbackToText(query) {
   const { mode, value } = searchInput(query);
-  return mode === 'auto' && !!value && !/[=!~<>]|\b(?:IN\s*\(|IS\s+(?:NOT\s+)?(?:EMPTY|NULL)|WAS\b|CHANGED\b|ORDER\s+BY)/i.test(unquoted(value));
+  return mode === 'auto' && !!value && !/[=~<>]|\b(?:IN\s*\(|IS\s+(?:NOT\s+)?(?:EMPTY|NULL)|WAS\b|CHANGED\b|ORDER\s+BY)/i.test(unquoted(value));
+}
+
+// Splits a trailing ORDER BY off a JQL string, ignoring quoted text.
+export function splitOrder(jql) {
+  const at = unquoted(jql).search(/\s+ORDER\s+BY\s+/i);
+  return at < 0 ? { predicate: jql, order: '' } : { predicate: jql.slice(0, at), order: jql.slice(at) };
 }
 
 export function buildJql(query, textFallback = false) {
@@ -32,9 +38,8 @@ export function buildJql(query, textFallback = false) {
     return values.length ? `${fieldId} IN (${values.flatMap((v) => v.kind === 'user' || v.kind === 'labels' ? v.value.map((o) => quote(o.id)) : [quote(v.value)]).join(', ')})` : '';
   }).filter(Boolean);
   // Preserve a user-provided ORDER BY while placing filters before it.
-  const orderAt = unquoted(expression).search(/\s+ORDER\s+BY\s+/i);
-  let order = orderAt < 0 ? '' : expression.slice(orderAt);
-  if (orderAt >= 0) expression = expression.slice(0, orderAt);
+  let { predicate: expr, order } = splitOrder(expression);
+  expression = expr;
   if (query.sort) {
     if (!SORT.has(query.sort.fieldId)) throw new Error('Unsupported Jira sort field');
     order = ` ORDER BY ${query.sort.fieldId} ${query.sort.descending ? 'DESC' : 'ASC'}`;
