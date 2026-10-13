@@ -15,12 +15,12 @@ export default {
 		host.registerFilePreview({
 			extensions: ["xlsx", "xlsm", "xltx", "xltm", "xlsb", "xls", "ods", "fods"],
 			async onOpen(ctx) {
+				const abs = absolutePath(ctx.fsRoot, ctx.filePath);
 				try {
 					if (!xlsxApi?.read || !xlsxApi?.utils?.sheet_to_json) {
 						throw new Error("SheetJS did not initialize");
 					}
 
-					const abs = absolutePath(ctx.fsRoot, ctx.filePath);
 					const base64 = await host.readFileBase64(abs);
 					const workbook = xlsxApi.read(base64ToUint8Array(base64), {
 						type: "array",
@@ -29,7 +29,7 @@ export default {
 					const fileName = basename(ctx.filePath);
 
 					host.openPanel({
-						id: panelId(ctx.filePath),
+						id: panelId(abs),
 						title: shortTitle(fileName),
 						html: buildPanelHtml(fileName, readSheets(workbook)),
 						onMessage(data) {
@@ -40,7 +40,7 @@ export default {
 					});
 				} catch (error) {
 					host.openPanel({
-						id: panelId(ctx.filePath),
+						id: panelId(abs),
 						title: shortTitle(basename(ctx.filePath)),
 						html: buildErrorHtml(ctx.filePath, error),
 					});

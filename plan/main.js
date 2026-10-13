@@ -27,27 +27,33 @@ function stopWatch() {
 }
 
 async function listPlans(repoPath, openNew) {
-  if (!hostRef) return;
+  const host = hostRef;
+  const generation = watchGeneration;
+  if (!host) return;
   const plansDir = joinPath(repoPath, "plans");
   try {
-    const names = await hostRef.listDirectory(plansDir, "*.md");
+    const names = await host.listDirectory(plansDir, "*.md");
+    if (hostRef !== host || generation !== watchGeneration) return;
     for (const name of names) {
       const absolutePath = joinPath(plansDir, name);
       const isNew = !knownPlans.has(absolutePath);
       knownPlans.add(absolutePath);
-      if (openNew && isNew) hostRef.openMarkdownFileBackground(absolutePath);
+      if (openNew && isNew) host.openMarkdownFileBackground(absolutePath);
     }
   } catch (error) {
-    if (!isMissing(error)) hostRef.log("warn", "Failed to scan plans directory", String(error));
+    if (hostRef === host && generation === watchGeneration && !isMissing(error)) host.log("warn", "Failed to scan plans directory", String(error));
   }
 }
 
 async function openActivePlan(repoPath) {
-  if (!hostRef) return;
+  const host = hostRef;
+  const generation = watchGeneration;
+  if (!host) return;
   const markers = [joinPath(repoPath, ".claude/active-plan.json"), joinPath(repoPath, "src-tauri/.claude/active-plan.json")];
   for (const marker of markers) {
     try {
-      const parsed = JSON.parse(await hostRef.readFile(marker));
+      const parsed = JSON.parse(await host.readFile(marker));
+      if (hostRef !== host || generation !== watchGeneration) return;
       if (!parsed || typeof parsed.path !== "string") continue;
       const absolutePath = isAbsolutePath(parsed.path) ? parsed.path : joinPath(repoPath, parsed.path);
       // Open once per path, like the other two entry points. This runs on every
@@ -55,22 +61,25 @@ async function openActivePlan(repoPath) {
       // closed every time they came back to the repo.
       if (!knownPlans.has(absolutePath)) {
         knownPlans.add(absolutePath);
-        hostRef.openMarkdownFileBackground(absolutePath);
+        host.openMarkdownFileBackground(absolutePath);
       }
       return;
     } catch (error) {
+      if (hostRef !== host || generation !== watchGeneration) return;
       if (!isMissing(error) && !(error instanceof SyntaxError)) {
-        hostRef.log("warn", `Failed to read active-plan marker ${marker}`, String(error));
+        host.log("warn", `Failed to read active-plan marker ${marker}`, String(error));
       }
     }
   }
 }
 
 async function watchPlans(repoPath) {
-  const generation = ++watchGeneration;
+  const generation = watchGeneration;
+  const host = hostRef;
+  if (!host) return;
   const plansDir = joinPath(repoPath, "plans");
   try {
-    const disposable = await hostRef.watchPath(plansDir, () => void listPlans(repoPath, true));
+    const disposable = await host.watchPath(plansDir, () => { if (hostRef === host && generation === watchGeneration) void listPlans(repoPath, true); });
     if (!hostRef || generation !== watchGeneration) disposable.dispose();
     else watchDisposable = disposable;
   } catch (error) {

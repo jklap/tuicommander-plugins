@@ -39,6 +39,8 @@ const ACTIONS = {
 
 let hostRef = null;
 let panelRef = null;
+let panelGeneration = 0;
+let tickerGeneration = 0;
 let lastData = null; // last fetched { stats, memories, config, error }
 
 // ---------------------------------------------------------------------------
@@ -514,6 +516,7 @@ function updateTicker(host, stats) {
 async function runAction(host, repo, cmdId) {
   const action = ACTIONS[cmdId];
   if (!action) return;
+  const request = ++panelGeneration;
 
   // Show the running state immediately (buttons disabled + banner).
   renderPanel(lastData, repo.path, { running: cmdId });
@@ -529,9 +532,12 @@ async function runAction(host, repo, cmdId) {
     host.log("error", `mdkb ${action.argv.join(" ")} failed`, { error: String(err) });
   }
 
-  lastData = await fetchMdkbData(host, repo.path);
-  renderPanel(lastData, repo.path, { lastResult });
-  updateTicker(host, lastData.stats);
+  if (hostRef !== host || request !== panelGeneration || host.getActiveRepo()?.path !== repo.path) return;
+  const data = await fetchMdkbData(host, repo.path);
+  if (hostRef !== host || request !== panelGeneration || host.getActiveRepo()?.path !== repo.path) return;
+  lastData = data;
+  renderPanel(data, repo.path, { lastResult });
+  void refreshTicker(host);
 }
 
 /** Short human summary of an action's stdout. `update`/`compact` have no clean
@@ -568,12 +574,17 @@ function renderPanel(data, repoPath, opts = {}) {
 
 async function handlePanelMessage(msg) {
   if (!msg || msg.action !== "run") return;
-  const repo = hostRef.getActiveRepo();
+  const host = hostRef;
+  if (!host) return;
+  const repo = host.getActiveRepo();
   if (!repo) return;
-  await runAction(hostRef, repo, msg.cmd);
+  await runAction(host, repo, msg.cmd);
 }
 
 async function openDashboard(host) {
+  if (hostRef !== host) return;
+  const request = ++panelGeneration;
+  const onClose = () => { panelGeneration++; panelRef = null; };
   const repo = host.getActiveRepo();
   if (!repo) {
     const html = buildPage("(none)", null, `
@@ -586,7 +597,7 @@ async function openDashboard(host) {
     `);
     // openPanel reuses and activates the panel with this id when one is open,
     // so the user always ends up looking at it — no update/re-open dance.
-    panelRef = host.openPanel({ id: "mdkb-dash", title: "mdkb", html, onMessage: handlePanelMessage });
+    panelRef = host.openPanel({ id: "mdkb-dash", title: "mdkb", html, onMessage: handlePanelMessage, onClose });
     return;
   }
 
@@ -594,14 +605,17 @@ async function openDashboard(host) {
   const loading = buildPage(repo.displayName, null, `
     <div class="dash-section"><div class="empty-state">Loading mdkb data for ${esc(repo.displayName)}…</div></div>
   `);
-  panelRef = host.openPanel({ id: "mdkb-dash", title: "mdkb", html: loading, onMessage: handlePanelMessage });
+  panelRef = host.openPanel({ id: "mdkb-dash", title: "mdkb", html: loading, onMessage: handlePanelMessage, onClose });
 
-  lastData = await fetchMdkbData(host, repo.path);
-  renderPanel(lastData, repo.path);
-  updateTicker(host, lastData.stats);
+  const data = await fetchMdkbData(host, repo.path);
+  if (hostRef !== host || request !== panelGeneration || host.getActiveRepo()?.path !== repo.path) return;
+  lastData = data;
+  renderPanel(data, repo.path);
+  void refreshTicker(host);
 }
 
 async function refreshTicker(host) {
+  const request = ++tickerGeneration;
   const repo = host.getActiveRepo();
   if (!repo) {
     host.clearTicker("mdkb-status");
@@ -609,8 +623,10 @@ async function refreshTicker(host) {
   }
   try {
     const out = await host.execCli("mdkb", ["--format", "json", "stats"], repo.path);
+    if (hostRef !== host || request !== tickerGeneration || host.getActiveRepo()?.path !== repo.path) return;
     updateTicker(host, JSON.parse(out));
   } catch {
+    if (hostRef !== host || request !== tickerGeneration || host.getActiveRepo()?.path !== repo.path) return;
     host.clearTicker("mdkb-status");
   }
 }
@@ -637,10 +653,17 @@ export default {
       open: () => openDashboard(host),
     });
 
-    refreshTicker(host);
+    host.onStateChange((event) => {
+      if (event.type !== "repo-changed") return;
+      panelGeneration++;
+      void refreshTicker(host);
+    });
+    void refreshTicker(host);
   },
 
   onunload() {
+    panelGeneration++;
+    tickerGeneration++;
     hostRef?.clearTicker("mdkb-status");
     hostRef = null;
     panelRef = null;

@@ -14,23 +14,24 @@ const ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="
 
 let hostRef = null;
 let panelHandle = null;
+let generation = 0;
 
 // ── Data fetching ─────────────────────────────────────────────────────────
 
-async function fetchRtk(args) {
+async function fetchRtk(host, repoPath, args) {
   try {
-    return await hostRef.execCli("rtk", args);
+    return await host.execCli("rtk", args, repoPath);
   } catch (err) {
-    hostRef.log("warn", `rtk ${args.join(" ")} failed`, String(err));
+    host.log("warn", `rtk ${args.join(" ")} failed`, String(err));
     return null;
   }
 }
 
-async function fetchAllData() {
+async function fetchAllData(host, repoPath) {
   const [gainRaw, dailyRaw, discoverRaw] = await Promise.all([
-    fetchRtk(["gain", "--format", "json"]),
-    fetchRtk(["gain", "--daily", "--format", "json"]),
-    fetchRtk(["discover", "--format", "json", "--limit", "15"]),
+    fetchRtk(host, repoPath, ["gain", "--format", "json"]),
+    fetchRtk(host, repoPath, ["gain", "--daily", "--format", "json"]),
+    fetchRtk(host, repoPath, ["discover", "--format", "json", "--limit", "15"]),
   ]);
 
   return {
@@ -268,6 +269,8 @@ export default {
 
   async onload(host) {
     hostRef = host;
+    generation++;
+    host.onStateChange((event) => { if (event.type === "repo-changed") generation++; });
 
     host.registerContextMenuAction({
       id: "open-rtk-dashboard",
@@ -285,23 +288,36 @@ export default {
   },
 
   onunload() {
+    generation++;
     panelHandle = null;
     hostRef = null;
   },
 };
 
 async function openDashboard() {
-  const data = await fetchAllData();
-  panelHandle = hostRef.openPanel({
+  const host = hostRef;
+  if (!host) return;
+  const request = ++generation;
+  const repoPath = host.getActiveRepoPath();
+  const data = await fetchAllData(host, repoPath);
+  if (hostRef !== host || request !== generation || host.getActiveRepoPath() !== repoPath) return;
+  panelHandle = host.openPanel({
     id: "rtk-dashboard",
     title: "RTK Token Savings",
     html: buildPanelHtml(data),
     onMessage: handlePanelMessage,
+    onClose() { generation++; panelHandle = null; },
   });
 }
 
 async function handlePanelMessage(msg) {
   if (!msg || msg.type !== "rtk-refresh") return;
-  const data = await fetchAllData();
-  panelHandle.update(buildPanelHtml(data));
+  const host = hostRef;
+  const panel = panelHandle;
+  if (!host || !panel) return;
+  const request = ++generation;
+  const repoPath = host.getActiveRepoPath();
+  const data = await fetchAllData(host, repoPath);
+  if (hostRef !== host || panelHandle !== panel || request !== generation || host.getActiveRepoPath() !== repoPath) return;
+  if (!panel.update(buildPanelHtml(data))) panelHandle = null;
 }

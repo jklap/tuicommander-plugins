@@ -54,3 +54,21 @@ Open a PR adding your entry to `registry.json`. Requirements:
 See the [plugin docs](https://github.com/sstraus/tuicommander/blob/main/docs/plugins.md) for the full API reference and examples.
 
 Join [TUICommander & Co on Discord](https://discord.gg/4DQ7Ah6hSh) and use **#plugins** in the **TUICommander** category to showcase and discuss plugins, ask for plugin development help, or request plugins. The server is checked once a day. Report reproducible bugs in [GitHub issues](https://github.com/sstraus/tuicommander-plugins/issues).
+
+Repository-aware scanners discard completions from a previous repository or plugin
+lifetime. The MDKB ticker refreshes when the active repository changes; dashboard
+requests cannot recreate a panel after it closes or the plugin unloads.
+
+Retry and wakeup plugins revalidate session state after composer inspection. State
+changes, awaiting dialogs, session closure and unload invalidate an outstanding
+decision. A failed retry composer read does not submit input.
+
+CSV, DOCX and XLSX preview panels use the full file path for identity. Equal file
+names in different repositories open separate panels; reopening the same file
+reuses its panel.
+
+Catalogue entries must match the shipped manifest for version, app minimum,
+capabilities, agent targeting and CLI binaries. Dashboard plugins require at least
+v1.0.3 (`registerDashboard`, core commit `9a62e145b`). MDKB and RTK dashboard
+lifetime guards require v1.7.6 (panel `onClose`, core commit `26b9e6b99`). SQLite
+keeps its documented ES2022 panel-bundle target.

@@ -36,3 +36,8 @@ The bundled `sql.js` artifacts are licensed under MIT. See `vendor/LICENSE.sql.j
 ```bash
 pnpm exec esbuild plugins/sqlite-viewer/panel.js --bundle --format=iife --target=es2022 --outfile=plugins/sqlite-viewer/panel.bundle.js
 ```
+
+The panel bundle deliberately targets ES2022. The app TypeScript target does not
+change this distributed JavaScript bundle. Keep the ES2022 target until the
+supported WebViews are verified against a newer baseline; do not regenerate the
+vendored sql.js engine as part of a target-policy change.
