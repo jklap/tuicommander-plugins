@@ -13,7 +13,7 @@ export const listFields = [
   { id: 'author', name: 'Author', kind: 'user', required: false, editable: false, options: [] },
   { id: 'updated', name: 'Updated', kind: 'date', required: false, editable: false, options: [] },
   { id: 'created', name: 'Created', kind: 'date', required: false, editable: false, options: [] },
-];
+].map((field) => ({ ...field, sortable: field.id in SORTS, groupable: ['state', 'type', 'labels', 'assignee', 'author'].includes(field.id), filterable: true }));
 
 const emptyQuery = { filters: [], savedFilterId: null, search: '', sort: null, groupBy: null, cursor: null, limit: 50 };
 const preset = (id, name, filters) => ({ id, name, query: { ...emptyQuery, savedFilterId: id, filters } });

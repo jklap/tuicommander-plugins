@@ -102,7 +102,13 @@ export function createJiraProvider(options) {
   }
   return {
     providerId: 'jira', accountId: account.id, name: `Jira · ${account.label ?? host}`,
-    fields: ['project', 'status', 'assignee', 'labels', 'issuetype', 'priority'].map((id) => ({ id, name: id, kind: id === 'labels' ? 'labels' : 'text', required: false, editable: false, options: [] })),
+    fields: ['project', 'status', 'assignee', 'labels', 'issuetype', 'priority', 'updated', 'created', 'key', 'summary'].map((id) => ({
+      id, name: { issuetype: 'Type', summary: 'Summary' }[id] ?? id[0].toUpperCase() + id.slice(1),
+      kind: id === 'labels' ? 'labels' : id === 'assignee' ? 'user' : 'text', required: false, editable: false, options: [],
+      sortable: ['updated', 'created', 'priority', 'key', 'summary'].includes(id),
+      groupable: ['assignee', 'issuetype', 'status'].includes(id),
+      filterable: ['project', 'status', 'assignee', 'labels', 'issuetype', 'priority'].includes(id),
+    })),
     boards: (options.boards ?? []).map((b) => ({ id: String(b.id), name: b.name, fieldId: 'status', columns: [] })),
     savedFilters: presets.map((p) => ({ id: p.id, name: p.name, query: { ...emptyQuery, savedFilterId: p.id } })),
     async verify() { return request(`${api}/myself`); },

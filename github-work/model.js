@@ -4,6 +4,9 @@ export const field = (id, name, kind, editable = true, options = []) => ({
   kind,
   required: false,
   editable,
+  sortable: ["updatedAt", "createdAt", "comments"].includes(id),
+  groupable: ["state", "itemType"].includes(id),
+  filterable: ["labels", "assignees", "state", "itemType"].includes(id),
   options,
 });
 export const FIELDS = [
@@ -17,6 +20,13 @@ export const FIELDS = [
   field("labels", "Labels", "labels"),
   field("milestone", "Milestone", "enum"),
   field("url", "URL", "link", false),
+];
+export const LIST_FIELDS = [
+  ...FIELDS,
+  field("updatedAt", "Updated", "date", false),
+  field("createdAt", "Created", "date", false),
+  field("comments", "Comments", "number", false),
+  field("itemType", "Type", "enum", false, [{ id: "issue", name: "Issue" }, { id: "pull", name: "Pull request" }]),
 ];
 export const user = (value) => ({
   id: String(value?.id ?? value?.login ?? "deleted"),

@@ -1,5 +1,5 @@
 import { createClient, nextPage, pageNumber, pageSize } from "./client.js";
-import { FIELDS, comment, field, identity, item, parseReference, resolveUrl } from "./model.js";
+import { FIELDS, LIST_FIELDS, comment, field, identity, item, parseReference, resolveUrl } from "./model.js";
 import { searchPath, savedFilters } from "./query.js";
 import { Projects } from "./projects.js";
 
@@ -37,7 +37,7 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
     accountId,
     name: "GitHub",
     get fields() {
-      return [...FIELDS, ...[...projects.fields.values()].map((v) => v.schema)];
+      return [...LIST_FIELDS, ...[...projects.fields.values()].map((v) => v.schema)];
     },
     savedFilters,
     boards: [],

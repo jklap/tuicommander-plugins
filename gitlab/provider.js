@@ -7,7 +7,7 @@ import { boardPort } from './board.js';
 import { listFields, presets, issueParams, search } from './query.js';
 
 const transition = (id, name) => ({ id, name, kind: 'transition', enabled: true, disabledReason: null });
-const schema = (id, name, kind, options = [], required = false) => ({ id, name, kind, required, editable: true, options });
+const schema = (id, name, kind, options = [], required = false) => ({ id, name, kind, required, editable: true, sortable: false, groupable: false, filterable: false, options });
 
 /** Readable failures of the merge endpoints (`PUT …/merge`, `PUT …/rebase`). */
 const MERGE_ERRORS = {

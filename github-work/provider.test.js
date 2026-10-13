@@ -264,3 +264,22 @@ test("normal_comments_preserve_recorded_content_and_cursor", async () => {
   assert.ok(result.entries[0].value.body.length > 0);
   assert.equal(result.nextCursor, "normal:2");
 });
+
+// Catches: the host offers a query option that this provider rejects (or omits all declarations).
+test('declared_query_capabilities_never_offer_rejected_options', async () => {
+  const { provider } = setup(Array.from({ length: 50 }, () => ({ json: fixture("search") })));
+  const base = { filters: [], savedFilterId: null, search: '', sort: null, groupBy: null, cursor: null, limit: 20 };
+  assert.ok(provider.fields.some((f) => f.sortable), 'must expose a supported sort');
+  assert.ok(provider.fields.some((f) => f.groupable), 'must expose a supported group');
+  assert.ok(provider.fields.some((f) => f.filterable), 'must expose a supported filter');
+  for (const field of provider.fields) {
+    for (const capability of ['sortable', 'groupable', 'filterable']) assert.equal(typeof field[capability], 'boolean');
+    if (field.sortable) await provider.list({ ...base, sort: { fieldId: field.id, descending: false } });
+    if (field.groupable) await provider.grouped({ ...base, groupBy: field.id });
+    if (field.filterable) {
+      const option = field.options[0] ?? { id: 'demo', name: 'demo' };
+      const value = field.kind === 'user' ? [{ ...option, avatarUrl: null }] : field.kind === 'labels' ? [option] : field.kind === 'date' ? '2026-10-01' : option.id;
+      await provider.list({ ...base, filters: [{ fieldId: field.id, values: [{ kind: field.kind, value }] }] });
+    }
+  }
+});

@@ -225,3 +225,22 @@ test('preset_filters_sort_and_group_keep_the_same_account_rows', async () => {
   assert.equal(groups.groups[0].name, 'In progress');
   assert.equal(groups.groups[0].items[0].reference.accountId, 'site-one');
 });
+
+// Catches: the host offers a query option that this provider rejects (or omits all declarations).
+test('declared_query_capabilities_never_offer_rejected_options', async () => {
+  const provider = createJiraProvider({ account, fetch: fixtureFetch() });
+  const base = { filters: [], savedFilterId: null, search: '', sort: null, groupBy: null, cursor: null, limit: 20 };
+  assert.ok(provider.fields.some((f) => f.sortable), 'must expose a supported sort');
+  assert.ok(provider.fields.some((f) => f.groupable), 'must expose a supported group');
+  assert.ok(provider.fields.some((f) => f.filterable), 'must expose a supported filter');
+  for (const field of provider.fields) {
+    for (const capability of ['sortable', 'groupable', 'filterable']) assert.equal(typeof field[capability], 'boolean');
+    if (field.sortable) await provider.list({ ...base, sort: { fieldId: field.id, descending: false } });
+    if (field.groupable) await provider.grouped({ ...base, groupBy: field.id });
+    if (field.filterable) {
+      const option = field.options[0] ?? { id: 'demo', name: 'demo' };
+      const value = field.kind === 'user' ? [{ ...option, avatarUrl: null }] : field.kind === 'labels' ? [option] : field.kind === 'date' ? '2026-10-01' : option.id;
+      await provider.list({ ...base, filters: [{ fieldId: field.id, values: [{ kind: field.kind, value }] }] });
+    }
+  }
+});
