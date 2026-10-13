@@ -1,0 +1,1462 @@
+{
+ "projectId": "10009",
+ "projectKey": "LAN",
+ "types": {
+  "startAt": 0,
+  "maxResults": 100,
+  "total": 20,
+  "issueTypes": [
+   {
+    "id": "10000",
+    "description": "",
+    "name": "Epic",
+    "untranslatedName": "Epic",
+    "subtask": false,
+    "hierarchyLevel": 1
+   },
+   {
+    "id": "10001",
+    "description": "",
+    "name": "Story",
+    "untranslatedName": "Story",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10002",
+    "description": "",
+    "name": "Task",
+    "untranslatedName": "Task",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10003",
+    "description": "",
+    "name": "Sub-task",
+    "untranslatedName": "Sub-task",
+    "subtask": true,
+    "hierarchyLevel": -1
+   },
+   {
+    "id": "10004",
+    "description": "",
+    "name": "Bug",
+    "untranslatedName": "Bug",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10017",
+    "description": "",
+    "name": "Test",
+    "untranslatedName": "Test",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10018",
+    "description": "",
+    "name": "Test Set",
+    "untranslatedName": "Test Set",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10019",
+    "description": "",
+    "name": "Test Plan",
+    "untranslatedName": "Test Plan",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10020",
+    "description": "",
+    "name": "Test Execution",
+    "untranslatedName": "Test Execution",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10022",
+    "description": "",
+    "name": "Sub Test Execution",
+    "untranslatedName": "Sub Test Execution",
+    "subtask": true,
+    "hierarchyLevel": -1
+   },
+   {
+    "id": "10045",
+    "description": "",
+    "name": "Incident",
+    "untranslatedName": "Incident",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10067",
+    "description": "",
+    "name": "Initiative",
+    "untranslatedName": "Initiative",
+    "subtask": false,
+    "hierarchyLevel": 4
+   },
+   {
+    "id": "10093",
+    "description": "",
+    "name": "Vulnerability",
+    "untranslatedName": "Vulnerability",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10145",
+    "description": "",
+    "name": "Support Request",
+    "untranslatedName": "Support Request",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10156",
+    "description": "",
+    "name": "Research item",
+    "untranslatedName": "Research item",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10160",
+    "description": "",
+    "name": "Precondition",
+    "untranslatedName": "Precondition",
+    "subtask": false,
+    "hierarchyLevel": 0
+   },
+   {
+    "id": "10161",
+    "description": "",
+    "name": "Defect",
+    "untranslatedName": "Defect",
+    "subtask": true,
+    "hierarchyLevel": -1
+   },
+   {
+    "id": "10182",
+    "description": "",
+    "name": "Outcome",
+    "untranslatedName": "Outcome",
+    "subtask": false,
+    "hierarchyLevel": 3
+   },
+   {
+    "id": "10281",
+    "description": "",
+    "name": "Milestone",
+    "untranslatedName": "Milestone",
+    "subtask": false,
+    "hierarchyLevel": 2
+   },
+   {
+    "id": "12415",
+    "description": "",
+    "name": "Wizy",
+    "untranslatedName": "Wizy",
+    "subtask": true,
+    "hierarchyLevel": -1
+   }
+  ]
+ },
+ "fields": {
+  "10002": [
+   {
+    "isLast": true,
+    "fields": [
+     {
+      "required": false,
+      "schema": {
+       "type": "user",
+       "system": "assignee"
+      },
+      "name": "Assignee",
+      "key": "assignee",
+      "fieldId": "assignee",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "array",
+       "items": "attachment",
+       "system": "attachment"
+      },
+      "name": "Attachment",
+      "key": "attachment",
+      "fieldId": "attachment",
+      "hasDefaultValue": false,
+      "operations": [
+       "set",
+       "copy"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "array",
+       "items": "component",
+       "system": "components"
+      },
+      "name": "Components",
+      "key": "components",
+      "fieldId": "components",
+      "hasDefaultValue": false,
+      "operations": [
+       "add",
+       "set",
+       "remove"
+      ],
+      "allowedValues": [
+       {
+        "id": "10695",
+        "name": "AD Scanning"
+       },
+       {
+        "id": "15603",
+        "name": "AI Usage"
+       },
+       {
+        "id": "15369",
+        "name": "AirWatch"
+       },
+       {
+        "id": "10011",
+        "name": "API Cloud"
+       },
+       {
+        "id": "10696",
+        "name": "Asset Radar"
+       },
+       {
+        "id": "15303",
+        "name": "Asset Types"
+       },
+       {
+        "id": "14575",
+        "name": "Assets"
+       },
+       {
+        "id": "15301",
+        "name": "Assets CRUD"
+       },
+       {
+        "id": "10835",
+        "name": "Automatic"
+       },
+       {
+        "id": "14578",
+        "name": "AutoUpdate"
+       },
+       {
+        "id": "10153",
+        "name": "AutoUpdateAPI"
+       },
+       {
+        "id": "12884",
+        "name": "AWS Scanning"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "team",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team",
+       "customId": 10001,
+       "configuration": {
+        "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team": true
+       }
+      },
+      "name": "Team",
+      "key": "customfield_10001",
+      "fieldId": "customfield_10001",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "any",
+       "custom": "com.pyxis.greenhopper.jira:gh-epic-link",
+       "customId": 10008
+      },
+      "name": "Epic Link",
+      "key": "customfield_10008",
+      "fieldId": "customfield_10008",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "any",
+       "custom": "com.atlassian.jpo:jpo-custom-field-parent",
+       "customId": 10009
+      },
+      "name": "Parent Link",
+      "key": "customfield_10009",
+      "fieldId": "customfield_10009",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "array",
+       "items": "json",
+       "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+       "customId": 10010
+      },
+      "name": "Sprint",
+      "key": "customfield_10010",
+      "fieldId": "customfield_10010",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "number",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:float",
+       "customId": 10014
+      },
+      "name": "Story Points",
+      "key": "customfield_10014",
+      "fieldId": "customfield_10014",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+       "customId": 10027
+      },
+      "name": "Salesforce HelpdeskCase",
+      "key": "customfield_10027",
+      "fieldId": "customfield_10027",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "date",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datepicker",
+       "customId": 10036
+      },
+      "name": "Start date",
+      "key": "customfield_10036",
+      "fieldId": "customfield_10036",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+       "customId": 10039
+      },
+      "name": "Changelog",
+      "key": "customfield_10039",
+      "fieldId": "customfield_10039",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "number",
+       "custom": "com.pyxis.greenhopper.jira:jsw-story-points",
+       "customId": 10044
+      },
+      "name": "Story point estimate",
+      "key": "customfield_10044",
+      "fieldId": "customfield_10044",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "datetime",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datetime",
+       "customId": 10051
+      },
+      "name": "End Date",
+      "key": "customfield_10051",
+      "fieldId": "customfield_10051",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "option",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+       "customId": 10122
+      },
+      "name": "Impact on system",
+      "key": "customfield_10122",
+      "fieldId": "customfield_10122",
+      "hasDefaultValue": true,
+      "operations": [
+       "set"
+      ],
+      "allowedValues": [
+       {
+        "id": "10338",
+        "value": "low"
+       },
+       {
+        "id": "10339",
+        "value": "medium"
+       },
+       {
+        "id": "10340",
+        "value": "high"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+       "customId": 10187
+      },
+      "name": "Salesforce Jira Case Id",
+      "key": "customfield_10187",
+      "fieldId": "customfield_10187",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+       "customId": 10209
+      },
+      "name": "Salesforce Cases",
+      "key": "customfield_10209",
+      "fieldId": "customfield_10209",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+       "customId": 10249
+      },
+      "name": "icingaStatus",
+      "key": "customfield_10249",
+      "fieldId": "customfield_10249",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+       "customId": 10250
+      },
+      "name": "icingaKey",
+      "key": "customfield_10250",
+      "fieldId": "customfield_10250",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "option",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+       "customId": 10274
+      },
+      "name": "Functional area",
+      "key": "customfield_10274",
+      "fieldId": "customfield_10274",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ],
+      "allowedValues": [
+       {
+        "id": "11489",
+        "value": "AIChat"
+       },
+       {
+        "id": "10973",
+        "value": "API"
+       },
+       {
+        "id": "11479",
+        "value": "Architecture"
+       },
+       {
+        "id": "12553",
+        "value": "Assets"
+       },
+       {
+        "id": "12562",
+        "value": "Backoffice"
+       },
+       {
+        "id": "12552",
+        "value": "Dashboards"
+       },
+       {
+        "id": "10969",
+        "value": "Data pipeline"
+       },
+       {
+        "id": "13741",
+        "value": "Design System"
+       },
+       {
+        "id": "11452",
+        "value": "Diagrams"
+       },
+       {
+        "id": "12564",
+        "value": "Discovery"
+       },
+       {
+        "id": "10974",
+        "value": "Enrichment_OLD"
+       },
+       {
+        "id": "12486",
+        "value": "Flow Builder"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "number",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:float",
+       "customId": 10285
+      },
+      "name": "Milestone score",
+      "key": "customfield_10285",
+      "fieldId": "customfield_10285",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "option",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+       "customId": 10346
+      },
+      "name": "Changelog status",
+      "key": "customfield_10346",
+      "fieldId": "customfield_10346",
+      "hasDefaultValue": true,
+      "operations": [
+       "set"
+      ],
+      "allowedValues": [
+       {
+        "id": "11223",
+        "value": "Internal"
+       },
+       {
+        "id": "11222",
+        "value": "External"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+       "customId": 10380
+      },
+      "name": "Latest update",
+      "key": "customfield_10380",
+      "fieldId": "customfield_10380",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+       "customId": 10437
+      },
+      "name": "Outcome",
+      "key": "customfield_10437",
+      "fieldId": "customfield_10437",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+       "customId": 10550
+      },
+      "name": "SLA_days",
+      "key": "customfield_10550",
+      "fieldId": "customfield_10550",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+       "customId": 10847
+      },
+      "name": "public-api-break-change",
+      "key": "customfield_10847",
+      "fieldId": "customfield_10847",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+       "customId": 10848
+      },
+      "name": "public-api-change",
+      "key": "customfield_10848",
+      "fieldId": "customfield_10848",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+       "customId": 10849
+      },
+      "name": "public-api-feature",
+      "key": "customfield_10849",
+      "fieldId": "customfield_10849",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "option-with-child",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:cascadingselect",
+       "customId": 11045
+      },
+      "name": "User documentation work required?",
+      "key": "customfield_11045",
+      "fieldId": "customfield_11045",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ],
+      "allowedValues": [
+       {
+        "id": "12420",
+        "value": "Yes"
+       },
+       {
+        "id": "12421",
+        "value": "No"
+       },
+       {
+        "id": "12422",
+        "value": "Maybe"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "number",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:float",
+       "customId": 13285
+      },
+      "name": "Salesforce Case Count",
+      "key": "customfield_13285",
+      "fieldId": "customfield_13285",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+       "customId": 13318
+      },
+      "name": "InNew_days",
+      "key": "customfield_13318",
+      "fieldId": "customfield_13318",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "option",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+       "customId": 13417
+      },
+      "name": "3D Status",
+      "key": "customfield_13417",
+      "fieldId": "customfield_13417",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ],
+      "allowedValues": [
+       {
+        "id": "14956",
+        "value": "Concept"
+       },
+       {
+        "id": "14957",
+        "value": "Problem Discovery"
+       },
+       {
+        "id": "14958",
+        "value": "Problem Definition"
+       },
+       {
+        "id": "14959",
+        "value": "Solution Discovery"
+       },
+       {
+        "id": "14960",
+        "value": "Solution Definition"
+       },
+       {
+        "id": "14961",
+        "value": "Ready for Grooming"
+       },
+       {
+        "id": "14962",
+        "value": "Development"
+       },
+       {
+        "id": "14963",
+        "value": "Testing"
+       },
+       {
+        "id": "14964",
+        "value": "Released"
+       },
+       {
+        "id": "14965",
+        "value": "Done But Waiting"
+       },
+       {
+        "id": "14966",
+        "value": "Rollout Validation"
+       },
+       {
+        "id": "14967",
+        "value": "Rejected"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "option",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+       "customId": 13451
+      },
+      "name": "Domain",
+      "key": "customfield_13451",
+      "fieldId": "customfield_13451",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ],
+      "allowedValues": [
+       {
+        "id": "15035",
+        "value": "VISIBILITY"
+       },
+       {
+        "id": "15036",
+        "value": "TOT VISIBILITY"
+       },
+       {
+        "id": "15037",
+        "value": "MANAGEMENT"
+       },
+       {
+        "id": "15038",
+        "value": "ANALYTICS"
+       },
+       {
+        "id": "15039",
+        "value": "DATA"
+       },
+       {
+        "id": "15040",
+        "value": "ORCHESTRATION"
+       },
+       {
+        "id": "15041",
+        "value": "LANSWEEPER LENS"
+       },
+       {
+        "id": "15042",
+        "value": "MULTI SITE PORTAL"
+       },
+       {
+        "id": "15043",
+        "value": "DEVELOPER PORTAL"
+       },
+       {
+        "id": "15044",
+        "value": "PLATFORM EXPERIENCE"
+       },
+       {
+        "id": "15771",
+        "value": "SECURITY & POLICY MANAGEMENT"
+       },
+       {
+        "id": "15077",
+        "value": "TBD"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+       "customId": 13484
+      },
+      "name": "Feature Flag",
+      "key": "customfield_13484",
+      "fieldId": "customfield_13484",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "option",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+       "customId": 13517
+      },
+      "name": "Size",
+      "key": "customfield_13517",
+      "fieldId": "customfield_13517",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ],
+      "allowedValues": [
+       {
+        "id": "15235",
+        "value": "XS"
+       },
+       {
+        "id": "15236",
+        "value": "S"
+       },
+       {
+        "id": "15237",
+        "value": "M"
+       },
+       {
+        "id": "15238",
+        "value": "L"
+       },
+       {
+        "id": "15239",
+        "value": "XL"
+       },
+       {
+        "id": "15240",
+        "value": "XXL"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "number",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:float",
+       "customId": 13617
+      },
+      "name": "Outcome score",
+      "key": "customfield_13617",
+      "fieldId": "customfield_13617",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+       "customId": 13650
+      },
+      "name": "Microteam",
+      "key": "customfield_13650",
+      "fieldId": "customfield_13650",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "array",
+       "items": "option",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multicheckboxes",
+       "customId": 13651
+      },
+      "name": "Escalation",
+      "key": "customfield_13651",
+      "fieldId": "customfield_13651",
+      "hasDefaultValue": false,
+      "operations": [
+       "add",
+       "set",
+       "remove"
+      ],
+      "allowedValues": [
+       {
+        "id": "15382",
+        "value": "Escalation"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+       "customId": 13684
+      },
+      "name": "Customer Name",
+      "key": "customfield_13684",
+      "fieldId": "customfield_13684",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "number",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:float",
+       "customId": 13917
+      },
+      "name": "Item Score",
+      "key": "customfield_13917",
+      "fieldId": "customfield_13917",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "option",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+       "customId": 13985
+      },
+      "name": "IAS38 Category Override",
+      "key": "customfield_13985",
+      "fieldId": "customfield_13985",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ],
+      "allowedValues": [
+       {
+        "id": "15628",
+        "value": "Research"
+       },
+       {
+        "id": "15629",
+        "value": "Development"
+       },
+       {
+        "id": "15630",
+        "value": "Maintenance"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+       "customId": 13986
+      },
+      "name": "Override Justification",
+      "key": "customfield_13986",
+      "fieldId": "customfield_13986",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "date",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datepicker",
+       "customId": 14058
+      },
+      "name": "Req Change Audit",
+      "key": "customfield_14058",
+      "fieldId": "customfield_14058",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "number",
+       "custom": "com.atlassian.jira.plugin.system.customfieldtypes:float",
+       "customId": 14158
+      },
+      "name": "Prio",
+      "key": "customfield_14158",
+      "fieldId": "customfield_14158",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "system": "description"
+      },
+      "name": "Description",
+      "key": "description",
+      "fieldId": "description",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "date",
+       "system": "duedate"
+      },
+      "name": "Due date",
+      "key": "duedate",
+      "fieldId": "duedate",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "string",
+       "system": "environment"
+      },
+      "name": "Environment",
+      "key": "environment",
+      "fieldId": "environment",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "array",
+       "items": "version",
+       "system": "fixVersions"
+      },
+      "name": "Fix versions",
+      "key": "fixVersions",
+      "fieldId": "fixVersions",
+      "hasDefaultValue": false,
+      "operations": [
+       "set",
+       "add",
+       "remove"
+      ],
+      "allowedValues": [
+       {
+        "id": "15919",
+        "name": "Versa 0.0.37"
+       },
+       {
+        "id": "10441",
+        "name": "OT-V3.4.2"
+       },
+       {
+        "id": "10534",
+        "name": "REL 11.1.2"
+       },
+       {
+        "id": "10526",
+        "name": "REL 11.1.1"
+       },
+       {
+        "id": "10416",
+        "name": "OT-V3.3.1"
+       },
+       {
+        "id": "10442",
+        "name": "REL 11.1"
+       },
+       {
+        "id": "10481",
+        "name": "REL 10.6.1"
+       },
+       {
+        "id": "10457",
+        "name": "REL 10.6"
+       },
+       {
+        "id": "10458",
+        "name": "OT-V3.3.8"
+       },
+       {
+        "id": "10456",
+        "name": "REL 10.5.2.0"
+       },
+       {
+        "id": "10426",
+        "name": "REL 10.5.0"
+       },
+       {
+        "id": "10423",
+        "name": "REL 10.4.4"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "array",
+       "items": "issuelinks",
+       "system": "issuelinks"
+      },
+      "name": "Linked work items",
+      "key": "issuelinks",
+      "fieldId": "issuelinks",
+      "hasDefaultValue": false,
+      "operations": [
+       "add",
+       "copy"
+      ]
+     },
+     {
+      "required": true,
+      "schema": {
+       "type": "issuetype",
+       "system": "issuetype"
+      },
+      "name": "Issue Type",
+      "key": "issuetype",
+      "fieldId": "issuetype",
+      "hasDefaultValue": false,
+      "operations": [],
+      "allowedValues": [
+       {
+        "id": "10002",
+        "name": "Task"
+       }
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "array",
+       "items": "string",
+       "system": "labels"
+      },
+      "name": "Labels",
+      "key": "labels",
+      "fieldId": "labels",
+      "hasDefaultValue": false,
+      "operations": [
+       "add",
+       "set",
+       "remove"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "issuelink",
+       "system": "parent"
+      },
+      "name": "Parent",
+      "key": "parent",
+      "fieldId": "parent",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "priority",
+       "system": "priority"
+      },
+      "name": "Priority",
+      "key": "priority",
+      "fieldId": "priority",
+      "hasDefaultValue": true,
+      "operations": [
+       "set"
+      ],
+      "allowedValues": [
+       {
+        "id": "1",
+        "name": "Critical"
+       },
+       {
+        "id": "2",
+        "name": "High"
+       },
+       {
+        "id": "3",
+        "name": "Medium"
+       },
+       {
+        "id": "4",
+        "name": "Low"
+       },
+       {
+        "id": "5",
+        "name": "Lowest"
+       },
+       {
+        "id": "10000",
+        "name": "None"
+       }
+      ]
+     },
+     {
+      "required": true,
+      "schema": {
+       "type": "project",
+       "system": "project"
+      },
+      "name": "Project",
+      "key": "project",
+      "fieldId": "project",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ],
+      "allowedValues": [
+       {
+        "id": "10009",
+        "name": "Discovery"
+       }
+      ]
+     },
+     {
+      "required": true,
+      "schema": {
+       "type": "user",
+       "system": "reporter"
+      },
+      "name": "Reporter",
+      "key": "reporter",
+      "fieldId": "reporter",
+      "hasDefaultValue": true,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": true,
+      "schema": {
+       "type": "string",
+       "system": "summary"
+      },
+      "name": "Summary",
+      "key": "summary",
+      "fieldId": "summary",
+      "hasDefaultValue": false,
+      "operations": [
+       "set"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "timetracking",
+       "system": "timetracking"
+      },
+      "name": "Time tracking",
+      "key": "timetracking",
+      "fieldId": "timetracking",
+      "hasDefaultValue": false,
+      "operations": [
+       "set",
+       "edit"
+      ]
+     },
+     {
+      "required": false,
+      "schema": {
+       "type": "array",
+       "items": "version",
+       "system": "versions"
+      },
+      "name": "Affects versions",
+      "key": "versions",
+      "fieldId": "versions",
+      "hasDefaultValue": false,
+      "operations": [
+       "set",
+       "add",
+       "remove"
+      ],
+      "allowedValues": [
+       {
+        "id": "15919",
+        "name": "Versa 0.0.37"
+       },
+       {
+        "id": "10441",
+        "name": "OT-V3.4.2"
+       },
+       {
+        "id": "10534",
+        "name": "REL 11.1.2"
+       },
+       {
+        "id": "10526",
+        "name": "REL 11.1.1"
+       },
+       {
+        "id": "10416",
+        "name": "OT-V3.3.1"
+       },
+       {
+        "id": "10442",
+        "name": "REL 11.1"
+       },
+       {
+        "id": "10481",
+        "name": "REL 10.6.1"
+       },
+       {
+        "id": "10457",
+        "name": "REL 10.6"
+       },
+       {
+        "id": "10458",
+        "name": "OT-V3.3.8"
+       },
+       {
+        "id": "10456",
+        "name": "REL 10.5.2.0"
+       },
+       {
+        "id": "10426",
+        "name": "REL 10.5.0"
+       },
+       {
+        "id": "10423",
+        "name": "REL 10.4.4"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

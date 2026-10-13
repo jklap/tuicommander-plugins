@@ -9,3 +9,8 @@ People are replaced with `review-user-N` and `Reviewer N`; emails, avatar URLs,
 self URLs and credentials are removed. A pre-commit scan checks for the authorized
 key and `@lansweeper.com` without printing the key. `cloud.json` remains the older
 synthetic documentation-shape fixture and is not live evidence.
+
+`create-lan-wide.json` holds the full 57-field create metadata of the LAN Task
+type, recorded the same way (GET only, 2026-10-13). Every field Jira offered is
+kept; only the allowed values are cut to the first 12 per field, and issue type
+descriptions are blanked. It exists to test the layout of a wide schema.
