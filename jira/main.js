@@ -1,16 +1,41 @@
 import { createJiraProvider } from './provider.js';
 import { accountFetch, readConfig } from './runtime.js';
 
+const slug = (title) => title.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40).replace(/-+$/, '');
+
+/** Pasted issue URL → link plus a drafted start-work brief, from the first account that owns the URL. */
+export function urlResolver(providers) {
+  return async (url, signal) => {
+    for (const provider of providers) {
+      const reference = provider.resolveUrl(url);
+      if (!reference) continue;
+      const { item, body } = await provider.detail(reference, signal);
+      return {
+        link: { reference, key: item.key, title: item.title, url: item.url, state: item.state },
+        startWork: {
+          branch: `${item.key}-${slug(item.title) || 'issue'}`,
+          prompt: `Jira issue ${item.key}: ${item.title}\n${item.url}\n\n${body}`,
+          delivery: 'draft',
+        },
+      };
+    }
+    return null;
+  };
+}
+
 /** Host integration seam. A3c supplies fetchForAccount; tokens never enter JS. */
 export function registerJiraAccounts(host, accounts, fetchForAccount, configuration = {}) {
   const registrations = [];
+  const providers = [];
   try {
     for (const account of accounts.filter((a) => a.provider === 'jira')) {
       const provider = createJiraProvider({
         account, fetch: fetchForAccount(account.id), ...(configuration[account.id] ?? {}),
       });
       registrations.push(host.registerWorkItemProvider(provider));
+      providers.push(provider);
     }
+    if (providers.length) registrations.push(host.registerUrlResolver(urlResolver(providers)));
   } catch (error) {
     for (const registration of registrations.reverse()) registration.dispose();
     throw error;
