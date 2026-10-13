@@ -7,7 +7,7 @@ const SORTS = { updated: 'updated_at', created: 'created_at' };
 /** Filterable and sortable list fields; the core list renders one control per field. */
 export const listFields = [
   { id: 'type', name: 'Type', kind: 'enum', required: false, editable: false, options: [{ id: 'issue', name: 'Issues' }, { id: 'merge_request', name: 'Merge requests' }] },
-  { id: 'state', name: 'State', kind: 'enum', required: false, editable: false, options: [{ id: 'opened', name: 'Open' }, { id: 'closed', name: 'Closed' }, { id: 'merged', name: 'Merged' }, { id: 'all', name: 'All' }] },
+  { id: 'state', name: 'State', kind: 'enum', required: false, editable: false, options: [{ id: 'opened', name: 'Open' }, { id: 'closed', name: 'Closed' }, { id: 'all', name: 'All' }] },
   { id: 'labels', name: 'Labels', kind: 'labels', required: false, editable: false, options: [] },
   { id: 'assignee', name: 'Assignee', kind: 'user', required: false, editable: false, options: [] },
   { id: 'author', name: 'Author', kind: 'user', required: false, editable: false, options: [] },
