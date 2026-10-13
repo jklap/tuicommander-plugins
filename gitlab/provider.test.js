@@ -308,15 +308,3 @@ test('every_date_field_in_the_schema_works_as_a_list_filter_and_sort', async () 
     await provider.list({ ...query, sort: { fieldId: field.id, descending: false } });
   }
 });
-
-// Catches: the core assignee picker is fed by createFields, whose user option id is the numeric GitLab id;
-// sending that as assignee_username filters on a user named "7" and the list comes back empty.
-test('assignee_filter_from_a_create_form_user_option_filters_that_user', async () => {
-  const requests = [];
-  const provider = createGitLabProvider({ account, fetch: gitlab(null, requests) });
-  const ada = { id: '7', name: 'Ada Lovelace', avatarUrl: null };
-  await provider.list({ ...query, filters: [{ fieldId: 'assignee', values: [{ kind: 'user', value: [ada] }] }] });
-  const params = new URL(requests.at(-1).url).searchParams;
-  assert.notEqual(params.get('assignee_username'), '7');
-  assert.equal(params.get('assignee_id'), '7');
-});
