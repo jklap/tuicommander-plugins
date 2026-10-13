@@ -29,8 +29,12 @@ A 429 blocks further calls from this provider until `Retry-After` expires (numer
 seconds or HTTP date); it does not automatically replay writes.
 
 Cloud uses the enhanced `/rest/api/3/search/jql` token cursor. Data Center uses
-REST v2 offset pagination. Search accepts JQL, an issue key shortcut, and falls
-back to quoted `text ~` search on 400 only. Presets cover assigned, reported,
+REST v2 offset pagination. Search accepts JQL and an issue key shortcut. Use
+`jql: project = AITR` to require JQL, or `text: project =` for literal text.
+Without a prefix, predicates with JQL operators keep their parse errors; other
+input can fall back to quoted `text ~` search on 400. Lists and boards use the
+same rule. A rejected JQL query shows Jira's parse message and a correction hint;
+the Tasks search input keeps the typed query. Presets cover assigned, reported,
 and recently updated items. Invalid filter/sort identifiers are rejected.
 
 Descriptions and comments convert ADF to Markdown; Cloud writes convert Markdown
@@ -62,7 +66,7 @@ A live recording must confirm:
 
 1. Cloud Basic email/token and DC PAT verification through the core account port,
    context-path/port handling, and a non-browser User-Agent on the wire.
-2. Enhanced JQL search pagination, key lookup and 400 fallback with real permissions.
+2. Enhanced JQL search pagination, key lookup and plain-text fallback with real permissions.
 3. Issue detail, independent comment pages, create metadata for two issue types,
    required/custom field values, creation and inline edits.
 4. ADF list, nested list, code, and Markdown rendering after a create/comment write.
@@ -85,4 +89,10 @@ account IDs or Data Center usernames. User search is read-only and bounded to 50
 results; refine the query if the desired user is absent. The core create form
 accepts free labels and reports missing required values beside their controls.
 Parent issue keys are encoded as Jira `{key}` objects during creation.
+
+
+`fixtures/malformed-jql-live.json` is a scrubbed Jira Cloud recording from
+2026-10-13. It records the 400 for `(project =) ORDER BY updated DESC` using
+read-only enhanced search. It contains no credentials or user identities.
+The DC error test reuses its shape as an assumption, not a live DC recording.
 

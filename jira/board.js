@@ -1,4 +1,4 @@
-import { buildJql, presets, search } from './query.js';
+import { buildJql, canFallbackToText, presets, search } from './query.js';
 
 /** Four workers bound transition lookups for a page; no per-card cache can go stale. */
 async function mapCards(items, project) {
@@ -46,7 +46,7 @@ export function boardPort(client, toItem) {
     let page;
     try { page = await searchPage(false); }
     catch (error) {
-      if (error.status !== 400 || !query.search.trim()) throw error;
+      if (error.status !== 400 || !canFallbackToText(query)) throw error;
       page = await searchPage(true);
     }
     const cards = await mapCards(page.issues, async (issue) => {

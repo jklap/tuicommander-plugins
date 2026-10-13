@@ -1,7 +1,7 @@
 /** Token-free Jira REST port. The core supplies authentication and account budget. */
 export class JiraError extends Error {
-  constructor(status, retryAfterMs = null) {
-    super(status === 429 ? 'Jira rate limit; retry later' : `Jira request failed (${status})`);
+  constructor(status, retryAfterMs = null, detail = null) {
+    super(status === 429 ? 'Jira rate limit; retry later' : `Jira request failed (${status})${detail ? `: ${detail}` : ''}`);
     this.status = status;
     this.retryAfterMs = retryAfterMs;
   }
@@ -29,7 +29,12 @@ export function createClient({ account, fetch, now = Date.now }) {
       blockedUntil = now() + (Number.isFinite(delay) ? Math.max(1000, delay) : 60_000);
       throw new JiraError(429, blockedUntil - now());
     }
-    if (response.status < 200 || response.status >= 300) throw new JiraError(response.status);
+    if (response.status < 200 || response.status >= 300) {
+      // Only search validation messages belong in the query UI; other bodies stay private.
+      const messages = response.status === 400 && /\/search(?:\/jql)?$/.test(path) && response.json?.errorMessages;
+      const detail = Array.isArray(messages) ? messages.filter((value) => typeof value === 'string').join(' ') : null;
+      throw new JiraError(response.status, null, detail);
+    }
     return response.json;
   }
   return { host, cloud, api: `/rest/api/${cloud ? 3 : 2}`, request };

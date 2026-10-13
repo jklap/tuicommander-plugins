@@ -1,0 +1,18 @@
+{
+  "recordedAt": "2026-10-13T12:22:51.991Z",
+  "request": {
+    "method": "POST",
+    "path": "/rest/api/3/search/jql",
+    "jql": "(project =) ORDER BY updated DESC"
+  },
+  "response": {
+    "status": 400,
+    "headers": {},
+    "json": {
+      "errorMessages": [
+        "Error in JQL Query: Expecting either a value, list or function but got ')'. You must surround ')' in quotation marks to use it as a value. (line 1, character 11)"
+      ],
+      "errors": {}
+    }
+  }
+}

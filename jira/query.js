@@ -7,17 +7,32 @@ export const presets = [
   { id: 'recent', name: 'Recently updated', jql: 'updated >= -7d' },
 ];
 
+function searchInput(query) {
+  const input = query.search.trim();
+  const explicit = input.match(/^(jql|text):\s*([\s\S]*)$/i);
+  return { mode: explicit?.[1].toLowerCase() ?? 'auto', value: explicit ? explicit[2] : input };
+}
+
+const unquoted = (value) => value.replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g, (match) => ' '.repeat(match.length));
+
+// Lists and boards share the same rule: an intended predicate must never change meaning on 400.
+export function canFallbackToText(query) {
+  const { mode, value } = searchInput(query);
+  return mode === 'auto' && !!value && !/[=!~<>]|\b(?:IN\s*\(|IS\s+(?:NOT\s+)?(?:EMPTY|NULL)|WAS\b|CHANGED\b|ORDER\s+BY)/i.test(unquoted(value));
+}
+
 export function buildJql(query, textFallback = false) {
-  const search = query.search.trim();
+  const { mode, value: search } = searchInput(query);
+  if (mode === 'jql' && !search) throw new Error('Enter a JQL query after jql:');
   let expression = search || presets.find((p) => p.id === query.savedFilterId)?.jql || 'resolution = Unresolved';
-  if (search && !textFallback && /^[a-z][a-z0-9_]*-\d+$/i.test(search)) expression = `key = ${quote(search.toUpperCase())}`;
-  else if (search && textFallback) expression = `text ~ ${quote(search)}`;
+  if (search && mode === 'auto' && !textFallback && /^[a-z][a-z0-9_]*-\d+$/i.test(search)) expression = `key = ${quote(search.toUpperCase())}`;
+  else if (search && (mode === 'text' || mode === 'auto' && textFallback)) expression = `text ~ ${quote(search)}`;
   const filters = query.filters.map(({ fieldId, values }) => {
     if (!FIELDS.has(fieldId)) throw new Error(`Unsupported Jira filter: ${fieldId}`);
     return values.length ? `${fieldId} IN (${values.flatMap((v) => v.kind === 'user' || v.kind === 'labels' ? v.value.map((o) => quote(o.id)) : [quote(v.value)]).join(', ')})` : '';
   }).filter(Boolean);
   // Preserve a user-provided ORDER BY while placing filters before it.
-  const orderAt = expression.search(/\s+ORDER\s+BY\s+/i);
+  const orderAt = unquoted(expression).search(/\s+ORDER\s+BY\s+/i);
   let order = orderAt < 0 ? '' : expression.slice(orderAt);
   if (orderAt >= 0) expression = expression.slice(0, orderAt);
   if (query.sort) {
@@ -43,7 +58,12 @@ export async function search(client, query, allowFallback = true) {
   let page;
   try { page = await run(false); }
   catch (error) {
-    if (!allowFallback || error.status !== 400 || !query.search.trim()) throw error;
+    if (!allowFallback || error.status !== 400 || !canFallbackToText(query)) {
+      if (error.status === 400 && searchInput(query).mode !== 'text') {
+        error.message += ' Check the JQL syntax, or use text: for literal search.';
+      }
+      throw error;
+    }
     page = await run(true);
   }
   if (!Array.isArray(page?.issues)) throw new Error('Invalid Jira search response');
