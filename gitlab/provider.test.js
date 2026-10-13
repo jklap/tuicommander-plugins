@@ -247,3 +247,17 @@ test('declared_query_capabilities_never_offer_rejected_options', async () => {
     }
   }
 });
+
+// Catches: the declared State selector offers Merged for the default Issues list,
+// but choosing it fails before GitLab can return results.
+test('offered_state_options_do_not_reject_the_default_issue_list', async () => {
+  const provider = createGitLabProvider({ account, fetch: gitlab() });
+  const state = provider.fields.find((field) => field.id === 'state' && field.filterable);
+  assert.ok(state, 'the default issue list exposes its State filter');
+  for (const option of state.options) {
+    await assert.doesNotReject(
+      provider.list({ ...query, filters: [{ fieldId: 'state', values: [{ kind: 'enum', value: option.id }] }] }),
+      `offered State option ${option.name} must work with the default Issues type`,
+    );
+  }
+});
