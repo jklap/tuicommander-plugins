@@ -1,0 +1,2821 @@
+{
+  "projectId": "10009",
+  "projectKey": "LAN",
+  "types": {
+    "startAt": 0,
+    "maxResults": 100,
+    "total": 20,
+    "issueTypes": [
+      {
+        "id": "10000",
+        "description": "[Private text redacted]",
+        "name": "Epic",
+        "untranslatedName": "Epic",
+        "subtask": false,
+        "hierarchyLevel": 1
+      },
+      {
+        "id": "10001",
+        "description": "[Private text redacted]",
+        "name": "Story",
+        "untranslatedName": "Story",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10002",
+        "description": "[Private text redacted]",
+        "name": "Task",
+        "untranslatedName": "Task",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10003",
+        "description": "[Private text redacted]",
+        "name": "Sub-task",
+        "untranslatedName": "Sub-task",
+        "subtask": true,
+        "hierarchyLevel": -1
+      },
+      {
+        "id": "10004",
+        "description": "[Private text redacted]",
+        "name": "Bug",
+        "untranslatedName": "Bug",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10017",
+        "description": "[Private text redacted]",
+        "name": "Test",
+        "untranslatedName": "Test",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10018",
+        "description": "[Private text redacted]",
+        "name": "Test Set",
+        "untranslatedName": "Test Set",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10019",
+        "description": "[Private text redacted]",
+        "name": "Test Plan",
+        "untranslatedName": "Test Plan",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10020",
+        "description": "[Private text redacted]",
+        "name": "Test Execution",
+        "untranslatedName": "Test Execution",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10022",
+        "description": "[Private text redacted]",
+        "name": "Sub Test Execution",
+        "untranslatedName": "Sub Test Execution",
+        "subtask": true,
+        "hierarchyLevel": -1
+      },
+      {
+        "id": "10045",
+        "description": "[Private text redacted]",
+        "name": "Incident",
+        "untranslatedName": "Incident",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10067",
+        "description": "[Private text redacted]",
+        "name": "Initiative",
+        "untranslatedName": "Initiative",
+        "subtask": false,
+        "hierarchyLevel": 4
+      },
+      {
+        "id": "10093",
+        "description": "[Private text redacted]",
+        "name": "Vulnerability",
+        "untranslatedName": "Vulnerability",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10145",
+        "description": "[Private text redacted]",
+        "name": "Support Request",
+        "untranslatedName": "Support Request",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10156",
+        "description": "[Private text redacted]",
+        "name": "Research item",
+        "untranslatedName": "Research item",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10160",
+        "description": "[Private text redacted]",
+        "name": "Precondition",
+        "untranslatedName": "Precondition",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "id": "10161",
+        "description": "[Private text redacted]",
+        "name": "Defect",
+        "untranslatedName": "Defect",
+        "subtask": true,
+        "hierarchyLevel": -1
+      },
+      {
+        "id": "10182",
+        "description": "[Private text redacted]",
+        "name": "Outcome",
+        "untranslatedName": "Outcome",
+        "subtask": false,
+        "hierarchyLevel": 3
+      },
+      {
+        "id": "10281",
+        "description": "[Private text redacted]",
+        "name": "Milestone",
+        "untranslatedName": "Milestone",
+        "subtask": false,
+        "hierarchyLevel": 2
+      },
+      {
+        "id": "12415",
+        "description": "[Private text redacted]",
+        "name": "Wizy",
+        "untranslatedName": "Wizy",
+        "subtask": true,
+        "hierarchyLevel": -1
+      }
+    ]
+  },
+  "fields": {
+    "10000": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10000",
+                "name": "Epic"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10001": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10001",
+                "name": "Story"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10002": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10002",
+                "name": "Task"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10003": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10003",
+                "name": "Sub-task"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuelink",
+              "system": "parent"
+            },
+            "name": "Parent",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "parent"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10004": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10004",
+                "name": "Bug"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10017": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10017",
+                "name": "Test"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10018": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10018",
+                "name": "Test Set"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10019": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10019",
+                "name": "Test Plan"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10020": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10020",
+                "name": "Test Execution"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10022": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10022",
+                "name": "Sub Test Execution"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuelink",
+              "system": "parent"
+            },
+            "name": "Parent",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "parent"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10045": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10045",
+                "name": "Incident"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10067": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10067",
+                "name": "Initiative"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10093": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10093",
+                "name": "Vulnerability"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10145": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10145",
+                "name": "Support Request"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10156": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10156",
+                "name": "Research item"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10160": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10160",
+                "name": "Precondition"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10161": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10161",
+                "name": "Defect"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuelink",
+              "system": "parent"
+            },
+            "name": "Parent",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "parent"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10182": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10182",
+                "name": "Outcome"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "10281": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "10281",
+                "name": "Milestone"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "12415": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "name": "Issue Type",
+            "operations": [],
+            "allowedValues": [
+              {
+                "id": "12415",
+                "name": "Wizy"
+              }
+            ],
+            "fieldId": "issuetype"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "name": "Labels",
+            "operations": [
+              "add",
+              "set",
+              "remove"
+            ],
+            "fieldId": "labels"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuelink",
+              "system": "parent"
+            },
+            "name": "Parent",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "parent"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "10009",
+                "name": "Discovery"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "name": "Reporter",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "reporter"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ]
+  }
+}

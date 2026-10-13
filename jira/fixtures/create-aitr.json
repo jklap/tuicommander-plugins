@@ -1,0 +1,328 @@
+{
+  "projectId": "13130",
+  "projectKey": "AITR",
+  "types": {
+    "startAt": 0,
+    "maxResults": 100,
+    "total": 3,
+    "issueTypes": [
+      {
+        "id": "12624",
+        "description": "[Private text redacted]",
+        "name": "Workstream",
+        "untranslatedName": "Workstream",
+        "subtask": false,
+        "hierarchyLevel": 1,
+        "scope": {
+          "type": "PROJECT",
+          "project": {
+            "id": "13130"
+          }
+        }
+      },
+      {
+        "id": "12625",
+        "description": "[Private text redacted]",
+        "name": "Task",
+        "untranslatedName": "Task",
+        "subtask": false,
+        "hierarchyLevel": 0,
+        "scope": {
+          "type": "PROJECT",
+          "project": {
+            "id": "13130"
+          }
+        }
+      },
+      {
+        "id": "12626",
+        "description": "[Private text redacted]",
+        "name": "Sub-task",
+        "untranslatedName": "Sub-task",
+        "subtask": true,
+        "hierarchyLevel": -1,
+        "scope": {
+          "type": "PROJECT",
+          "project": {
+            "id": "13130"
+          }
+        }
+      }
+    ]
+  },
+  "fields": {
+    "12624": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "13130",
+                "name": "AI Transformation Roadmap (WIP)"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "12625": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "13130",
+                "name": "AI Transformation Roadmap (WIP)"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ],
+    "12626": [
+      {
+        "isLast": true,
+        "fields": [
+          {
+            "required": false,
+            "schema": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "name": "Assignee",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "assignee"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "issuelink",
+              "system": "parent"
+            },
+            "name": "Parent",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "parent"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "name": "Priority",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "name": "Critical",
+                "id": "1"
+              },
+              {
+                "name": "High",
+                "id": "2"
+              },
+              {
+                "name": "Medium",
+                "id": "3"
+              },
+              {
+                "name": "Low",
+                "id": "4"
+              },
+              {
+                "name": "Lowest",
+                "id": "5"
+              },
+              {
+                "name": "None",
+                "id": "10000"
+              }
+            ],
+            "fieldId": "priority"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "project",
+              "system": "project"
+            },
+            "name": "Project",
+            "operations": [
+              "set"
+            ],
+            "allowedValues": [
+              {
+                "id": "13130",
+                "name": "AI Transformation Roadmap (WIP)"
+              }
+            ],
+            "fieldId": "project"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "system": "summary"
+            },
+            "name": "Summary",
+            "operations": [
+              "set"
+            ],
+            "fieldId": "summary"
+          }
+        ]
+      }
+    ]
+  }
+}

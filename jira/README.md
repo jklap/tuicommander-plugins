@@ -77,3 +77,12 @@ replacing the unrecorded fixture. Desktop plugin loading waits for the core
 account fetch and provider registration integration; verify after Boss's restart.
 
 Detail values include Summary, Description, Assignee and Labels. Issue type uses its human name; priority and type field values retain request IDs, resolved through schema option labels by the core detail view.
+
+Create metadata omits Project and Issue Type because `projectId` and the selected
+type supply those values. `lookupUsers(fieldId, query)` uses project-scoped
+assignable-user search for Assignee and user search for Reporter, returning Cloud
+account IDs or Data Center usernames. User search is read-only and bounded to 50
+results; refine the query if the desired user is absent. The core create form
+accepts free labels and reports missing required values beside their controls.
+Parent issue keys are encoded as Jira `{key}` objects during creation.
+

@@ -32,6 +32,7 @@ export function commentPage(page) {
 
 export function fieldSchema(field) {
   const type = field.schema?.type;
-  const kind = field.fieldId === 'description' ? 'markdown' : field.allowedValues?.length ? 'enum' : type === 'user' ? 'user' : type === 'number' ? 'number' : type === 'date' ? 'date' : type === 'array' && field.schema.items === 'string' ? 'labels' : 'text';
-  return { sortable: false, groupable: false, filterable: false, id: field.fieldId, name: field.name, kind, required: !!field.required, editable: (field.operations ?? ['set']).includes('set'), options: (field.allowedValues ?? []).map((o) => ({ id: String(typeof o === 'string' ? o : o.id ?? o.value ?? o.name), name: typeof o === 'string' ? o : o.name ?? o.value ?? o.displayName })) };
+  const kind = field.fieldId === 'description' ? 'markdown' : type === 'user' ? 'user' : field.allowedValues?.length ? 'enum' : type === 'number' ? 'number' : type === 'date' ? 'date' : type === 'array' && field.schema.items === 'string' ? 'labels' : 'text';
+  return { sortable: false, groupable: false, filterable: false, id: field.fieldId, name: field.name, kind, required: !!field.required, editable: (field.operations ?? ['set']).includes('set'), options: (field.allowedValues ?? []).map((o) => ({ id: String(typeof o === 'string' ? o : o.accountId ?? o.id ?? o.value ?? o.name), name: typeof o === 'string' ? o : o.name ?? o.value ?? o.displayName })) };
+
 }

@@ -24,6 +24,6 @@ export function creationPort(client, projectId) {
       if (page.isLast === true || !batch.length || start >= page.total || (page.total == null && page.isLast == null)) break;
     }
     // Title and body are fixed form inputs, not schema fields.
-    return fields.filter((f) => f.id !== 'summary' && f.id !== 'description');
+    return fields.filter((f) => f.id !== 'summary' && f.id !== 'description' && f.id !== 'project' && f.id !== 'issuetype');
   };
 }

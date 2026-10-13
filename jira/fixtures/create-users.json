@@ -1,0 +1,29 @@
+[
+  {
+    "accountId": "review-user-2",
+    "accountType": "atlassian",
+    "displayName": "Reviewer 2",
+    "active": true,
+    "timeZone": "Europe/Berlin",
+    "locale": "en_US",
+    "guest": false
+  },
+  {
+    "accountId": "review-user-4",
+    "accountType": "atlassian",
+    "displayName": "Reviewer 4",
+    "active": true,
+    "timeZone": "Europe/Berlin",
+    "locale": "en_US",
+    "guest": false
+  },
+  {
+    "accountId": "review-user-5",
+    "accountType": "atlassian",
+    "displayName": "Reviewer 5",
+    "active": true,
+    "timeZone": "Europe/Berlin",
+    "locale": "en_US",
+    "guest": false
+  }
+]

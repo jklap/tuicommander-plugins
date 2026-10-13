@@ -51,6 +51,7 @@ export function createJiraProvider(options) {
       const selected = field.value[0];
       return selected ? cloud ? { accountId: selected.id } : { name: selected.id } : null;
     }
+    if (id === 'parent') return { key: field.value };
     if (id === 'project' || id === 'issuetype' || id === 'status') throw new Error('Use a typed Jira project, type or transition');
     return field.value;
   }
@@ -123,6 +124,15 @@ export function createJiraProvider(options) {
         groups.get(id).items.push(item);
       }
       return { groups: [...groups.values()], nextCursor: page.nextCursor };
+    },
+    async lookupUsers(fieldId, query) {
+      if (!query.trim()) return [];
+      const params = new URLSearchParams({ [cloud ? 'query' : 'username']: query.trim(), maxResults: '50' });
+      if (fieldId === 'assignee') params.set('project', options.projectId);
+      const path = fieldId === 'assignee' ? 'user/assignable/search' : 'user/search';
+      const users = await request(`${api}/${path}?${params}`);
+      if (!Array.isArray(users)) throw new Error('Invalid Jira user search response');
+      return users.filter((u) => u.active !== false).map((u) => ({ id: cloud ? u.accountId : u.name, name: u.displayName ?? u.name })).filter((u) => u.id);
     },
     detail, comments, act, createFields, board: boards.board, resolveUrl,
   };
