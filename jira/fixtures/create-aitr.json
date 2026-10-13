@@ -65,7 +65,8 @@
             "operations": [
               "set"
             ],
-            "fieldId": "assignee"
+            "fieldId": "assignee",
+            "hasDefaultValue": false
           },
           {
             "required": false,
@@ -103,7 +104,8 @@
                 "id": "10000"
               }
             ],
-            "fieldId": "priority"
+            "fieldId": "priority",
+            "hasDefaultValue": true
           },
           {
             "required": true,
@@ -121,7 +123,8 @@
                 "name": "AI Transformation Roadmap (WIP)"
               }
             ],
-            "fieldId": "project"
+            "fieldId": "project",
+            "hasDefaultValue": false
           },
           {
             "required": true,
@@ -133,7 +136,8 @@
             "operations": [
               "set"
             ],
-            "fieldId": "summary"
+            "fieldId": "summary",
+            "hasDefaultValue": false
           }
         ]
       }
@@ -152,7 +156,8 @@
             "operations": [
               "set"
             ],
-            "fieldId": "assignee"
+            "fieldId": "assignee",
+            "hasDefaultValue": false
           },
           {
             "required": false,
@@ -190,7 +195,8 @@
                 "id": "10000"
               }
             ],
-            "fieldId": "priority"
+            "fieldId": "priority",
+            "hasDefaultValue": true
           },
           {
             "required": true,
@@ -208,7 +214,8 @@
                 "name": "AI Transformation Roadmap (WIP)"
               }
             ],
-            "fieldId": "project"
+            "fieldId": "project",
+            "hasDefaultValue": false
           },
           {
             "required": true,
@@ -220,7 +227,8 @@
             "operations": [
               "set"
             ],
-            "fieldId": "summary"
+            "fieldId": "summary",
+            "hasDefaultValue": false
           }
         ]
       }
@@ -239,7 +247,8 @@
             "operations": [
               "set"
             ],
-            "fieldId": "assignee"
+            "fieldId": "assignee",
+            "hasDefaultValue": false
           },
           {
             "required": true,
@@ -251,7 +260,8 @@
             "operations": [
               "set"
             ],
-            "fieldId": "parent"
+            "fieldId": "parent",
+            "hasDefaultValue": false
           },
           {
             "required": false,
@@ -289,7 +299,8 @@
                 "id": "10000"
               }
             ],
-            "fieldId": "priority"
+            "fieldId": "priority",
+            "hasDefaultValue": true
           },
           {
             "required": true,
@@ -307,7 +318,8 @@
                 "name": "AI Transformation Roadmap (WIP)"
               }
             ],
-            "fieldId": "project"
+            "fieldId": "project",
+            "hasDefaultValue": false
           },
           {
             "required": true,
@@ -319,7 +331,8 @@
             "operations": [
               "set"
             ],
-            "fieldId": "summary"
+            "fieldId": "summary",
+            "hasDefaultValue": false
           }
         ]
       }

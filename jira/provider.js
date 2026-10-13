@@ -65,7 +65,7 @@ export function createJiraProvider(options) {
         const input = field.id === 'summary' ? value.title : field.id === 'description' ? value.body : value.fields[field.id]?.value;
         if (field.required && field.id !== 'project' && field.id !== 'issuetype' && (input == null || input === '' || Array.isArray(input) && !input.length)) throw new Error(`Jira required field: ${field.name}`);
       }
-      const fields = Object.fromEntries(Object.entries(value.fields).filter(([id]) => id !== 'project').map(([id, f]) => [id, rawField(id, f)]));
+      const fields = Object.fromEntries(Object.entries(value.fields).filter(([id, f]) => id !== 'project' && f != null).map(([id, f]) => [id, rawField(id, f)]));
       fields.summary = value.title;
       fields.issuetype = { id: value.itemType };
       fields.project = { id: options.projectId ?? value.fields.project.value };
@@ -125,6 +125,8 @@ export function createJiraProvider(options) {
       }
       return { groups: [...groups.values()], nextCursor: page.nextCursor };
     },
+    // Jira user fields hold one user; a multi-user picker is an array field and never reaches this kind.
+    singleUser: () => true,
     async lookupUsers(fieldId, query) {
       if (!query.trim()) return [];
       const params = new URLSearchParams({ [cloud ? 'query' : 'username']: query.trim(), maxResults: '50' });
