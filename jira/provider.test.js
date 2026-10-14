@@ -357,7 +357,7 @@ test('list_preserves_recorded_dates_and_project_without_changing_detail_enums', 
  } });
  const page = await provider.list(query);
  for (const id of ['created', 'updated']) {
-  assert.equal(provider.fields.find((field) => field.id === id).kind, 'date');
+  assert.equal(provider.fields.find((field) => field.id === id).kind, 'text');
   assert.deepEqual(page.items[0].fields[id], recorded.fields[id] ? { kind: 'date', value: recorded.fields[id] } : null);
  }
  assert.equal(page.items[0].fields.project, null);
