@@ -1,0 +1,4225 @@
+{
+  "groups": [
+    {
+      "id": "6",
+      "name": "[name redacted]",
+      "items": [
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23350"
+          },
+          "key": "LAN-23350",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T13:07:10.833+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23334"
+          },
+          "key": "LAN-23334",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T13:02:05.226+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23360"
+          },
+          "key": "LAN-23360",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "TW",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T12:58:54.683+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-11-07"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22953"
+          },
+          "key": "LAN-22953",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Visibility-Domain",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-arm",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T12:55:07.656+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22885"
+          },
+          "key": "LAN-22885",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T12:42:22.797+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2027-02-15"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "4"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23228"
+          },
+          "key": "LAN-23228",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-featureparity",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:56:31.160+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23396"
+          },
+          "key": "LAN-23396",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "NetworkDiscovery",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:11:23.713+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-11-07"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23436"
+          },
+          "key": "LAN-23436",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Maintenance",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:50:18.584+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23361"
+          },
+          "key": "LAN-23361",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Maintenance",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:49:14.430+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20154"
+          },
+          "key": "LAN-20154",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "BCG-FollowUp",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Enterprise",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "arcane-bug-triage",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "bcg",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "scry-confirmed",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:48:23.866+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-17"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20606"
+          },
+          "key": "LAN-20606",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:48:23.136+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-11-07"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20355"
+          },
+          "key": "LAN-20355",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:48:21.660+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-26"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "4"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-18820"
+          },
+          "key": "LAN-18820",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "H2-2025",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "NEXT",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "OT",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "R&D",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Visibility-Domain",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:48:20.672+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23342"
+          },
+          "key": "LAN-23342",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "OT",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:19:44.920+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2027-01-05"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-18611"
+          },
+          "key": "LAN-18611",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "OT",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:19:23.246+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23163"
+          },
+          "key": "LAN-23163",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "OT",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:18:22.279+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23353"
+          },
+          "key": "LAN-23353",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:55:01.288+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-18190"
+          },
+          "key": "LAN-18190",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Enterprise",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "arcane-bug-triage",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "scry-confirmed",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:53:18.940+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-07-18"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-21661"
+          },
+          "key": "LAN-21661",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q3-MVP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:35:12.466+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-09"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "2"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23423"
+          },
+          "key": "LAN-23423",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:06:57.437+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-16"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23335"
+          },
+          "key": "LAN-23335",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-featureparity",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:47:17.263+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23349"
+          },
+          "key": "LAN-23349",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-featureparity",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:46:29.377+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23348"
+          },
+          "key": "LAN-23348",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "6",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-featureparity",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:46:23.552+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "10032",
+      "name": "[name redacted]",
+      "items": [
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22579"
+          },
+          "key": "LAN-22579",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10032",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "duplicate-assets",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "network-discovery",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "traffic-sensor",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "windows",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T12:33:45.410+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-04"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20525"
+          },
+          "key": "LAN-20525",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10032",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "NetworkDiscovery",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "R&D",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Security",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-credentials",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:25:14.121+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16248"
+          },
+          "key": "LAN-16248",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10032",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ncore",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T07:01:52.641+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-08-08"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "10029",
+      "name": "[name redacted]",
+      "items": [
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-21575"
+          },
+          "key": "LAN-21575",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q3-MVP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T12:33:01.783+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-16"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22226"
+          },
+          "key": "LAN-22226",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q3-MVP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T12:33:01.301+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-11-27"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20770"
+          },
+          "key": "LAN-20770",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q3-MVP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T12:33:01.289+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-30"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "4"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23438"
+          },
+          "key": "LAN-23438",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "OT",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:30:32.325+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22215"
+          },
+          "key": "LAN-22215",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "MoDisc-Test-Automation",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "NeedsRefinement",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "NetworkDiscovery",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "R&D",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:29:44.222+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23422"
+          },
+          "key": "LAN-23422",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T11:11:38.456+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2027-01-10"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23434"
+          },
+          "key": "LAN-23434",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T11:11:35.414+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2027-01-11"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23412"
+          },
+          "key": "LAN-23412",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [],
+          "updatedAt": "2026-10-13T11:11:11.755+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2027-01-07"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23428"
+          },
+          "key": "LAN-23428",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "OT",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:15:19.468+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23417"
+          },
+          "key": "LAN-23417",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:06:22.662+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23426"
+          },
+          "key": "LAN-23426",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:08:06.597+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-15645"
+          },
+          "key": "LAN-15645",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T07:01:52.966+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-02-01"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16085"
+          },
+          "key": "LAN-16085",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T07:01:52.783+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-06-13"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16125"
+          },
+          "key": "LAN-16125",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T07:01:52.670+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-06-24"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16230"
+          },
+          "key": "LAN-16230",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Enterprise",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Support-high",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T07:01:52.610+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-03-13"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "2"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16100"
+          },
+          "key": "LAN-16100",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T07:01:52.586+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-06-16"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16287"
+          },
+          "key": "LAN-16287",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T07:01:52.523+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-08-16"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16449"
+          },
+          "key": "LAN-16449",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T07:01:52.462+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-09-30"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "4"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16575"
+          },
+          "key": "LAN-16575",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T07:01:52.413+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-11-17"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-15741"
+          },
+          "key": "LAN-15741",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T07:01:52.413+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-02-19"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "4"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-15968"
+          },
+          "key": "LAN-15968",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "LHF",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "NeedsRefinement",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Reproducible",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Support_open",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T07:01:52.201+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-04-19"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "4"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16697"
+          },
+          "key": "LAN-16697",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T07:01:52.173+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2025-01-04"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16817"
+          },
+          "key": "LAN-16817",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10029",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [],
+          "updatedAt": "2026-10-13T07:01:51.846+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2025-02-08"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "10000",
+      "name": "[value redacted]",
+      "items": [
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-19361"
+          },
+          "key": "LAN-19361",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T12:33:01.289+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-12-23"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-18002"
+          },
+          "key": "LAN-18002",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "D1-Refinement",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Enterprise",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Support_open",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:50:12.211+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-04-25"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23402"
+          },
+          "key": "LAN-23402",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:33:05.923+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-23"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20748"
+          },
+          "key": "LAN-20748",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "NeedsRefinement",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q3-MVP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:31:12.972+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-09-18"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20724"
+          },
+          "key": "LAN-20724",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "NeedsRefinement",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q3-MVP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:27:43.197+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-09-23"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22944"
+          },
+          "key": "LAN-22944",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:26:24.091+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-16"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20501"
+          },
+          "key": "LAN-20501",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:26:05.874+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-23"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23260"
+          },
+          "key": "LAN-23260",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:24:44.827+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-16"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22643"
+          },
+          "key": "LAN-22643",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q3-MVP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:24:07.878+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-16"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "2"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23019"
+          },
+          "key": "LAN-23019",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T11:20:04.493+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-07"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22238"
+          },
+          "key": "LAN-22238",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Discovery.Tests",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Maintenance",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:01:21.667+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-09-07"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "2"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23435"
+          },
+          "key": "LAN-23435",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Discovery.Tests",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Maintenance",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:44:05.073+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-11-12"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23433"
+          },
+          "key": "LAN-23433",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:56:17.188+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-16497"
+          },
+          "key": "LAN-16497",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "H1-2026",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Visibility-Domain",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:25:17.008+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2024-10-27"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-19363"
+          },
+          "key": "LAN-19363",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:25:01.468+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-09-10"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-21903"
+          },
+          "key": "LAN-21903",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:24:28.752+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-09-13"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20356"
+          },
+          "key": "LAN-20356",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:24:03.257+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-26"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "4"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23252"
+          },
+          "key": "LAN-23252",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:21:39.889+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-12"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23421"
+          },
+          "key": "LAN-23421",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:13:36.620+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-19864"
+          },
+          "key": "LAN-19864",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Uninstall",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:13:17.632+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-03"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-15865"
+          },
+          "key": "LAN-15865",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10000",
+            "name": "[value redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "LsAgent",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Support_open",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T07:01:52.415+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2023-10-25"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "2"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "[value redacted]",
+      "items": [
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23229"
+          },
+          "key": "LAN-23229",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-featureparity",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:59:15.238+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22239"
+          },
+          "key": "LAN-22239",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Visibility-Domain",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-featureparity",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:58:50.995+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-12-30"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23230"
+          },
+          "key": "LAN-23230",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-featureparity",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:58:49.419+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23424"
+          },
+          "key": "LAN-23424",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [],
+          "updatedAt": "2026-10-13T11:57:51.575+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-19904"
+          },
+          "key": "LAN-19904",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q3-MVP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:37:59.519+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-12-23"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "2"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22802"
+          },
+          "key": "LAN-22802",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:37:57.885+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-16"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "2"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-18799"
+          },
+          "key": "LAN-18799",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "H2-2025",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "OT",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:29:59.625+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-12-31"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23437"
+          },
+          "key": "LAN-23437",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:21:21.620+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23382"
+          },
+          "key": "LAN-23382",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:10:36.709+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23427"
+          },
+          "key": "LAN-23427",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:57:36.338+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-16"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "2"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-19871"
+          },
+          "key": "LAN-19871",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Visibility-Domain",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-arm",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:42:32.142+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-03"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23418"
+          },
+          "key": "LAN-23418",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:40:42.731+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-19814"
+          },
+          "key": "LAN-19814",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q3-MVP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:29:24.648+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-12-23"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20829"
+          },
+          "key": "LAN-20829",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "R&D",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "SNMP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Visibility-Domain",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:15:56.069+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-12-31"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-18071"
+          },
+          "key": "LAN-18071",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [],
+          "updatedAt": "2026-10-13T08:49:04.683+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-12-31"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-18778"
+          },
+          "key": "LAN-18778",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "MoDisc-Test-Automation",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "NetworkDiscovery",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q3-MVP",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Q4-Deliverable",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "R&D",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "TEST-LAB",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-ta",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:39:34.751+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-12-23"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "2"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20845"
+          },
+          "key": "LAN-20845",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "R&D",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Visibility-Domain",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:12:16.909+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-12-31"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20828"
+          },
+          "key": "LAN-20828",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "3",
+            "name": "[value redacted]",
+            "tone": "info"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "R&D",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Visibility-Domain",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T07:22:48.836+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-12-31"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "name": "[name redacted]",
+      "items": [
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23233"
+          },
+          "key": "LAN-23233",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "1",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-featureparity",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T11:56:37.420+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20883"
+          },
+          "key": "LAN-20883",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "1",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Enterprise",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "arcane-bug-triage",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "scry-confirmed",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:49:20.689+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-11-20"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "4"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23431"
+          },
+          "key": "LAN-23431",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "1",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Visibility-Domain",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-arm",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:42:30.574+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23263"
+          },
+          "key": "LAN-23263",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "1",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "FeatureTeam",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "feat-credentials",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:13:09.120+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-11-12"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-23404"
+          },
+          "key": "LAN-23404",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "1",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [],
+          "updatedAt": "2026-10-13T10:07:30.725+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "priority": {
+              "kind": "enum",
+              "value": "10000"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-18273"
+          },
+          "key": "LAN-18273",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "1",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T09:49:30.155+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-08-21"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-22083"
+          },
+          "key": "LAN-22083",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "1",
+            "name": "[name redacted]",
+            "tone": "info"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:42:30.997+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2027-01-21"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "4"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "10250",
+      "name": "[name redacted]",
+      "items": [
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-17990"
+          },
+          "key": "LAN-17990",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10250",
+            "name": "[name redacted]",
+            "tone": "success"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "ActiveWork",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Released",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T10:36:11.746+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-04-23"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-20024"
+          },
+          "key": "LAN-20024",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10250",
+            "name": "[name redacted]",
+            "tone": "success"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Elopark",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Enterprise",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "SR_Priority",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:21:58.887+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-10-10"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-18176"
+          },
+          "key": "LAN-18176",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10250",
+            "name": "[name redacted]",
+            "tone": "success"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "ActiveDirectory",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "DQ",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:19:37.193+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-07-13"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        },
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-18164"
+          },
+          "key": "LAN-18164",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "10250",
+            "name": "[name redacted]",
+            "tone": "success"
+          },
+          "assignees": [],
+          "labels": [
+            {
+              "id": "Classic",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Enterprise",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "arcane-bug-triage",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "scry-confirmed",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:19:35.121+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-07-03"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "12814",
+      "name": "[name redacted]",
+      "items": [
+        {
+          "reference": {
+            "providerId": "jira",
+            "accountId": "[user redacted]",
+            "id": "LAN-21269"
+          },
+          "key": "LAN-21269",
+          "title": "[private text redacted]",
+          "itemType": "[value redacted]",
+          "state": {
+            "id": "12814",
+            "name": "[name redacted]",
+            "tone": "neutral"
+          },
+          "assignees": [
+            {
+              "id": "[user redacted]",
+              "name": "[name redacted]",
+              "avatarUrl": "[user redacted]"
+            }
+          ],
+          "labels": [
+            {
+              "id": "CleanupOptions",
+              "name": "[name redacted]"
+            },
+            {
+              "id": "Ready",
+              "name": "[name redacted]"
+            }
+          ],
+          "updatedAt": "2026-10-13T08:20:00.719+0200",
+          "url": "[url redacted]",
+          "fields": {
+            "duedate": {
+              "kind": "date",
+              "value": "2026-08-14"
+            },
+            "priority": {
+              "kind": "enum",
+              "value": "3"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "nextCursor": "[opaque cursor]"
+}

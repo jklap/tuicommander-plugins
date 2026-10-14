@@ -14,3 +14,5 @@ synthetic documentation-shape fixture and is not live evidence.
 type, recorded the same way (GET only, 2026-10-13). Every field Jira offered is
 kept; only the allowed values are cut to the first 12 per field, and issue type
 descriptions are blanked. It exists to test the layout of a wide schema.
+
+`grouped-priority-model.json` is the scrubbed provider model recorded during the read-only Jira review on 2026-10-13. It preserves the observed status-grouped result of a priority grouping request. The host regression uses these rows and the real provider declarations to verify unsupported groups are not offered; it is not a REST response or evidence of live server acceptance.
