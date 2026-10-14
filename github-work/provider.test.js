@@ -320,3 +320,12 @@ test("project_discovery_names_missing_read_project_scope", async () => {
  const { provider } = setup([{ json: fixture("project-scope-error") }]);
  await assert.rejects(provider.listBoards(), /read:project/);
 });
+
+// Catches: local Created/Comments controls operate on missing values although REST supplied both.
+test("search_rows_retain_declared_created_and_comment_fields_for_local_queries", async () => {
+ const payload = fixture("search");
+ const { provider } = setup([{ json: payload }]);
+ const page = await provider.list(emptyQuery());
+ assert.deepEqual(page.items[0].fields.createdAt, { kind: "date", value: payload.items[0].created_at });
+ assert.deepEqual(page.items[0].fields.comments, { kind: "number", value: payload.items[0].comments });
+});
