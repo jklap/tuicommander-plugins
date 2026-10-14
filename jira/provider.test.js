@@ -346,3 +346,21 @@ test('detail_declares_edit_field_only_with_settable_metadata', async () => {
   assert.equal(detail.actions.some((a) => a.kind === 'edit_field' && a.enabled), editable);
  }
 });
+
+// Catches: list dates and project scope are advertised but discarded, while detail enums must remain editable.
+test('list_preserves_recorded_dates_and_project_without_changing_detail_enums', async () => {
+ const recorded = JSON.parse(readFileSync(new URL('./fixtures/detail-recorded.json', import.meta.url), 'utf8'));
+ const provider = createJiraProvider({ account, fetch: async (req) => {
+  assert.ok(req.body.fields.includes('created'));
+  assert.ok(req.body.fields.includes('project'));
+  return ok({ issues: [recorded], isLast: true });
+ } });
+ const page = await provider.list(query);
+ for (const id of ['created', 'updated']) {
+  assert.equal(provider.fields.find((field) => field.id === id).kind, 'date');
+  assert.deepEqual(page.items[0].fields[id], recorded.fields[id] ? { kind: 'date', value: recorded.fields[id] } : null);
+ }
+ assert.equal(page.items[0].fields.project, null);
+ assert.deepEqual(page.items[0].fields.status, { kind: 'text', value: String(recorded.fields.status.id) });
+ assert.deepEqual(page.items[0].fields.priority, { kind: 'enum', value: '10000' });
+});

@@ -50,7 +50,7 @@ export function buildJql(query, textFallback = false) {
 export async function search(client, query, allowFallback = true) {
   const limit = Math.max(1, Math.min(100, Math.floor(query.limit || 50)));
   async function run(fallback) {
-    const body = { jql: buildJql(query, fallback), maxResults: limit, fields: ['summary', 'status', 'assignee', 'labels', 'updated', 'issuetype', 'priority', 'duedate'] };
+    const body = { jql: buildJql(query, fallback), maxResults: limit, fields: ['summary', 'status', 'assignee', 'labels', 'updated', 'issuetype', 'priority', 'duedate', 'created', 'project'] };
     if (client.cloud) {
       if (query.cursor) body.nextPageToken = query.cursor;
       return client.request(`${client.api}/search/jql`, { method: 'POST', body });

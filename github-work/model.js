@@ -102,6 +102,8 @@ export function item(value, accountId, repository, kind) {
     url: value.html_url,
     fields: {
       title: { kind: "text", value: value.title },
+      createdAt: value.created_at ? { kind: "date", value: value.created_at } : null,
+      comments: Number.isFinite(value.comments) ? { kind: "number", value: value.comments } : null,
       body: { kind: "markdown", value: value.body ?? "" },
       state: { kind: "enum", value: value.state },
       assignees: { kind: "user", value: assignees },
