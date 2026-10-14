@@ -115,7 +115,7 @@ export function createJiraProvider(options) {
     boards: (options.boards ?? []).map((b) => ({ id: String(b.id), name: b.name, fieldId: 'status', columns: [] })),
     savedFilters: presets.map((p) => ({ id: p.id, name: p.name, query: { ...emptyQuery, savedFilterId: p.id } })),
     async verify() { return request(`${api}/myself`); },
-    async list(query) { const page = await search(client, query); return { items: page.issues.map(toItem), nextCursor: page.nextCursor }; },
+    async list(query) { const page = await search(client, query); return { items: page.issues.map(toItem), nextCursor: page.nextCursor, ...(page.total === undefined ? {} : { total: page.total }) }; },
     async grouped(query) {
       const page = await this.list(query);
       const groups = new Map();

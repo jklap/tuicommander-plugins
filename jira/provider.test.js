@@ -320,3 +320,13 @@ test('list_fields_have_readable_names', () => {
   ]);
 
 });
+
+// Catches: a fabricated Cloud total inferred from rows/cursor, or a real DC total discarded.
+test('unknown_cloud_total_and_known_dc_total_keep_their_meaning', async () => {
+ for (const kind of ['basic', 'bearer']) {
+  const provider = createJiraProvider({ account: { ...account, kind }, fetch: async () => ok(kind === 'basic' ? { issues: [fixture.issue], nextPageToken: 'next' } : { issues: [fixture.issue], startAt: 0, total: 120 }) });
+  const result = await provider.list(query);
+  assert.equal(result.total, kind === 'basic' ? undefined : 120);
+  assert.equal(result.nextCursor, kind === 'basic' ? 'next' : '1');
+ }
+});

@@ -48,7 +48,7 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
         throw new Error("Malformed GitHub search response");
       if (json.incomplete_results) throw new Error("GitHub search returned incomplete results; narrow the query");
       const current = pageNumber(query.cursor);
-      return { items: json.items.map((v) => item(v, accountId)), nextCursor: nextPage(headers, current) };
+      return { items: json.items.map((v) => item(v, accountId)), nextCursor: nextPage(headers, current), total: json.total_count };
     },
     async duplicates(title, signal) {
       if (!title.trim()) return { items: [], nextCursor: null };

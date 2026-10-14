@@ -73,5 +73,5 @@ export async function search(client, query, allowFallback = true) {
   }
   if (!Array.isArray(page?.issues)) throw new Error('Invalid Jira search response');
   const nextOffset = (page.startAt ?? 0) + page.issues.length;
-  return { issues: page.issues, nextCursor: client.cloud ? (page.isLast === true ? null : page.nextPageToken ?? null) : nextOffset < page.total && page.issues.length ? String(nextOffset) : null };
+  return { issues: page.issues, total: client.cloud ? undefined : page.total, nextCursor: client.cloud ? (page.isLast === true ? null : page.nextPageToken ?? null) : nextOffset < page.total && page.issues.length ? String(nextOffset) : null };
 }

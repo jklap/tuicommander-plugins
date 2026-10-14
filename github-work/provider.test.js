@@ -283,3 +283,11 @@ test('declared_query_capabilities_never_offer_rejected_options', async () => {
     }
   }
 });
+
+// Catches: total_count discarded, preventing the host from recognizing a complete small scope.
+test("list_preserves_recorded_search_total", async () => {
+ const fixture = JSON.parse(readFileSync(new URL("./fixtures/search.json", import.meta.url), "utf8"));
+ const provider = createGitHubProvider({ accountId: "a", repository: "demo/widgets", fetch: async () => ({ status: 200, headers: {}, json: fixture }) });
+ const result = await provider.list({ filters: [], search: "", savedFilterId: null, sort: null, groupBy: null, cursor: null, limit: 100 });
+ assert.equal(result.total, fixture.total_count);
+});
