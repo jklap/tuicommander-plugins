@@ -302,3 +302,21 @@ test("detail_declares_edit_field_for_supported_issue_and_pull_fields", async () 
   assert.equal(detail.fields.find((f) => f.id === "state").editable, false);
  }
 });
+
+// Documented GitHub GraphQL ProjectsV2Connection shape; success is not a live account recording.
+// Catches: only the first Projects page is offered, or duplicate IDs appear twice.
+test("project_discovery_pages_and_preserves_board_identities", async () => {
+ const { provider, requests } = setup([
+  { json: { data: { viewer: { projectsV2: { nodes: [{ id: "P1", title: "Sprint" }], pageInfo: { hasNextPage: true, endCursor: "next" } } } } } },
+  { json: { data: { viewer: { projectsV2: { nodes: [{ id: "P1", title: "Sprint" }, { id: "P2", title: "Backlog" }], pageInfo: { hasNextPage: false, endCursor: null } } } } } },
+ ]);
+ const boards = await provider.listBoards();
+ assert.deepEqual(boards.map((b) => [b.id, b.name]), [["P1", "Sprint"], ["P2", "Backlog"]]);
+ assert.equal(requests[1].body.variables.after, "next");
+ assert.ok(requests.every((r) => r.body.query.startsWith("query ")));
+});
+// Catches: the recorded insufficient-scope error is replaced by a generic board failure.
+test("project_discovery_names_missing_read_project_scope", async () => {
+ const { provider } = setup([{ json: fixture("project-scope-error") }]);
+ await assert.rejects(provider.listBoards(), /read:project/);
+});

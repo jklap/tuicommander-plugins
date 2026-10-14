@@ -22,6 +22,28 @@ export class Projects {
     this.memberships = new Map();
     this.fields = new Map();
   }
+  async list(signal) {
+    const boards = [];
+    const cursors = new Set();
+    let after = null;
+    do {
+      const data = await this.client.graphql(
+        'query UserProjects($after:String) { viewer { projectsV2(first:100,after:$after) { nodes { id title } pageInfo { hasNextPage endCursor } } } }',
+        { after }, signal,
+      );
+      const page = data.viewer?.projectsV2;
+      if (!Array.isArray(page?.nodes) || !page.pageInfo) throw new Error('Invalid GitHub Projects response');
+      for (const node of page.nodes) {
+        if (typeof node?.id !== 'string' || typeof node.title !== 'string') throw new Error('Invalid GitHub project');
+        if (!boards.some((board) => board.id === node.id)) boards.push({ id: node.id, name: node.title, fieldId: '', columns: [] });
+      }
+      if (!page.pageInfo.hasNextPage) return boards;
+      after = page.pageInfo.endCursor;
+      if (!after || cursors.has(after)) throw new Error('GitHub Projects cursor did not advance');
+      cursors.add(after);
+    } while (cursors.size <= 100);
+    throw new Error('GitHub Projects discovery exceeds 100 pages');
+  }
   async read(projectId, query, signal) {
     // Projects filtering/search differs from issue search; do not silently ignore a query.
     if (query.search || query.filters.length || query.savedFilterId || query.sort)

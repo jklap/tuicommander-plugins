@@ -82,3 +82,5 @@ Projects API reference:
 https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
 
 Task details declare the `edit_field` action for API-editable schema fields. The host enables only fields marked editable; Jira requires an explicit `set` operation and keeps project, issue type and status on their typed workflows. Save errors remain visible without discarding the draft.
+
+Opening Tasks Board discovers the current user Projects v2 through paged `viewer.projectsV2` queries. Select a returned project in the core picker. A missing scope error names `read:project`. Discovery success tests use documented GraphQL response shapes; the insufficient-scope fixture is recorded. No live successful Projects discovery is claimed.

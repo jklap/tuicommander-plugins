@@ -42,6 +42,9 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
     },
     savedFilters,
     boards: [],
+    async listBoards(signal) {
+      return projects.list(signal);
+    },
     resolveUrl: (url) => resolveUrl(url, accountId, webOrigin),
     async list(query, signal) {
       const { json, headers } = await client.request(searchPath(repository, query), "GET", undefined, signal);
