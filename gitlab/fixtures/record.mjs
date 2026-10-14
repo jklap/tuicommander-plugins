@@ -47,17 +47,18 @@ const recorded = {
   issuesPage: await exchange('GET', `${P}/issues?state=opened&per_page=1&page=1`),
 };
 
-// Scrub rules: instance origin, avatar URLs (gravatar hashes derive from e-mail), e-mail addresses.
+// Scrub rules: token fields and prefixes, instance origin, avatar URLs and e-mail addresses.
 const ORIGIN = 'https://gitlab.example.invalid:8443';
 const scrub = (value) => {
   if (typeof value === 'string') {
-    return value.replaceAll(base, ORIGIN)
+    return value.replace(/(?:glpat-|glrt-|GR1348941)[A-Za-z0-9_-]+/g, 'REDACTED')
+      .replaceAll(base, ORIGIN)
       .replaceAll(new URL(base).hostname, 'gitlab.example.invalid')
       .replace(/https:\/\/www\.gravatar\.com\/avatar\/[0-9a-f]+\?[^"\s]*/g, `${ORIGIN}/avatar.png`)
       .replace(/[\w.+-]+@[\w-]+(\.[\w-]+)+/g, 'user@example.invalid');
   }
   if (Array.isArray(value)) return value.map(scrub);
-  if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, scrub(v)]));
+  if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, /token/i.test(k) ? 'REDACTED' : scrub(v)]));
   return value;
 };
 
@@ -67,7 +68,7 @@ const out = {
     gitlab: `${version.version} (${version.revision})`,
     image: process.env.GITLAB_IMAGE ?? 'gitlab/gitlab-ce:latest',
     recordedAt: new Date().toISOString(),
-    scrubbed: ['instance origin -> ' + ORIGIN, 'bare hostname (ssh URLs)', 'gravatar avatar URLs', 'e-mail addresses'],
+    scrubbed: ['token-named fields -> REDACTED', 'GitLab token prefixes -> REDACTED', 'instance origin -> ' + ORIGIN, 'bare hostname (ssh URLs)', 'gravatar avatar URLs', 'e-mail addresses'],
     note: 'Pipeline and job rows were driven to success/failed through the Rails console (no runner); the trace is served by the real trace endpoint.',
   },
   ...scrub(recorded),

@@ -73,8 +73,10 @@ Planning dates remain available to the roadmap. They set `queryable: false` so t
 `fixtures/recorded.json` holds responses **recorded from a GitLab CE container**
 (version and image digest in its `_provenance` block) and scrubbed: instance origin
 and hostname become `gitlab.example.invalid:8443`, avatar URLs and e-mail addresses
-are replaced; no token is ever stored. Every test derives ids, paths and expected
-values from it.
+are replaced. Fields whose names contain `token` (case-insensitive) become
+`REDACTED`, including nested fields. GitLab token prefixes `glpat-`, `glrt-` and
+`GR1348941` in string values are also replaced with `REDACTED` before writing.
+Every test derives ids, paths and expected values from it.
 
 Recorded: `/user`, issue and MR detail, approvals, project merge settings, MR
 pipelines, jobs, a job trace, MR and issue discussions (system notes, a `<details>`
