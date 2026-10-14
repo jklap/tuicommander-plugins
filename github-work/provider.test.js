@@ -291,3 +291,14 @@ test("list_preserves_recorded_search_total", async () => {
  const result = await provider.list({ filters: [], search: "", savedFilterId: null, sort: null, groupBy: null, cursor: null, limit: 100 });
  assert.equal(result.total, fixture.total_count);
 });
+
+// Catches: editable fields never become available because detail omits edit_field.
+test("detail_declares_edit_field_for_supported_issue_and_pull_fields", async () => {
+ for (const [ref, name, comments] of [[issueRef, "issue", "issue-comments"], [prRef, "pull", "pull-comments"]]) {
+  const { provider } = setup([{ json: fixture(name) }, { json: fixture(comments) }]);
+  const detail = await provider.detail(ref);
+  assert.ok(detail.fields.some((f) => f.editable));
+  assert.ok(detail.actions.some((a) => a.kind === "edit_field" && a.enabled));
+  assert.equal(detail.fields.find((f) => f.id === "state").editable, false);
+ }
+});

@@ -11,6 +11,7 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
   const projects = new Projects(client, accountId);
   const compose = (mapped, json, kind, comments) => {
     const actions = [
+      { id: "edit_field", name: "Edit field", kind: "edit_field" },
       { id: "comment", name: "Comment", kind: "comment" },
       { id: "start-work", name: "Start work", kind: "start_work" },
       ...(mapped.state.id === "open"

@@ -80,3 +80,5 @@ Projects scope error is a real recording, not a successful project fixture.
 
 Projects API reference:
 https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
+
+Task details declare the `edit_field` action for API-editable schema fields. The host enables only fields marked editable; Jira requires an explicit `set` operation and keeps project, issue type and status on their typed workflows. Save errors remain visible without discarding the draft.

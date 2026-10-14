@@ -30,10 +30,15 @@ export function createJiraProvider(options) {
       request(`${path}?expand=names,schema,editmeta`), request(`${path}/transitions`), comments(ref),
     ]);
     if (!Array.isArray(transitions?.transitions)) throw new Error('Invalid Jira transitions response');
+    const fields = Object.entries(issue.editmeta?.fields ?? {}).map(([id, f]) => ({
+      ...fieldSchema({ ...f, fieldId: id }),
+      editable: !['project', 'issuetype', 'status'].includes(id) && !!f.operations?.includes('set'),
+    }));
     return {
       item: toItem(issue), body: adfToMarkdown(issue.fields.description),
-      fields: Object.entries(issue.editmeta?.fields ?? {}).map(([id, f]) => fieldSchema({ ...f, fieldId: id })),
+      fields,
       actions: [
+        ...(fields.some((field) => field.editable) ? [{ id: 'edit_field', name: 'Edit field', kind: 'edit_field', enabled: true, disabledReason: null }] : []),
         ...transitions.transitions.map((t) => ({ id: String(t.id), name: t.name, kind: 'transition', enabled: true, disabledReason: null })),
         { id: 'comment', name: 'Add comment', kind: 'comment', enabled: true, disabledReason: null },
         { id: 'start_work', name: 'Start work', kind: 'start_work', enabled: true, disabledReason: null },

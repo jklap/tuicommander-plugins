@@ -101,3 +101,5 @@ environment only.
 From the TUIC checkout: `scripts/with-test-tmp.sh pnpm --dir plugins/gitlab test`.
 
 Detail field values project the recorded title, description, labels and assignees alongside the matching header metadata.
+
+Task details declare the `edit_field` action for API-editable schema fields. The host enables only fields marked editable; Jira requires an explicit `set` operation and keeps project, issue type and status on their typed workflows. Save errors remain visible without discarding the draft.

@@ -310,3 +310,14 @@ test('every_date_field_in_the_schema_works_as_a_list_filter_and_sort', async () 
     await provider.list({ ...query, sort: { fieldId: field.id, descending: false } });
   }
 });
+
+// Catches: API-editable issue/MR fields remain read-only because detail omits the action.
+test('detail_declares_edit_field_for_issue_and_mr_schemas', async () => {
+ const provider = createGitLabProvider({ account, project: 'demo/widgets', fetch: gitlab() });
+ for (const ref of [issueRef, mrRef]) {
+  const detail = await provider.detail(ref);
+  assert.ok(detail.actions.some((a) => a.kind === 'edit_field' && a.enabled));
+  assert.ok(detail.fields.filter((f) => f.editable).length > 0);
+  assert.equal(detail.fields.some((f) => f.id === 'due'), ref === issueRef);
+ }
+});

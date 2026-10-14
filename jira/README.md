@@ -96,3 +96,6 @@ Parent issue keys are encoded as Jira `{key}` objects during creation.
 read-only enhanced search. It contains no credentials or user identities.
 The DC error test reuses its shape as an assumption, not a live DC recording.
 
+
+Task details declare the `edit_field` action for API-editable schema fields. The host enables only fields marked editable; Jira requires an explicit `set` operation and keeps project, issue type and status on their typed workflows. Save errors remain visible without discarding the draft.
+

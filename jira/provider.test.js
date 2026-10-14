@@ -330,3 +330,19 @@ test('unknown_cloud_total_and_known_dc_total_keep_their_meaning', async () => {
   assert.equal(result.nextCursor, kind === 'basic' ? 'next' : '1');
  }
 });
+
+// Catches: Jira settable fields remain unavailable, or empty metadata grants an edit control.
+test('detail_declares_edit_field_only_with_settable_metadata', async () => {
+ const recorded = JSON.parse(readFileSync(new URL('./fixtures/detail-recorded.json', import.meta.url), 'utf8'));
+ for (const editable of [true, false]) {
+  const issue = structuredClone(recorded);
+  if (!editable) issue.editmeta = { fields: {} };
+  const provider = createJiraProvider({ account, fetch: async (req) => {
+   if (req.url.includes('/transitions')) return ok({ transitions: [] });
+   if (req.url.includes('/comment')) return ok({ comments: [], total: 0 });
+   return ok(issue);
+  } });
+  const detail = await provider.detail({ ...ref, id: issue.key });
+  assert.equal(detail.actions.some((a) => a.kind === 'edit_field' && a.enabled), editable);
+ }
+});

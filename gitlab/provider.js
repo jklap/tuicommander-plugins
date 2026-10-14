@@ -52,7 +52,7 @@ export function createGitLabProvider(options) {
       request(path, { signal }).then((r) => r.json), comments(ref, null, 20, signal), projectOptions(encoded, signal),
     ]);
     const item = toItem(raw, mr);
-    const actions = [];
+    const actions = [{ id: 'edit_field', name: 'Edit field', kind: 'edit_field', enabled: true, disabledReason: null }];
     if (raw.state === 'opened') actions.push(transition('close', 'Close'));
     if (raw.state === 'closed') actions.push(transition('reopen', 'Reopen'));
     if (mr) {
