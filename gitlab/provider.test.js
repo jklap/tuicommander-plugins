@@ -269,8 +269,7 @@ test('recorded_detail_fields_retain_title_labels_and_assignees', async () => {
   const detail = await createGitLabProvider({ account, fetch: gitlab() }).detail(issueRef);
   assert.deepEqual(detail.item.fields.title, { kind: 'text', value: fixture.issue.title });
   assert.deepEqual(detail.item.fields.labels, { kind: 'labels', value: fixture.issue.labels.map((name) => ({ id: name, name })) });
-  assert.deepEqual(detail.item.fields.assignees, { kind: 'user', value: fixture.issue.assignees.map((u) => ({ id: String(u.id), name: u.name, avatarUrl: u.avatar_url ?? null })) });
-
+  assert.deepEqual(detail.item.fields.assignees, { kind: 'user', value: fixture.issue.assignees.map((u) => ({ id: String(u.id), name: u.name, avatarUrl: u.avatar_url ?? null, bot: u.bot === true })) });
 });
 
 // Catches: the roadmap plots Updated/Created (the first date fields) instead of planning dates.
@@ -295,14 +294,13 @@ test('list_reports_the_x_total_header_when_gitlab_sends_it', async () => {
   assert.equal((await silent.list(query)).total ?? null, null);
   const garbled = createGitLabProvider({ account, project: 'demo/widgets', fetch: gitlab(answer({ 'X-Total': 'many' })) });
   assert.equal((await garbled.list(query)).total ?? null, null);
-
 });
 
 // Catches: roadmap-only date fields advertised in the schema, so the core list offers a Due date
 // filter and sort that GitLab rejects ("Unsupported GitLab filter: target") the moment the user uses it.
 test('every_date_field_in_the_schema_works_as_a_list_filter_and_sort', async () => {
   const provider = createGitLabProvider({ account, fetch: gitlab() });
-  const dates = provider.fields.filter((f) => f.kind === 'date' && f.queryable !== false);
+  const dates = provider.fields.filter((f) => f.kind === 'date' && f.filterable && f.sortable);
   assert.ok(dates.length > 0, 'the provider still exposes queryable dates');
   for (const field of dates) {
     const filters = [{ fieldId: field.id, values: [{ kind: 'date', value: '2026-01-01' }] }];

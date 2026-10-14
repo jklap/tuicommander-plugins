@@ -115,8 +115,6 @@ export function createJiraProvider(options) {
       groupable: ['assignee', 'issuetype', 'status'].includes(id),
       filterable: ['project', 'status', 'assignee', 'labels', 'issuetype', 'priority'].includes(id),
     })).concat({ id: 'duedate', name: 'Due date', kind: 'date', required: false, editable: false, options: [], sortable: false, groupable: false, filterable: false }),
-
-
     boards: (options.boards ?? []).map((b) => ({ id: String(b.id), name: b.name, fieldId: 'status', columns: [] })),
     savedFilters: presets.map((p) => ({ id: p.id, name: p.name, query: { ...emptyQuery, savedFilterId: p.id } })),
     async verify() { return request(`${api}/myself`); },

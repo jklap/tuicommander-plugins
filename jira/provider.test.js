@@ -259,7 +259,6 @@ test('recorded_detail_retains_summary_assignee_and_option_names', async () => {
   assert.equal(detail.item.itemType, 'Task');
   assert.deepEqual(detail.item.fields.priority, { kind: 'enum', value: '10000' });
   assert.equal(detail.fields.find((f) => f.id === 'priority').options.find((o) => o.id === '10000').name, '[name redacted]');
-
 });
 
 const recorded = JSON.parse(readFileSync(new URL('./fixtures/recorded-duedate.json', import.meta.url), 'utf8'));
@@ -280,7 +279,6 @@ test('due_date_maps_on_every_page_and_undated_items_stay', async () => {
   assert.deepEqual(first.items.map((i) => i.fields.duedate ?? null), [{ kind: 'date', value: '2026-10-16' }, null, { kind: 'date', value: '2026-10-04' }]);
   const second = await provider.list({ ...query, cursor: first.nextCursor });
   assert.equal(second.items[0].fields.duedate.value, recorded.pages[1].issues[0].fields.duedate);
-
 });
 
 // Catches: board query composition treats ORDER BY inside a quoted value as sorting.
@@ -308,7 +306,6 @@ test('plain_text_with_exclamation_keeps_text_search_fallback', async () => {
   const page = await provider.list({ ...query, search: 'Fix crash!' });
   assert.equal(requests.at(-1).body.jql, '(text ~ "Fix crash!") ORDER BY updated DESC');
   assert.equal(page.items[0].key, 'DEMO-7');
-
 });
 
 // Catches: the filter and group controls label Jira fields with raw JQL ids such as "issuetype".
@@ -317,8 +314,8 @@ test('list_fields_have_readable_names', () => {
   assert.deepEqual(provider.fields.map((f) => [f.id, f.name]), [
     ['project', 'Project'], ['status', 'Status'], ['assignee', 'Assignee'],
     ['labels', 'Labels'], ['issuetype', 'Issue type'], ['priority', 'Priority'],
+    ['updated', 'Updated'], ['created', 'Created'], ['key', 'Key'], ['summary', 'Summary'], ['duedate', 'Due date'],
   ]);
-
 });
 
 // Catches: a fabricated Cloud total inferred from rows/cursor, or a real DC total discarded.
