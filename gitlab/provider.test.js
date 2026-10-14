@@ -101,7 +101,7 @@ test('merge_blockers_are_readable_and_disable_merge', async () => {
 test('stale_head_merge_is_refused_with_a_reason', async () => {
   const provider = mergeProvider({}, [], (req) => (req.method === 'PUT' ? { status: fixture.staleMerge.status, headers: {}, json: fixture.staleMerge.body } : null));
   const { actions } = await provider.detail(mrRef);
-  await assert.rejects(provider.act(mrRef, { kind: 'transition', value: actions[1].id }), (e) => e.status === 409 && /changed since you loaded it/.test(e.message) && !e.message.includes(fixture.mr.sha));
+  await assert.rejects(provider.act(mrRef, { kind: 'transition', value: actions.find((action) => action.id.startsWith('merge:merge:')).id }), (e) => e.status === 409 && /changed since you loaded it/.test(e.message) && !e.message.includes(fixture.mr.sha));
 });
 
 // Catches: move without list label swap, or a move that rewrites the whole label set.
