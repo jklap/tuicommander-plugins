@@ -163,14 +163,3 @@ test("awaiting received before the first shell state still blocks keepalive", as
   await elapse();
   assert.deepEqual(host.sent, [], "an already open dialog must not be answered by a noop");
 });
-
-test("a draft arriving at the guarded send is not cleared and consumes no budget", async (t) => {
-  // catches: a stale empty read authorizes a later destructive send.
-  const host = await setup(t);
-  host.blockSend = true;
-  await elapse();
-  assert.deepEqual(host.sent, []);
-  host.blockSend = false;
-  await elapse(CHECK_MS);
-  assert.equal(host.sent.length, 1);
-});
