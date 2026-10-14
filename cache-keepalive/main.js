@@ -598,20 +598,6 @@ async function verifyFollowUp(sessionId, repoPath, busyStartMs) {
 
 // ── Keepalive check ──────────────────────────────────────────────────
 
-/**
- * True only when the composer is provably empty. sendAgentInput clears the
- * input line with Ctrl-U, so an unsent draft — or an unreadable composer —
- * must never receive a keepalive.
- */
-async function composerIsEmpty(sessionId) {
-  try {
-    const buffer = await hostRef.invoke("get_input_buffer_content", { sessionId });
-    return buffer === "";
-  } catch {
-    return false;
-  }
-}
-
 async function checkKeepalives() {
   if (!hostRef) return;
   const now = Date.now();
@@ -640,16 +626,24 @@ async function checkKeepalives() {
 
     const idleMs = now - session.lastIdleAt;
     if (idleMs >= interval) {
-      if (!(await composerIsEmpty(sessionId))) {
+      // Reserve the tick before awaiting the host so overlapping timer callbacks cannot send twice.
+      session.pendingKeepalive = true;
+      session.pendingKeepaliveAt = now;
+      session.lastKeepaliveSentAt = now;
+      let sent;
+      try {
+        sent = await hostRef.sendAgentInputIfEmpty(sessionId, config.message);
+      } catch (err) {
+        hostRef?.log("error", `Keepalive failed: ${err}`);
+      }
+      if (!hostRef || sessions.get(sessionId) !== session) continue;
+      if (sent !== true) {
+        session.pendingKeepalive = false;
+        session.pendingKeepaliveAt = 0;
         activeCount++;
         continue;
       }
-      // State may have changed while the composer was read.
-      if (!hostRef || sessions.get(sessionId) !== session) continue;
-      if (session.shellState !== "idle" || session.backendAwaiting || session.pendingKeepalive) continue;
 
-      session.pendingKeepalive = true;
-      session.pendingKeepaliveAt = now;
       session.keepaliveCount++;
       session.totalKeepalivesEver++;
       if (session.chainStartedAt === 0) {
@@ -667,19 +661,6 @@ async function checkKeepalives() {
       const max = config.maxKeepalives;
 
       session.lastKeepaliveSentAt = now;
-      hostRef.sendAgentInput(sessionId, config.message).catch((err) => {
-          const msg = String(err);
-          if (msg.includes("not found") || msg.includes("No such session")) {
-            hostRef.log("info", `Session ${sessionId.slice(0, 8)} closed — removing from tracking`);
-            sessions.delete(sessionId);
-          } else {
-            hostRef.log("error", `Keepalive failed: ${err}`);
-            session.pendingKeepalive = false;
-            session.pendingKeepaliveAt = 0;
-            session.keepaliveCount--;
-            session.totalKeepalivesEver--;
-          }
-        });
 
       hostRef.log("info", `Keepalive ${count}/${max} → ${sessionId.slice(0, 8)}`);
       hostRef.setTicker({
