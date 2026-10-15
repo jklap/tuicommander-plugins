@@ -94,14 +94,14 @@ test('onload_without_config_registers_nothing_and_says_why', async () => {
   await plugin.onload(host);
   assert.deepEqual(host.live, { providers: [], resolvers: [] });
   assert.equal(logs[0][0], 'warn');
-  assert.match(logs[0][1], /config\.json/);
+  assert.match(logs[0][1], /Tasks setup/);
 });
 
 // Catches: configured accounts not registered with their project, or leaked after unload.
 test('onload_registers_configured_accounts_and_unload_removes_them', async () => {
   const config = { accounts: [{ id: 'work', host: HOST, project: 'demo/widgets', login: 'me' }] };
   const host = { ...fakeHost(), log() {}, httpFetch: async () => ({ status: 200, headers: {}, body: '[]' }), invoke: async (cmd, args) => {
-    assert.deepEqual([cmd, args], ['read_plugin_data', { pluginId: 'gitlab', path: 'config.json' }]);
+    assert.deepEqual([cmd, args], ['read_plugin_data', { pluginId: 'gitlab', path: 'work-items.json' }]);
     return JSON.stringify(config);
   } };
   await plugin.onload(host);

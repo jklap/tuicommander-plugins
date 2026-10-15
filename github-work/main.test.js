@@ -23,7 +23,7 @@ function fakeHost({ config = null, responses = [] } = {}) {
     },
     invoke: async (cmd, args) => {
       assert.equal(cmd, "read_plugin_data");
-      assert.deepEqual(args, { pluginId: "github-work", path: "config.json" });
+      assert.deepEqual(args, { pluginId: "github-work", path: "work-items.json" });
       return config && JSON.stringify(config);
     },
     httpFetch: async (url, options) => {
@@ -79,7 +79,7 @@ test("onload_without_config_registers_nothing_and_says_why", async () => {
   await plugin.onload(host);
   assert.deepEqual(host.live, { providers: [], resolvers: [] });
   assert.equal(host.logs[0][0], "warn");
-  assert.match(host.logs[0][1], /config\.json/);
+  assert.match(host.logs[0][1], /Tasks setup/);
 });
 
 // Catches: provider/resolver leaked after unload, so a reload throws "already registered".

@@ -16,8 +16,8 @@ The manifest declares `net:http` and the `jira` account descriptor; requests go 
 `host.httpFetch(url, {account})` (`runtime.js`), so Rust injects the credential.
 
 Install by copying this directory to `~/Library/Application Support/com.tuic.commander/plugins/jira/`
-(macOS). The host gives plugins no account list, so add the account in Settings, then write
-`data/config.json` inside the plugin directory (`kind`: `basic` for Cloud, `bearer` for Data Center):
+(macOS). Add the credential account in Settings > Accounts, then configure the provider through
+**Tasks setup**. Tasks stores the selected accounts in `data/work-items.json` (`kind`: `basic` for Cloud, `bearer` for Data Center):
 
 ```json
 { "accounts": [{ "id": "<account id>", "host": "https://site.atlassian.net", "kind": "basic", "projectId": "10000" }] }

@@ -55,7 +55,7 @@ export default {
   async onload(host) {
     const config = await readConfig(host, 'gitlab');
     if (!config?.accounts?.length) {
-      host.log('warn', 'gitlab has no accounts: write data/config.json with {"accounts":[{"id":"<account id>","host":"https://gitlab.com","project":"group/project"}]}.');
+      host.log("warn", "gitlab has no accounts: configure this provider in Tasks setup.");
       return;
     }
     const accounts = config.accounts.map(({ project, boards, ...account }) => ({ kind: 'bearer', ...account, provider: 'gitlab' }));
