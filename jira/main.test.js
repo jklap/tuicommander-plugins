@@ -68,7 +68,7 @@ test('onload_without_config_registers_nothing_and_says_why', async () => {
   await plugin.onload(host);
   assert.equal(registered, 0);
   assert.equal(logs[0][0], 'warn');
-  assert.match(logs[0][1], /config\.json/);
+  assert.match(logs[0][1], /Tasks setup/);
 });
 
 // Catches: configured sites not registered with their kind, or leaked after unload.
@@ -77,7 +77,7 @@ test('onload_registers_configured_accounts_and_unload_removes_them', async () =>
   const host = {
     log() {},
     invoke: async (cmd, args) => {
-      assert.deepEqual([cmd, args], ['read_plugin_data', { pluginId: 'jira', path: 'config.json' }]);
+      assert.deepEqual([cmd, args], ['read_plugin_data', { pluginId: 'jira', path: 'work-items.json' }]);
       return JSON.stringify({ accounts: [{ id: 'one', host: 'https://one.example.invalid', kind: 'basic', projectId: '10000' }] });
     },
     httpFetch: async () => { throw new Error('No request expected during registration'); },

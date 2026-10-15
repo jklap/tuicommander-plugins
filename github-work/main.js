@@ -61,7 +61,7 @@ export default {
   async onload(host) {
     const config = await readConfig(host, ID);
     if (!config?.accounts?.length) {
-      host.log("warn", "github-work has no accounts: write data/config.json with {\"accounts\":[{\"id\":\"github.com\",\"repository\":\"owner/repo\"}]}.");
+      host.log("warn", "github-work has no accounts: configure this provider in Tasks setup.");
       return;
     }
     active = registerGitHubAccounts(host, config.accounts);

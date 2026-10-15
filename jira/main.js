@@ -50,7 +50,7 @@ export default {
   async onload(host) {
     const config = await readConfig(host, 'jira');
     if (!config?.accounts?.length) {
-      host.log('warn', 'jira has no accounts: write data/config.json with {"accounts":[{"id":"<account id>","host":"https://site.atlassian.net","kind":"basic"}]}.');
+      host.log("warn", "jira has no accounts: configure this provider in Tasks setup.");
       return;
     }
     const accounts = config.accounts.map(({ projectId, boards, ...account }) => ({ ...account, provider: 'jira' }));
