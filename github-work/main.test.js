@@ -73,6 +73,17 @@ test("manifest_declares_github_account_use", () => {
   assert.equal(manifest.id, plugin.id);
 });
 
+// Catches: the runtime catalog omits the provider or offers a manifest with no account consent.
+test("runtime_catalog_offers_github_work_with_account_consent", () => {
+  const catalog = JSON.parse(readFileSync(new URL("../registry.json", import.meta.url), "utf8"));
+  const entries = Array.isArray(catalog) ? catalog : catalog.plugins;
+  const entry = entries.find((entry) => entry.id === manifest.id);
+  assert.ok(entry, "GitHub Work is offered in the runtime catalog");
+  assert.ok(entry.downloadUrl.endsWith("/github-work.zip"));
+  assert.deepEqual(manifest.providers, ["github"]);
+  assert.ok(manifest.capabilities.includes("net:http"));
+});
+
 // Catches: activation without configuration registering a provider bound to a guessed repository.
 test("onload_without_config_registers_nothing_and_says_why", async () => {
   const host = fakeHost();

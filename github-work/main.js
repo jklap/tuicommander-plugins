@@ -38,6 +38,7 @@ export function registerGitHubAccounts(host, entries) {
   const providers = [];
   try {
     for (const { id, repository, apiUrl, webOrigin } of entries) {
+      // DEFERRED (2026-10-15) — B6/B7 need account-scoped host ports; the invoke whitelist cannot safely bind repository-scoped PR commands.
       const provider = createGitHubProvider({ accountId: id, repository, fetch: accountFetch(host, id), apiUrl, webOrigin });
       registrations.push(host.registerWorkItemProvider(provider));
       providers.push(provider);
