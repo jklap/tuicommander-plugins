@@ -6,14 +6,52 @@
   "main": "main.js",
   "description": "Jira Cloud and Data Center work items in core Tasks.",
   "author": "sstraus",
-  "capabilities": ["net:http"],
-  "allowedUrls": ["https://api.atlassian.com/*"],
+  "capabilities": [
+    "net:http"
+  ],
+  "allowedUrls": [
+    "https://api.atlassian.com/*"
+  ],
   "providers": [
     {
       "id": "jira",
       "label": "Jira",
-      "kinds": ["basic", "bearer"],
-      "verify": { "path": "/rest/api/2/myself", "loginPointer": "/displayName" }
+      "kinds": [
+        "basic",
+        "bearer"
+      ],
+      "verify": {
+        "path": "/rest/api/2/myself",
+        "loginPointer": "/displayName"
+      }
     }
-  ]
+  ],
+  "settings": {
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "title": "Default project ID",
+          "description": "Used for accounts without a project in Tasks setup. Account-specific projects take precedence.",
+          "maxLength": 256,
+          "x-setting": {
+            "sensitivity": "public",
+            "apply": "service_restart",
+            "effect": "Reloads the provider with the saved default project.",
+            "operations": [
+              "get",
+              "set",
+              "reset"
+            ],
+            "confirmationClass": "ordinary"
+          }
+        }
+      }
+    },
+    "defaults": {
+      "projectId": ""
+    }
+  }
 }

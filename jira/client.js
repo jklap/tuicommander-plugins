@@ -16,10 +16,11 @@ export function createClient({ account, fetch, now = Date.now }) {
   const cloud = account.kind === 'basic';
   if (!cloud && account.kind !== 'bearer') throw new Error('Jira supports Basic Cloud or Bearer Data Center accounts');
   let blockedUntil = 0;
-  async function request(path, { method = 'GET', body } = {}) {
+  async function request(path, { method = 'GET', body, signal } = {}) {
+    signal?.throwIfAborted();
     if (now() < blockedUntil) throw new JiraError(429, blockedUntil - now());
     const response = await fetch({
-      url: `${host}${path}`, method, body,
+      url: `${host}${path}`, method, body, signal,
       headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'User-Agent': 'TUICommander-Jira/1.0' },
     });
     if (response.status === 429) {

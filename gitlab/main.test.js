@@ -101,7 +101,8 @@ test('onload_without_config_registers_nothing_and_says_why', async () => {
 test('onload_registers_configured_accounts_and_unload_removes_them', async () => {
   const config = { accounts: [{ id: 'work', host: HOST, project: 'demo/widgets', login: 'me' }] };
   const host = { ...fakeHost(), log() {}, httpFetch: async () => ({ status: 200, headers: {}, body: '[]' }), invoke: async (cmd, args) => {
-    assert.deepEqual([cmd, args], ['read_plugin_data', { pluginId: 'gitlab', path: 'work-items.json' }]);
+    if (args.path === 'config.json') return null;
+      assert.deepEqual([cmd, args], ['read_plugin_data', { pluginId: 'gitlab', path: 'work-items.json' }]);
     return JSON.stringify(config);
   } };
   await plugin.onload(host);
@@ -109,4 +110,18 @@ test('onload_registers_configured_accounts_and_unload_removes_them', async () =>
   assert.equal(host.live.resolvers.length, 1);
   plugin.onunload();
   assert.deepEqual(host.live, { providers: [], resolvers: [] });
+});
+
+// Catches: schema project default ignored by real provider search, or overriding an account project.
+test('settings_project_default_scopes_real_provider_search', async () => {
+ for (const project of [undefined, 'explicit/project']) {
+   const host = fakeHost(); const urls = [];
+   host.log = () => {};
+   host.invoke = async (_, { path }) => JSON.stringify(path === 'config.json' ? { project: 'default/project' } : { accounts: [{ id: 'work', host: HOST, project }] });
+   host.httpFetch = async url => { urls.push(url); return { status: 200, headers: {}, body: '[]' }; };
+   await plugin.onload(host);
+   await host.live.providers[0].list({ filters: [], search: '', limit: 20, cursor: null, sort: null });
+   assert.ok(urls.some(url => url.includes(encodeURIComponent(project ?? 'default/project'))));
+   plugin.onunload();
+ }
 });

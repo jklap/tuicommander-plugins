@@ -18,16 +18,16 @@ export function createJiraProvider(options) {
   }
   const toItem = (issue) => issueToItem(issue, account, host);
   const boards = boardPort(client, toItem);
-  async function comments(ref, cursor = null, limit = 50) {
+  async function comments(ref, cursor = null, limit = 50, signal) {
     const offset = cursor == null ? 0 : Number(cursor);
     if (!Number.isSafeInteger(offset) || offset < 0) throw new Error('Invalid Jira comment cursor');
     const size = Math.max(1, Math.min(100, limit));
-    return commentPage(await request(`${checkRef(ref)}/comment?startAt=${offset}&maxResults=${size}&orderBy=created`));
+    return commentPage(await request(`${checkRef(ref)}/comment?startAt=${offset}&maxResults=${size}&orderBy=created`, { signal }));
   }
-  async function detail(ref) {
+  async function detail(ref, signal) {
     const path = checkRef(ref);
     const [issue, transitions, page] = await Promise.all([
-      request(`${path}?expand=names,schema,editmeta`), request(`${path}/transitions`), comments(ref),
+      request(`${path}?expand=names,schema,editmeta`, { signal }), request(`${path}/transitions`, { signal }), comments(ref, null, 50, signal),
     ]);
     if (!Array.isArray(transitions?.transitions)) throw new Error('Invalid Jira transitions response');
     const fields = Object.entries(issue.editmeta?.fields ?? {}).map(([id, f]) => ({
