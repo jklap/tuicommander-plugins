@@ -35,8 +35,12 @@ function makeHost() {
     clearTicker() {},
     getRepoPathForSession: () => null,
     getClaudeProjectDir: async () => null,
-    async sendAgentInput(sessionId, text) {
+    async sendAgentInputIfEmpty(sessionId, text) {
+      host.bufferReads.push({ sessionId });
+      const buffer = typeof host.inputBuffer === "function" ? host.inputBuffer() : host.inputBuffer;
+      if (buffer !== "" || host.blockSend) return false;
       host.sent.push({ sessionId, text });
+      return true;
     },
     async invoke(cmd, args) {
       if (cmd === "get_input_buffer_content") {
@@ -129,6 +133,7 @@ test("a session that turns busy while the composer is read gets no keepalive", a
   const host = await setup(t);
   host.inputBuffer = () => {
     host.handlers.get("shell-state")({ agent_type: "claude", state: "busy" }, SESSION);
+    host.blockSend = true;
     return "";
   };
   await elapse();
