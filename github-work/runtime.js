@@ -28,3 +28,26 @@ export async function readConfig(host, pluginId) {
   const raw = await host.invoke("read_plugin_data", { pluginId, path: "config.json" });
   return raw ? JSON.parse(raw) : null;
 }
+
+/** B6/B7 stay core-owned, bound to this provider account rather than a local repo default. */
+export function accountCore(host, accountId) {
+  const check = (reference, signal) => {
+    signal?.throwIfAborted();
+    if (reference?.providerId !== "github" || reference.accountId !== accountId)
+      throw new Error("GitHub account mismatch");
+  };
+  return {
+    async reviewThreads(reference, cursor, _limit, signal) {
+      check(reference, signal);
+      const result = await host.githubReviewThreads(accountId, reference, cursor);
+      signal?.throwIfAborted();
+      return result;
+    },
+    async prAction(reference, action, payload = {}, signal) {
+      check(reference, signal);
+      const result = await host.githubPrAction(accountId, reference, { ...payload, action });
+      signal?.throwIfAborted();
+      return result;
+    },
+  };
+}

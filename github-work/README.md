@@ -60,8 +60,9 @@ use `updateProjectV2ItemFieldValue`, never issue close. Draft issues are exclude
 ## Integration tasks still open
 
 - Verify the catalog release asset and desktop installation against the published version.
-- Bind B6/B7 core ports and expose their actions in the Tasks surface. Current
-  `host.invoke` does not whitelist them; do not bypass the host.
+- Verify B6/B7 desktop integration. Runtime registration now binds
+  `host.githubReviewThreads` and `host.githubPrAction` to each selected account;
+  these ports retain core policy without extending the invoke whitelist.
 - Verify live board mutation and roadmap field round trips only with separate write authorization.
 - Connect duplicate candidates to the generic create picker.
 - Integration owner: add desktop-load verification to `to-test.md`, update product
