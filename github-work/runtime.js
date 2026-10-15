@@ -23,9 +23,9 @@ export function accountFetch(host, accountId) {
   };
 }
 
-/** Plugin configuration from data/config.json, or null when the user has not written one. */
+/** Plugin configuration from data/work-items.json, or null when the user has not written one. */
 export async function readConfig(host, pluginId) {
-  const raw = await host.invoke("read_plugin_data", { pluginId, path: "config.json" });
+  const raw = await host.invoke("read_plugin_data", { pluginId, path: "work-items.json" });
   return raw ? JSON.parse(raw) : null;
 }
 

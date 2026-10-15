@@ -27,16 +27,16 @@ The manifest declares `net:http` and the `gitlab` account descriptor; requests g
 `host.httpFetch(url, {account})` (`runtime.js`), so Rust injects the PAT.
 
 Install by copying this directory to `~/Library/Application Support/com.tuic.commander/plugins/gitlab/`
-(macOS). The host gives plugins no account list, so add the account in Settings, then write
-`data/config.json` inside the plugin directory:
+(macOS). Add the credential account in Settings > Accounts, then configure the provider through
+**Tasks setup**. Tasks stores the selected accounts in `data/work-items.json`:
 
 ```json
 { "accounts": [{ "id": "<account id>", "host": "https://gitlab.com", "login": "me", "project": "group/project" }] }
 ```
 
 `kind` defaults to `bearer`; `label`, `login`, `project` and `boards` are optional. Without the
-file `onload` logs a warning and registers nothing. The Tasks views are not mounted in the app
-shell yet: a registered provider serves the command-palette URL paste and the sidebar link badge.
+file `onload` logs a warning and registers nothing. Core Tasks renders the provider views and setup form. A registered provider also serves
+the command-palette URL paste and the sidebar link badge.
 
 ## Behavior
 

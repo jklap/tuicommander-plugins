@@ -7,8 +7,8 @@ or PTY execution. `manifest.json` + `main.js` make it an installable plugin (`pr
 ## Install and configure
 
 Copy this directory to `~/Library/Application Support/com.tuic.commander/plugins/github-work/`
-(macOS; `docs/plugins.md` → Build & Install). The host offers plugins no account list, so write
-`data/config.json` inside it:
+(macOS; `docs/plugins.md` → Build & Install). Configure the provider through **Tasks setup**. Tasks stores the selected accounts in
+`data/work-items.json`, separate from schema-backed plugin Settings:
 
 ```json
 { "accounts": [{ "id": "github.com", "repository": "owner/repo" }] }
@@ -18,8 +18,8 @@ Copy this directory to `~/Library/Application Support/com.tuic.commander/plugins
 `apiUrl` and `webOrigin` select a GitHub Enterprise host. One provider is registered per account,
 so an account serves one repository. Without the file the plugin logs a warning and registers nothing.
 `runtime.js` adapts `fetch({url,method,body})` onto `host.httpFetch(url,{account})`.
-The core Tasks views consume the registered provider. It also serves command-palette
-URL paste (link + drafted start work) and the sidebar link badge.
+Core Tasks renders the provider views and setup form. The provider also serves
+command-palette URL paste (link + drafted start work) and the sidebar link badge.
 
 ```js
 import { createGitHubProvider } from './provider.js';
