@@ -73,6 +73,17 @@ test("manifest_declares_github_account_use", () => {
   assert.equal(manifest.id, plugin.id);
 });
 
+// Catches: the runtime catalog omits the provider or offers a manifest with no account consent.
+test("runtime_catalog_offers_github_work_with_account_consent", () => {
+  const catalog = JSON.parse(readFileSync(new URL("../registry.json", import.meta.url), "utf8"));
+  const entries = Array.isArray(catalog) ? catalog : catalog.plugins;
+  const entry = entries.find((entry) => entry.id === manifest.id);
+  assert.ok(entry, "GitHub Work is offered in the runtime catalog");
+  assert.ok(entry.downloadUrl.endsWith("/github-work.zip"));
+  assert.deepEqual(manifest.providers, ["github"]);
+  assert.ok(manifest.capabilities.includes("net:http"));
+});
+
 // Catches: activation without configuration registering a provider bound to a guessed repository.
 test("onload_without_config_registers_nothing_and_says_why", async () => {
   const host = fakeHost();
@@ -125,4 +136,30 @@ test("pasted_issue_url_links_and_drafts_start_work", async () => {
   assert.equal(resolved.startWork.delivery, "draft");
   assert.match(resolved.startWork.branch, new RegExp(`^${issue.number}-`));
   assert.equal(host.calls[0].options.account, "github.com");
+});
+
+// Catches: registration leaves core undefined, so B6 threads and B7 actions are unreachable.
+test("registered_provider_binds_b6_b7_to_selected_account", async () => {
+  const host = fakeHost();
+  const calls = [];
+  host.githubReviewThreads = async (...args) => {
+    calls.push(["threads", ...args]);
+    return { headSha: "head", threads: [], hasNextPage: false, endCursor: null };
+  };
+  host.githubPrAction = async (...args) => { calls.push(["action", ...args]); return { accepted: true }; };
+  const registration = registerGitHubAccounts(host, [{ id: "selected", repository: "owner/repo" }]);
+  const provider = host.live.providers[0];
+  const reference = { providerId: "github", accountId: "selected", id: "owner/repo/pull/12" };
+  assert.deepEqual(await provider.comments(reference, "threads:first", 20), { entries: [], nextCursor: null });
+  assert.deepEqual(await provider.runPrAction(reference, "rerun", { runId: 123 }), { accepted: true });
+  assert.deepEqual(calls, [
+    ["threads", "selected", reference, null],
+    ["action", "selected", reference, { runId: 123, action: "rerun" }],
+  ]);
+  await assert.rejects(provider.runPrAction({ ...reference, accountId: "other" }, "state"), /another provider\/account/);
+  assert.equal(calls.length, 2);
+  const abort = new AbortController(); abort.abort();
+  await assert.rejects(provider.runPrAction(reference, "state", {}, abort.signal), /abort/i);
+  assert.equal(calls.length, 2);
+  registration.dispose();
 });

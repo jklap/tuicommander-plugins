@@ -1,0 +1,382 @@
+{
+  "data": {
+    "node": {
+      "id": "PVT_kwDNJr_NE10",
+      "title": "GitHub Public Roadmap",
+      "fields": {
+        "nodes": [
+          {
+            "id": "PVTF_lADNJr_NE13Nmlw",
+            "name": "Title",
+            "dataType": "TITLE"
+          },
+          {
+            "id": "PVTF_lADNJr_NE13Nml0",
+            "name": "Assignees",
+            "dataType": "ASSIGNEES"
+          },
+          {
+            "id": "PVTSSF_lADNJr_NE13Nml4",
+            "name": "Status",
+            "dataType": "SINGLE_SELECT",
+            "options": [
+              {
+                "id": "f75ad846",
+                "name": "Up Next"
+              },
+              {
+                "id": "bebfd2a1",
+                "name": "Exploring"
+              },
+              {
+                "id": "7bdf8bc2",
+                "name": "Shipped"
+              },
+              {
+                "id": "0b6e37be",
+                "name": "Paused"
+              }
+            ]
+          },
+          {
+            "id": "PVTF_lADNJr_NE13Nml8",
+            "name": "Labels",
+            "dataType": "LABELS"
+          },
+          {
+            "id": "PVTF_lADNJr_NE13NmmA",
+            "name": "Repository",
+            "dataType": "REPOSITORY"
+          },
+          {
+            "id": "PVTF_lADNJr_NE13NmmE",
+            "name": "Milestone",
+            "dataType": "MILESTONE"
+          },
+          {
+            "id": "PVTF_lADNJr_NE13OAAZC7g",
+            "name": "Linked pull requests",
+            "dataType": "LINKED_PULL_REQUESTS"
+          },
+          {
+            "id": "PVTF_lADNJr_NE13OAAi8dQ",
+            "name": "Reviewers",
+            "dataType": "REVIEWERS"
+          },
+          {
+            "id": "PVTF_lADNJr_NE13OBX2eAw",
+            "name": "Parent issue",
+            "dataType": "PARENT_ISSUE"
+          },
+          {
+            "id": "PVTF_lADNJr_NE13OBX2eBA",
+            "name": "Sub-issues progress",
+            "dataType": "SUB_ISSUES_PROGRESS"
+          },
+          {
+            "id": "PVTSSF_lADNJr_NE13OCLgI8w",
+            "name": "Product Focus Area",
+            "dataType": "SINGLE_SELECT",
+            "options": [
+              {
+                "id": "3d325d0a",
+                "name": "\u26f0 Platform for collaboration at scale"
+              },
+              {
+                "id": "a18553e0",
+                "name": "\ud83c\udf31 Secure at every step"
+              },
+              {
+                "id": "4c464873",
+                "name": "\ud83d\ude80 Accelerate with AI"
+              }
+            ]
+          },
+          {
+            "id": "PVTSSF_lADNJr_NE13OCOPQHA",
+            "name": "Release Phase",
+            "dataType": "SINGLE_SELECT",
+            "options": [
+              {
+                "id": "2daad5d4",
+                "name": "GA"
+              },
+              {
+                "id": "e1e121e4",
+                "name": "Public Preview"
+              }
+            ]
+          },
+          {
+            "id": "PVTF_lADNJr_NE13OEG_BYQ",
+            "name": "Created",
+            "dataType": "CREATED"
+          },
+          {
+            "id": "PVTF_lADNJr_NE13OEG_BZQ",
+            "name": "Updated",
+            "dataType": "UPDATED"
+          },
+          {
+            "id": "PVTF_lADNJr_NE13OEG_BaA",
+            "name": "Closed",
+            "dataType": "CLOSED"
+          },
+          {
+            "id": "PVTSSF_lADNJr_NE13OFZ49Qw",
+            "name": "Theme",
+            "dataType": "SINGLE_SELECT",
+            "options": [
+              {
+                "id": "dc6f71ab",
+                "name": "People Stay In Flow"
+              },
+              {
+                "id": "25175cf3",
+                "name": "Teams Gain Velocity"
+              },
+              {
+                "id": "7864ece2",
+                "name": "Companies Scale With Intelligence + Trust"
+              }
+            ]
+          },
+          {
+            "id": "PVTSSF_lADNJr_NE13OFZ4-4Q",
+            "name": "Quarter",
+            "dataType": "SINGLE_SELECT",
+            "options": [
+              {
+                "id": "cbe2b75d",
+                "name": "Q3 2025 \u2013 Jul-Sep"
+              },
+              {
+                "id": "06d3b931",
+                "name": "Q4 2025 \u2013 Oct-Dec"
+              },
+              {
+                "id": "bbf75708",
+                "name": "Q1 2026 \u2013 Jan-Mar"
+              },
+              {
+                "id": "3463f1d4",
+                "name": "Q2 2026 \u2013 Apr-Jun"
+              },
+              {
+                "id": "626207a8",
+                "name": "Q3 2026 \u2013 Jul-Sep"
+              },
+              {
+                "id": "dd0140ac",
+                "name": "Q4 2026 \u2013 Oct-Dec"
+              },
+              {
+                "id": "baf825b3",
+                "name": "Future"
+              }
+            ]
+          },
+          {
+            "id": "PVTF_lADNJr_NE13OFqQyVg",
+            "name": "Archive",
+            "dataType": "DATE"
+          }
+        ]
+      },
+      "items": {
+        "pageInfo": {
+          "hasNextPage": true,
+          "endCursor": "Y3Vyc29yOnYyOpKqMDAwMDA1MzkuNc4AAtBn"
+        },
+        "nodes": [
+          {
+            "id": "PVTI_lADNJr_NE13OBakjpw",
+            "content": {
+              "number": 1093,
+              "title": "Report code scanning status information at the organisation level [GA]",
+              "url": "https://github.com/github/roadmap/issues/1093",
+              "state": "OPEN",
+              "updatedAt": "2026-09-23T15:40:55Z",
+              "repository": {
+                "nameWithOwner": "github/roadmap"
+              },
+              "assignees": {
+                "nodes": []
+              },
+              "labels": {
+                "nodes": [
+                  {
+                    "id": "MDU6TGFiZWwyMjI4MjMwMzQ1",
+                    "name": "GA"
+                  },
+                  {
+                    "id": "MDU6TGFiZWwyMjI4MjMwMzcw",
+                    "name": "Enterprise"
+                  },
+                  {
+                    "id": "MDU6TGFiZWwyMjI4MjMwNjE0",
+                    "name": "GitHub Advanced Security (GHAS)"
+                  },
+                  {
+                    "id": "LA_kwDODwFebM8AAAACvW69Aw",
+                    "name": "Paused"
+                  }
+                ]
+              }
+            },
+            "fieldValues": {
+              "nodes": [
+                {},
+                {},
+                {
+                  "text": "Report code scanning status information at the organisation level [GA]",
+                  "field": {
+                    "id": "PVTF_lADNJr_NE13Nmlw"
+                  }
+                },
+                {
+                  "optionId": "0b6e37be",
+                  "field": {
+                    "id": "PVTSSF_lADNJr_NE13Nml4"
+                  }
+                },
+                {
+                  "optionId": "a18553e0",
+                  "field": {
+                    "id": "PVTSSF_lADNJr_NE13OCLgI8w"
+                  }
+                },
+                {
+                  "optionId": "baf825b3",
+                  "field": {
+                    "id": "PVTSSF_lADNJr_NE13OFZ4-4Q"
+                  }
+                },
+                {
+                  "optionId": "2daad5d4",
+                  "field": {
+                    "id": "PVTSSF_lADNJr_NE13OCOPQHA"
+                  }
+                },
+                {
+                  "date": "2025-06-13",
+                  "field": {
+                    "id": "PVTF_lADNJr_NE13OFqQyVg"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "PVTI_lADNJr_NE13OA0SSnA",
+            "content": {
+              "number": 928,
+              "title": "Issues: Nested filtering with `AND` `OR` operators",
+              "url": "https://github.com/github/roadmap/issues/928",
+              "state": "CLOSED",
+              "updatedAt": "2024-12-02T18:11:44Z",
+              "repository": {
+                "nameWithOwner": "github/roadmap"
+              },
+              "assignees": {
+                "nodes": []
+              },
+              "labels": {
+                "nodes": [
+                  {
+                    "id": "MDU6TGFiZWwyMjI4MjMwMjU3",
+                    "name": "cloud"
+                  },
+                  {
+                    "id": "MDU6TGFiZWwyMjI4MjMwNDg0",
+                    "name": "all"
+                  },
+                  {
+                    "id": "MDU6TGFiZWwyMjI4MjMwNTQx",
+                    "name": "Preview"
+                  },
+                  {
+                    "id": "MDU6TGFiZWwyMjI4MjMwODEx",
+                    "name": "Shipped"
+                  }
+                ]
+              }
+            },
+            "fieldValues": {
+              "nodes": [
+                {},
+                {},
+                {
+                  "text": "Issues: Nested filtering with `AND` `OR` operators",
+                  "field": {
+                    "id": "PVTF_lADNJr_NE13Nmlw"
+                  }
+                },
+                {
+                  "optionId": "3d325d0a",
+                  "field": {
+                    "id": "PVTSSF_lADNJr_NE13OCLgI8w"
+                  }
+                },
+                {
+                  "optionId": "e1e121e4",
+                  "field": {
+                    "id": "PVTSSF_lADNJr_NE13OCOPQHA"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "PVTI_lADNJr_NE13OAALQZw",
+            "content": {
+              "number": 246,
+              "title": "Billing Usage API",
+              "url": "https://github.com/github/roadmap/issues/246",
+              "state": "CLOSED",
+              "updatedAt": "2023-01-12T23:35:44Z",
+              "repository": {
+                "nameWithOwner": "github/roadmap"
+              },
+              "assignees": {
+                "nodes": []
+              },
+              "labels": {
+                "nodes": [
+                  {
+                    "id": "MDU6TGFiZWwyMjI4MjMwMjU3",
+                    "name": "cloud"
+                  },
+                  {
+                    "id": "MDU6TGFiZWwyMjI4MjMwMzcw",
+                    "name": "Enterprise"
+                  },
+                  {
+                    "id": "MDU6TGFiZWwyMjI4MjMwNTQx",
+                    "name": "Preview"
+                  },
+                  {
+                    "id": "MDU6TGFiZWwzMDcyNDkxNjEx",
+                    "name": "billing"
+                  }
+                ]
+              }
+            },
+            "fieldValues": {
+              "nodes": [
+                {},
+                {},
+                {
+                  "text": "Billing Usage API",
+                  "field": {
+                    "id": "PVTF_lADNJr_NE13Nmlw"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

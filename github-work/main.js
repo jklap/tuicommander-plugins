@@ -1,5 +1,5 @@
 import { createGitHubProvider } from "./provider.js";
-import { accountFetch, readConfig } from "./runtime.js";
+import { accountCore, accountFetch, readConfig } from "./runtime.js";
 
 const ID = "github-work";
 const slug = (title) =>
@@ -38,7 +38,7 @@ export function registerGitHubAccounts(host, entries) {
   const providers = [];
   try {
     for (const { id, repository, apiUrl, webOrigin } of entries) {
-      const provider = createGitHubProvider({ accountId: id, repository, fetch: accountFetch(host, id), apiUrl, webOrigin });
+      const provider = createGitHubProvider({ accountId: id, repository, fetch: accountFetch(host, id), apiUrl, webOrigin, core: accountCore(host, id) });
       registrations.push(host.registerWorkItemProvider(provider));
       providers.push(provider);
     }

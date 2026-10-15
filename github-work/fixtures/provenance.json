@@ -104,5 +104,25 @@
     "url": "https://api.github.com/graphql \u2014 PrimeIntellect-ai/verifiers#2833 reviewThreads",
     "recordedAt": "2026-10-13",
     "note": "Selects isResolved, isOutdated, line, originalLine, path and the first comment author {__typename login}; no ids or bodies."
+  },
+  {
+    "file": "project.json",
+    "method": "POST (read-only GraphQL query, no mutation)",
+    "url": "https://api.github.com/graphql",
+    "recordedAt": "2026-10-15T00:06:55.488420+00:00",
+    "query": "query Project($id:ID!,$after:String,$limit:Int!) { node(id:$id) { ... on ProjectV2 {\n id title fields(first:100) { nodes { ... on ProjectV2Field { id name dataType }\n ... on ProjectV2SingleSelectField { id name dataType options { id name } } } }\n items(first:$limit,after:$after) { pageInfo { hasNextPage endCursor } nodes { id\n content { ... on Issue { number title url state updatedAt repository { nameWithOwner }\n assignees(first:100) { nodes { id login avatarUrl } } labels(first:100) { nodes { id name } } }\n ... on PullRequest { number title url state updatedAt repository { nameWithOwner }\n assignees(first:100) { nodes { id login avatarUrl } } labels(first:100) { nodes { id name } } } }\n fieldValues(first:100) { nodes { ... on ProjectV2ItemFieldSingleSelectValue { optionId field { ... on ProjectV2SingleSelectField { id } } }\n ... on ProjectV2ItemFieldDateValue { date field { ... on ProjectV2Field { id } } }\n ... on ProjectV2ItemFieldNumberValue { number field { ... on ProjectV2Field { id } } }\n ... on ProjectV2ItemFieldTextValue { text field { ... on ProjectV2Field { id } } } } } } } } } }",
+    "variables": {
+      "id": "PVT_kwDNJr_NE10",
+      "after": null,
+      "limit": 3
+    },
+    "note": "Public GitHub roadmap; exact production read query, first three items. No credentials or headers recorded; emails scrubbed."
+  },
+  {
+    "file": "project-issue.json",
+    "method": "GET",
+    "url": "https://api.github.com/repos/github/roadmap/issues/1093",
+    "recordedAt": "2026-10-15T00:07:21.928053+00:00",
+    "note": "Trimmed to detail fields; email addresses scrubbed. No credentials or headers recorded."
   }
 ]

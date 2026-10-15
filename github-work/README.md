@@ -18,8 +18,8 @@ Copy this directory to `~/Library/Application Support/com.tuic.commander/plugins
 `apiUrl` and `webOrigin` select a GitHub Enterprise host. One provider is registered per account,
 so an account serves one repository. Without the file the plugin logs a warning and registers nothing.
 `runtime.js` adapts `fetch({url,method,body})` onto `host.httpFetch(url,{account})`.
-The Tasks views are not mounted in the app shell yet: today a registered provider serves the
-command-palette URL paste (link + drafted start work) and the sidebar link badge.
+The core Tasks views consume the registered provider. It also serves command-palette
+URL paste (link + drafted start work) and the sidebar link badge.
 
 ```js
 import { createGitHubProvider } from './provider.js';
@@ -51,18 +51,19 @@ and must enforce the selected account, reviewed head and permissions.
 
 Projects v2 board and roadmap access is implemented through `board(projectId, query)`
 and `projectItems(projectId, query)`, including single-select, date, text and number
-fields. This path is **unverified**: the available GitHub credential lacks
-`read:project`, and no successful Projects fixture has been recorded. Project queries
+fields. Recorded public GitHub roadmap reads cover board cards and field metadata.
+Tests check move and clear requests against the documented mutation contract without
+sending live writes. Live mutation round trips and desktop loading remain unverified. Project queries
 reject unsupported search/filter/sort instead of silently ignoring them. Board moves
 use `updateProjectV2ItemFieldValue`, never issue close. Draft issues are excluded.
 
 ## Integration tasks still open
 
-- One registry entry (no release zip exists yet).
-- Bind B6/B7 core ports and expose their actions in the Tasks surface. Current
-  `host.invoke` does not whitelist them; do not bypass the host.
-- Record successful Projects v2 reads with a credential that has `read:project`, then
-  verify board mutation and roadmap field round trips on recorded responses.
+- Verify the catalog release asset and desktop installation against the published version.
+- Verify B6/B7 desktop integration. Runtime registration now binds
+  `host.githubReviewThreads` and `host.githubPrAction` to each selected account;
+  these ports retain core policy without extending the invoke whitelist.
+- Verify live board mutation and roadmap field round trips only with separate write authorization.
 - Connect duplicate candidates to the generic create picker.
 - Integration owner: add desktop-load verification to `to-test.md`, update product
   docs, and capture Chromium/WebKit screenshots after the runtime is wired.
@@ -76,7 +77,8 @@ Run from the TUIC checkout through `scripts/with-test-tmp.sh`:
 Fixtures were recorded with read-only GitHub requests. `fixtures/provenance.json`
 records each endpoint, date and filename. Email values and email addresses were
 removed. No tokens, authorization headers or TUIC account IDs are committed. The
-Projects scope error is a real recording, not a successful project fixture.
+Projects scope error and successful public roadmap read are real recordings; mutation
+responses in tests are documented contracts, not recordings of writes.
 
 Projects API reference:
 https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
