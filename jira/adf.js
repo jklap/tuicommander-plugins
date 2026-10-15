@@ -87,7 +87,10 @@ export function markdownToAdf(markdown) {
     if (/^---+$/.test(line)) { content.push({ type: 'rule' }); i++; continue; }
     const paragraph = [line]; i++;
     while (i < lines.length && lines[i].trim() && !/^(#{1,6}\s|>|[-+*]\s|\d+\.\s|`{3,}|~{3,})/.test(lines[i])) paragraph.push(lines[i++]);
-    content.push({ type: 'paragraph', content: inline(paragraph.join('\n')) });
+    const parts = paragraph.join('\n').split(/ {2,}\n/);
+    content.push({ type: 'paragraph', content: parts.flatMap((part, index) => [
+      ...(index ? [{ type: 'hardBreak' }] : []), ...inline(part),
+    ]) });
   }
   return { type: 'doc', version: 1, content };
 }
