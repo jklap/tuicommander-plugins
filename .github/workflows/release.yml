@@ -3,12 +3,6 @@ name: Release Plugins
 on:
   push:
     branches: [main]
-    paths:
-      - "*/manifest.json"
-      - "*/main.js"
-      - "*/icon-data.js"
-      - "*/icon-map.json"
-      - "registry.json"
 
   workflow_dispatch:
 
@@ -23,14 +17,8 @@ jobs:
 
       - name: Package plugins
         run: |
-          mkdir -p dist
-          for dir in */; do
-            [ -f "$dir/manifest.json" ] || continue
-            plugin_id=$(basename "$dir")
-            version=$(jq -r .version "$dir/manifest.json")
-            echo "Packaging $plugin_id v$version"
-            (cd "$dir" && zip -r "../dist/${plugin_id}.zip" . -x "node_modules/*" "scripts/*" ".claude/*" "package*.json")
-          done
+          node scripts/payload-catalog.mjs --check
+          node scripts/payload-catalog.mjs --package dist
           ls -la dist/
 
       - name: Update or create release
