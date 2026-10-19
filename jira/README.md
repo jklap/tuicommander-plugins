@@ -23,8 +23,15 @@ Install by copying this directory to `~/Library/Application Support/com.tuic.com
 { "accounts": [{ "id": "<account id>", "host": "https://site.atlassian.net", "kind": "basic", "projectId": "10000" }] }
 ```
 
-Without the file `onload` logs a warning and registers nothing. The Tasks views are not mounted
-in the app shell yet, and no URL resolver is registered for Jira.
+Without the file `onload` logs a warning and registers nothing. Core Tasks renders the
+provider views. The plugin registers a URL resolver for configured Jira accounts;
+pasting an owned issue URL offers a link and a drafted start-work brief. Unload
+removes both provider and URL-resolver registrations.
+
+Settings > Plugins > Jira exposes an optional **Default project ID** in the
+schema-backed `data/config.json`. A project selected for an account in Tasks setup
+takes precedence. Keep account configuration in `data/work-items.json`; do not
+move it into the settings file.
 A 429 blocks further calls from this provider until `Retry-After` expires (numeric
 seconds or HTTP date); it does not automatically replay writes.
 
@@ -52,8 +59,8 @@ visible-only 60-second periodic refresh, not the provider.
 
 `fixtures/cloud.json` is **unrecorded**, hand-authored from public Jira REST v3
 shapes with synthetic values. It is a test assumption, not a production recording.
-No Jira Cloud site or credential exists for this assignment. These sources guide
-the shape:
+Other files contain scrubbed Jira Cloud recordings; see `fixtures/README.md`
+for their provenance and limits. These sources guide the synthetic fixture:
 
 - [Issue search](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/)
 - [Issues, creation metadata and transitions](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issues/)
@@ -77,8 +84,10 @@ A live recording must confirm:
    routing through the core host intent.
 
 Scrub tokens, email addresses, real user IDs and private issue content before
-replacing the unrecorded fixture. Desktop plugin loading waits for the core
-account fetch and provider registration integration; verify after Boss's restart.
+adding recorded fixtures. The account HTTP and provider registration ports are
+already wired. Authenticated loading and the missing live boundaries still need
+operator verification; a fixture test does not prove them. A browser connected to
+a headless backend does not load user plugins through the normal app loader.
 
 Detail values include Summary, Description, Assignee and Labels. Issue type uses its human name; priority and type field values retain request IDs, resolved through schema option labels by the core detail view.
 
