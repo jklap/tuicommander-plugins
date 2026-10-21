@@ -16,3 +16,25 @@ kept; only the allowed values are cut to the first 12 per field, and issue type
 descriptions are blanked. It exists to test the layout of a wide schema.
 
 `grouped-priority-model.json` is the scrubbed provider model recorded during the read-only Jira review on 2026-10-13. It preserves the observed status-grouped result of a priority grouping request. The host regression uses these rows and the real provider declarations to verify unsupported groups are not offered; it is not a REST response or evidence of live server acceptance.
+
+## Evidence still required for provider closure
+
+The files above do not make `cloud.json` a recorded fixture. In particular,
+recorded issue detail does not prove the separate comments or transitions calls.
+The recorded-detail tests supply empty comment and transition responses locally.
+
+The remaining real-site evidence is:
+
+- Per-issue `GET /rest/api/3/issue/{key}/transitions` and independent
+  `GET /rest/api/3/issue/{key}/comment` pages.
+- `GET /rest/agile/1.0/board/{boardId}/configuration`, including a column with
+  multiple statuses and the relation to the issue's legal transitions.
+- An observed 429 response with its `Retry-After` header. Do not generate load
+  to force a rate limit; retain this boundary as unverified until observed.
+- Account verification through the core Basic/PAT port and a post-write ADF
+  read-back. ADF write/read-back needs separate scratch-project write consent;
+  read-only recording authorization does not permit it.
+
+Use an operator-authorized test account/site. Record method, endpoint, date,
+status, relevant headers and scrub rules with each new fixture. Never copy a
+credential from a token store or label a constructed response as a recording.

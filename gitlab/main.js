@@ -54,12 +54,14 @@ export default {
   id: 'gitlab',
   async onload(host) {
     const config = await readConfig(host, 'gitlab');
+    const rawSettings = await host.invoke('read_plugin_data', { pluginId: 'gitlab', path: 'config.json' });
+    const defaults = rawSettings ? JSON.parse(rawSettings) : {};
     if (!config?.accounts?.length) {
       host.log("warn", "gitlab has no accounts: configure this provider in Tasks setup.");
       return;
     }
     const accounts = config.accounts.map(({ project, boards, ...account }) => ({ kind: 'bearer', ...account, provider: 'gitlab' }));
-    const configuration = Object.fromEntries(config.accounts.map(({ id, project, boards }) => [id, { project, boards }]));
+    const configuration = Object.fromEntries(config.accounts.map(({ id, project, boards }) => [id, { project: project || defaults.project || undefined, boards }]));
     active = registerGitLabAccounts(host, accounts, (id) => accountFetch(host, id), configuration);
   },
   onunload() {

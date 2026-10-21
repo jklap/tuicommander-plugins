@@ -72,3 +72,20 @@ capabilities, agent targeting and CLI binaries. Dashboard plugins require at lea
 v1.0.3 (`registerDashboard`, core commit `9a62e145b`). MDKB and RTK dashboard
 lifetime guards require v1.7.6 (panel `onClose`, core commit `26b9e6b99`). SQLite
 keeps its documented ES2022 panel-bundle target.
+
+## Payload identity and release packaging
+
+The committed catalogue is the source of truth for `contentSha256`. After changing
+a plugin payload, run `node scripts/payload-catalog.mjs` and commit `registry.json`
+with the change. CI refuses stale digests and packages the exact same file list
+with `node scripts/payload-catalog.mjs --package dist`. `zip` and `unzip` are
+required for packaging and its focused regression test.
+
+The digest hashes sorted UTF-8 relative file names (with `/` separators). For each
+file, hash its path, NUL, its lowercase hexadecimal SHA-256, and LF. The final
+SHA-256 is the payload identity. It excludes directories named `data`,
+`node_modules`, `scripts`, `.claude`, `.git`, and files matching `package*.json`.
+Internal symlinks are not a supported release payload. File timestamps, ZIP
+metadata and mutable plugin settings do not affect the identity. This identifies
+content, not publisher authenticity. The raw catalogue can become available
+before its release workflow finishes; wait for that workflow before installing.

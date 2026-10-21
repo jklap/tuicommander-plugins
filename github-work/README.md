@@ -86,3 +86,23 @@ https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating
 Task details declare the `edit_field` action for API-editable schema fields. The host enables only fields marked editable; Jira requires an explicit `set` operation and keeps project, issue type and status on their typed workflows. Save errors remain visible without discarding the draft.
 
 Opening Tasks Board discovers the current user Projects v2 through paged `viewer.projectsV2` queries. Select a returned project in the core picker. A missing scope error names `read:project`. Discovery success tests use documented GraphQL response shapes; the insufficient-scope fixture is recorded. No live successful Projects discovery is claimed.
+
+## Authenticated closure checks
+
+Account-scoped runtime ports and issue-type discovery already exist. To verify
+integration, the operator must provide a logged-in test account with
+`repo read:project` consent, an accessible issue and PR, and a Projects v2 project.
+The TUIC checkout's `scripts/github-work-live-check.mjs --help` describes the
+read-only installed-module probe. It is not a Tasks rendering or issue-create E2E.
+
+The create E2E additionally requires an explicitly authorized scratch repository:
+open Tasks with this installed plugin, open New task, select Issue, load real
+repository metadata, submit one authorized issue, and read back its repository,
+number and selected metadata. Record the resulting URL without credentials or
+private body text. Do not submit or close an issue without write authorization.
+
+The normal app loader skips user plugins in browser mode. A worktree Vite page
+connected to an isolated headless backend therefore cannot by itself prove this
+plugin loaded. Do not inject a fake Tauri object or replace account HTTP with a
+test double and call it loaded-plugin E2E. Keep the integration criteria open
+until an approved runtime and the required account access are available.

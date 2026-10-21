@@ -49,12 +49,14 @@ export default {
   id: 'jira',
   async onload(host) {
     const config = await readConfig(host, 'jira');
+    const rawSettings = await host.invoke('read_plugin_data', { pluginId: 'jira', path: 'config.json' });
+    const defaults = rawSettings ? JSON.parse(rawSettings) : {};
     if (!config?.accounts?.length) {
       host.log("warn", "jira has no accounts: configure this provider in Tasks setup.");
       return;
     }
     const accounts = config.accounts.map(({ projectId, boards, ...account }) => ({ ...account, provider: 'jira' }));
-    const configuration = Object.fromEntries(config.accounts.map(({ id, projectId, boards }) => [id, { projectId, boards }]));
+    const configuration = Object.fromEntries(config.accounts.map(({ id, projectId, boards }) => [id, { projectId: projectId || defaults.projectId || undefined, boards }]));
     active = registerJiraAccounts(host, accounts, (id) => accountFetch(host, id), configuration);
   },
   onunload() {

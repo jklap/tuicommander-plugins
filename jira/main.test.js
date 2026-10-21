@@ -77,6 +77,7 @@ test('onload_registers_configured_accounts_and_unload_removes_them', async () =>
   const host = {
     log() {},
     invoke: async (cmd, args) => {
+      if (args.path === 'config.json') return null;
       assert.deepEqual([cmd, args], ['read_plugin_data', { pluginId: 'jira', path: 'work-items.json' }]);
       return JSON.stringify({ accounts: [{ id: 'one', host: 'https://one.example.invalid', kind: 'basic', projectId: '10000' }] });
     },
@@ -149,4 +150,53 @@ test('url_resolver_is_disposed_with_accounts_and_skipped_without_them', () => {
   const some = registerWithResolver([{ id: 'one', provider: 'jira', host: 'https://jira.example.invalid', kind: 'basic' }]);
   some.registration.dispose(); some.registration.dispose();
   assert.equal(some.disposed(), 1);
+});
+
+// Catches: detail fan-out drops cancellation before reaching the real account adapter.
+test('resolver_cancellation_reaches_every_account_http_request', async () => {
+  let resolveUrl;
+  const seen = [];
+  const host = {
+    registerWorkItemProvider() { return { dispose() {} }; },
+    registerUrlResolver(resolver) { resolveUrl = resolver; return { dispose() {} }; },
+    async httpFetch(url, options) {
+      seen.push(options.signal);
+      const value = url.includes('/transitions') ? fixture.transitions : url.includes('/comment') ? fixture.comments : fixture.issue;
+      return { status: 200, headers: {}, body: JSON.stringify(value) };
+    },
+  };
+  const registration = registerJiraAccounts(host, [{ id: 'one', provider: 'jira', host: 'https://jira.example.invalid', kind: 'basic' }], (id) => accountFetch(host, id));
+  const controller = new AbortController();
+  await resolveUrl('https://jira.example.invalid/browse/DEMO-7', controller.signal);
+  assert.equal(seen.length, 3);
+  assert.ok(seen.every((signal) => signal === controller.signal));
+  registration.dispose();
+});
+
+// Catches: settings project never reaching real create metadata requests, or overriding account scope.
+test('settings_project_default_is_used_without_overriding_account_project', async () => {
+  for (const override of [undefined, '20000']) {
+    let provider; const urls = [];
+    await plugin.onload({
+      log() {},
+      invoke: async (_, { path }) => JSON.stringify(path === 'config.json' ? { projectId: '10000' } : { accounts: [{ id: 'one', host: 'https://jira.example.invalid', kind: 'basic', projectId: override }] }),
+      registerWorkItemProvider(value) { provider = value; return { dispose() {} }; },
+      registerUrlResolver() { return { dispose() {} }; },
+      async httpFetch(url) { urls.push(url); return { status: 200, headers: {}, body: '{"issueTypes":[],"isLast":true}' }; },
+    });
+    await provider.createFields();
+    assert.match(urls[0], new RegExp(`/createmeta/${override ?? '10000'}/issuetypes`));
+    plugin.onunload();
+  }
+});
+
+// Catches: a pre-aborted URL resolver still dispatching all three detail requests.
+test('preaborted_resolver_starts_no_account_requests', async () => {
+ const controller = new AbortController(); controller.abort();
+ let calls = 0;
+ const { resolvers } = registerWithResolver([{ id: 'one', provider: 'jira', host: 'https://jira.example.invalid', kind: 'basic' }]);
+ const host = { httpFetch() { calls++; throw new Error('unexpected fetch'); }, registerWorkItemProvider() { return { dispose() {} }; }, registerUrlResolver(resolver) { resolvers[0] = resolver; return { dispose() {} }; } };
+ const registration = registerJiraAccounts(host, [{ id: 'one', provider: 'jira', host: 'https://jira.example.invalid', kind: 'basic' }], id => accountFetch(host, id));
+ await assert.rejects(resolvers[0]('https://jira.example.invalid/browse/DEMO-7', controller.signal), { name: 'AbortError' });
+ assert.equal(calls, 0); registration.dispose();
 });

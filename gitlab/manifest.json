@@ -6,14 +6,51 @@
   "main": "main.js",
   "description": "GitLab issues, merge requests, boards and pipelines in core Tasks.",
   "author": "sstraus",
-  "capabilities": ["net:http"],
-  "allowedUrls": ["https://gitlab.com/api/v4/*"],
+  "capabilities": [
+    "net:http"
+  ],
+  "allowedUrls": [
+    "https://gitlab.com/api/v4/*"
+  ],
   "providers": [
     {
       "id": "gitlab",
       "label": "GitLab",
-      "kinds": ["bearer"],
-      "verify": { "path": "/api/v4/user", "loginPointer": "/username" }
+      "kinds": [
+        "bearer"
+      ],
+      "verify": {
+        "path": "/api/v4/user",
+        "loginPointer": "/username"
+      }
     }
-  ]
+  ],
+  "settings": {
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "project": {
+          "type": "string",
+          "title": "Default project path or ID",
+          "description": "Used for accounts without a project in Tasks setup. Account-specific projects take precedence.",
+          "maxLength": 256,
+          "x-setting": {
+            "sensitivity": "public",
+            "apply": "service_restart",
+            "effect": "Reloads the provider with the saved default project.",
+            "operations": [
+              "get",
+              "set",
+              "reset"
+            ],
+            "confirmationClass": "ordinary"
+          }
+        }
+      }
+    },
+    "defaults": {
+      "project": ""
+    }
+  }
 }
