@@ -232,7 +232,7 @@
       "net:http"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/github-work.zip",
-    "contentSha256": "1ba7278f33e347413359232ceda41cc264374cfb57461594f09307276caa2ab0"
+    "contentSha256": "0fd734c9cfd8b4049800594501a5aca25e3ff66bddb5e91e47c6f5fb4a4f3aad"
   },
   {
     "id": "gitlab",
@@ -260,6 +260,6 @@
       "net:http"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/jira.zip",
-    "contentSha256": "689e63f1f57a6492e4002dcb922615c84d2ac5d07bf8a0dae89777e119976fc2"
+    "contentSha256": "e177774844db3bff520ed8f327cd715da1ef9b3c1393fc37aa575273b403cabc"
   }
 ]
