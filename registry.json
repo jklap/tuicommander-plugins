@@ -168,7 +168,7 @@
       "ui:context-menu"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/wiz-kanban.zip",
-    "contentSha256": "62c982950ee0bb396d641ba41a559b137660b5308f4df048163d876e05ab9865"
+    "contentSha256": "4b86ed5db2d66c668d1e8f45a7079c2beaec6f7d0379e0a06e37222aaf913e8f"
   },
   {
     "id": "plan",
@@ -218,7 +218,7 @@
       "fs:write"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/sqlite-viewer.zip",
-    "contentSha256": "acf8995541371208802a0e766f9470b828cbcf3ff87948ac11ac8974cb49e331"
+    "contentSha256": "eafa4b4ce9b06d85a36e9f7021c2772f06a679674c6161f670d60bd8f3fc01e0"
   },
   {
     "id": "github-work",

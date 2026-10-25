@@ -752,11 +752,12 @@ function renderBoard(storyList, filters) {
 
   // ── Messages from host ──
   window.addEventListener("message", (e) => {
-    if (!e.data || !e.data.type) return;
-    if (e.data.type === "toast") {
+    if (e.data?.type !== "tuic:host-message") return;
+    const message = e.data.payload;
+    if (message?.type === "toast") {
       const toast = document.getElementById("toast");
-      toast.textContent = e.data.message;
-      toast.className = "toast " + (e.data.level || "error") + " show";
+      toast.textContent = message.message;
+      toast.className = "toast " + (message.level || "error") + " show";
       setTimeout(() => toast.classList.remove("show"), 3000);
     }
   });

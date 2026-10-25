@@ -181,7 +181,8 @@
     }
   });
   window.addEventListener("message", (event) => {
-    const message = event.data;
+    if (event.data?.type !== "tuic:host-message") return;
+    const message = event.data.payload;
     if (message?.type === "load-error") showFatal(message.message);
     if (message?.type === "save-result" && message.requestId === saveRequestId) finishSave(message);
     if (message?.type === "load-database" && message.databaseBuffer instanceof ArrayBuffer && message.wasmBuffer instanceof ArrayBuffer) {
