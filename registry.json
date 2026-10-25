@@ -232,7 +232,7 @@
       "net:http"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/github-work.zip",
-    "contentSha256": "e7c8312148bd166bd2bc6e76baf00f8ea3f8075fd8e2cca117b169f61ab32196"
+    "contentSha256": "4bbe824418d027edaadb540a9ca88a0f2b5cd4bb386d6b4de6581ef4767fdf3c"
   },
   {
     "id": "gitlab",

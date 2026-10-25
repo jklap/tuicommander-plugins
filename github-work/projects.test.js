@@ -140,7 +140,7 @@ test("project_write_denial_stays_local_to_that_project", async () => {
     },
   });
   const board = await provider.board(projectId, emptyQuery());
-  const card = board.lanes.flatMap((lane) => lane.cards)[0];
+  const card = board.lanes.flatMap((lane) => lane.cards).find((card) => card.item.reference.id === "github/roadmap/issue/1093");
   await assert.rejects(provider.act(card.item.reference, card.moves[0].action), /Grant project write and organization access/);
   assert.equal(denied, true);
   const readonly = await provider.board(projectId, emptyQuery());
