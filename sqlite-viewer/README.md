@@ -29,6 +29,13 @@ Editing is explicit: enable edit mode for a table with a primary key, double-cli
 
 The bundled `sql.js` artifacts are licensed under MIT. See `vendor/LICENSE.sql.js`.
 
+## Host messages
+
+The panel receives `PanelHandle.send()` data in the documented
+`{ type: "tuic:host-message", payload }` envelope. It unwraps the payload before
+handling database loads, load errors, and save results. Raw application messages
+and unrelated SDK messages are ignored.
+
 ## Development
 
 `panel.bundle.js` is generated from `panel.js` and `model.js` so the sandboxed `srcdoc` panel does not depend on external module loading:

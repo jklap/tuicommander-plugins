@@ -1,7 +1,7 @@
 {
   "id": "wiz-kanban",
   "name": "Wiz Kanban",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "minAppVersion": "1.7.5",
   "main": "main.js",
   "description": "Wiz framework plugin that visualizes a kanban board for managing the workflow of plans, stories, and reviews.",

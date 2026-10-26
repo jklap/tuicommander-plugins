@@ -89,3 +89,10 @@ Internal symlinks are not a supported release payload. File timestamps, ZIP
 metadata and mutable plugin settings do not affect the identity. This identifies
 content, not publisher authenticity. The raw catalogue can become available
 before its release workflow finishes; wait for that workflow before installing.
+
+## Panel message fixes
+
+- SQLite Viewer 1.0.1 accepts the host message envelope, so database loads, load errors and save acknowledgements reach the panel.
+- Wiz Kanban 2.1.1 accepts the host message envelope for board toast feedback.
+
+Update these plugins in Settings > Plugins after the release workflow finishes.

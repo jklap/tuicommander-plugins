@@ -519,3 +519,16 @@ test("does not rebuild on re-show when nothing changed while hidden", async (t) 
 
   assert.equal(panel.updates.length, 0, "no watch event means no work to catch up on");
 });
+
+// Catches: host toast envelopes are discarded by a raw-message listener.
+test("board displays host-envelope toast feedback", async () => {
+  const { dom } = await boardDomWithOneStory();
+  try {
+    dom.window.dispatchEvent(new dom.window.MessageEvent("message", {
+      data: { type: "tuic:host-message", payload: { type: "toast", level: "success", message: "Sent to terminal" } },
+    }));
+    const toast = dom.document.getElementById("toast");
+    assert.equal(toast.textContent, "Sent to terminal");
+    assert.equal(toast.className, "toast success show");
+  } finally { dom.window.close(); plugin.onunload(); }
+});
