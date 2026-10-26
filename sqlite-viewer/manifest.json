@@ -1,7 +1,7 @@
 {
   "id": "sqlite-viewer",
   "name": "SQLite Viewer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minAppVersion": "1.7.7",
   "main": "main.js",
   "description": "Inspect, query, explain, and safely edit SQLite databases with WebAssembly.",

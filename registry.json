@@ -154,7 +154,7 @@
     "description": "Wiz framework plugin that visualizes a kanban board for managing the workflow of plans, stories, and reviews.",
     "author": "sstraus",
     "repo": "sstraus/tuicommander-plugins",
-    "latestVersion": "2.1.0",
+    "latestVersion": "2.1.1",
     "minAppVersion": "1.7.5",
     "capabilities": [
       "fs:read",
@@ -168,7 +168,7 @@
       "ui:context-menu"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/wiz-kanban.zip",
-    "contentSha256": "4b86ed5db2d66c668d1e8f45a7079c2beaec6f7d0379e0a06e37222aaf913e8f"
+    "contentSha256": "d2f19b4bc673952afd08d30f1307f63efe503d02438fc022b63820998b16eac9"
   },
   {
     "id": "plan",
@@ -209,7 +209,7 @@
     "description": "Inspect, filter, query, explain, and safely edit SQLite databases using a bundled WebAssembly engine.",
     "author": "sstraus",
     "repo": "sstraus/tuicommander-plugins",
-    "latestVersion": "1.0.0",
+    "latestVersion": "1.0.1",
     "minAppVersion": "1.7.7",
     "capabilities": [
       "ui:file-preview",
@@ -218,7 +218,7 @@
       "fs:write"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/sqlite-viewer.zip",
-    "contentSha256": "eafa4b4ce9b06d85a36e9f7021c2772f06a679674c6161f670d60bd8f3fc01e0"
+    "contentSha256": "b6107be16e427176159b76af8bd45f564edd7c09c33ece17fb918f2c981a26e6"
   },
   {
     "id": "github-work",
