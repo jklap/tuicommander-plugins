@@ -47,18 +47,18 @@ export function buildJql(query, textFallback = false) {
   return [expression, ...filters].map((s) => `(${s})`).join(' AND ') + (order || ' ORDER BY updated DESC');
 }
 
-export async function search(client, query, allowFallback = true) {
+export async function search(client, query, allowFallback = true, signal) {
   const limit = Math.max(1, Math.min(100, Math.floor(query.limit || 50)));
   async function run(fallback) {
     const body = { jql: buildJql(query, fallback), maxResults: limit, fields: ['summary', 'status', 'assignee', 'labels', 'updated', 'issuetype', 'priority', 'duedate', 'created', 'project'] };
     if (client.cloud) {
       if (query.cursor) body.nextPageToken = query.cursor;
-      return client.request(`${client.api}/search/jql`, { method: 'POST', body });
+      return client.request(`${client.api}/search/jql`, { method: 'POST', body, signal });
     }
     const offset = query.cursor == null ? 0 : Number(query.cursor);
     if (!Number.isSafeInteger(offset) || offset < 0) throw new Error('Invalid Jira page cursor');
     body.startAt = offset;
-    return client.request(`${client.api}/search`, { method: 'POST', body });
+    return client.request(`${client.api}/search`, { method: 'POST', body, signal });
   }
   let page;
   try { page = await run(false); }

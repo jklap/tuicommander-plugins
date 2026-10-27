@@ -1,0 +1,37 @@
+{
+  "provenance": { "recorded": false, "source": "Atlassian Jira Cloud REST v3 public documentation shapes, synthetic values", "date": "2026-10-10" },
+  "issue": {
+    "id": "10001", "key": "DEMO-7",
+    "fields": {
+      "summary": "Preserve code and lists", "issuetype": { "id": "10004", "name": "Task" },
+      "status": { "id": "3", "name": "In progress", "statusCategory": { "key": "indeterminate" } },
+      "assignee": { "accountId": "synthetic-user", "displayName": "Example User" },
+      "labels": ["integration"], "updated": "2026-10-10T10:00:00.000+0000", "duedate": "2026-10-20",
+      "description": { "type": "doc", "version": 1, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Steps" }] },
+        { "type": "bulletList", "content": [
+          { "type": "listItem", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "First" }] }] },
+          { "type": "listItem", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Second" }] }] }
+        ] },
+        { "type": "codeBlock", "attrs": { "language": "js" }, "content": [{ "type": "text", "text": "const n = 1;" }] }
+      ] }
+    },
+    "editmeta": { "fields": { "summary": { "name": "Summary", "required": true, "operations": ["set"], "schema": { "type": "string" } } } }
+  },
+  "transitions": { "transitions": [
+    { "id": "31", "name": "Start progress", "to": { "id": "3", "name": "In progress" } },
+    { "id": "91", "name": "Finish", "to": { "id": "5", "name": "Done" } }
+  ] },
+  "comments": { "startAt": 0, "maxResults": 50, "total": 1, "comments": [
+    { "id": "10000", "author": { "accountId": "synthetic-user", "displayName": "Example User" }, "created": "2026-10-10T10:00:00.000+0000", "body": { "type": "doc", "version": 1, "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Ready for review" }] }] } }
+  ] },
+  "board": { "id": 42, "name": "Example board", "filter": { "id": "10010" }, "columnConfig": { "columns": [
+    { "name": "To do", "statuses": [{ "id": "1" }] },
+    { "name": "In progress", "statuses": [{ "id": "3" }] },
+    { "name": "Done", "statuses": [{ "id": "5" }] }
+  ] } },
+  "createmeta": { "startAt": 0, "maxResults": 50, "total": 2, "fields": [
+    { "fieldId": "summary", "name": "Summary", "required": true, "operations": ["set"], "schema": { "type": "string" } },
+    { "fieldId": "priority", "name": "Priority", "required": false, "operations": ["set"], "schema": { "type": "priority" }, "allowedValues": [{ "id": "2", "name": "High" }] }
+  ] }
+}

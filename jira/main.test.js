@@ -91,7 +91,7 @@ test('onload_registers_configured_accounts_and_unload_removes_them', async () =>
   assert.equal(live.length, 0);
 });
 
-const fixture = JSON.parse(readFileSync(new URL('./fixtures/cloud.json', import.meta.url), 'utf8'));
+const fixture = JSON.parse(readFileSync(new URL('./fixtures/cloud-contract.json', import.meta.url), 'utf8'));
 const ok = (json) => ({ status: 200, headers: {}, json: structuredClone(json) });
 const issueFetch = (calls) => async (req) => {
   calls.push(req.url);

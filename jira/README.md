@@ -9,7 +9,7 @@ for Jira Data Center (PAT). The site may contain a context path and explicit por
 ## Integration
 
 `createJiraProvider({account, fetch, projectId})` accepts an authenticated fetch
-port. The port receives `{url, method, body, headers}` and returns
+port. The port receives `{url, method, body, headers, signal}` and returns
 `{status, headers, json}`. Authentication is injected by Rust; never pass a token
 to this module. Non-browser `User-Agent` must be forwarded by the host HTTP port.
 The manifest declares `net:http` and the `jira` account descriptor; requests go through
@@ -51,16 +51,28 @@ child text where available. Media, tables, extensions, complex overlapping
 marks, and rich metadata cannot round-trip through this subset. Do not use an
 edit of description to preserve unsupported rich content unchanged.
 
+All work-item request methods accept the optional caller `AbortSignal` and pass
+it to every fetch, including fallback searches, metadata pages, board transitions,
+action writes and detail refreshes. Cancellation does not undo a write that Jira
+has already accepted; read the item before retrying an interrupted write.
+
 Create metadata is retrieved per configured project and selected issue type.
 Comment pagination is independent of issue pagination. Core detail view owns
 visible-only 60-second periodic refresh, not the provider.
 
 ## Fixtures and live confirmation
 
-`fixtures/cloud.json` is **unrecorded**, hand-authored from public Jira REST v3
-shapes with synthetic values. It is a test assumption, not a production recording.
-Other files contain scrubbed Jira Cloud recordings; see `fixtures/README.md`
-for their provenance and limits. These sources guide the synthetic fixture:
+`fixtures/cloud.json` contains scrubbed responses recorded from the authorized
+`straus-team.atlassian.net` scratch site on 2026-10-27. It includes enhanced search
+pages, a real JQL 400, issue detail, transitions, independent comment pages, board
+configuration, create metadata and a successful create response. Each response
+retains method, path, date, status and relevant headers in `provenance.records`.
+`recorded-cloud.test.js` replays these boundaries through the real provider.
+
+`fixtures/cloud-contract.json` preserves the previous, explicitly synthetic
+contract inputs for edge cases that the scratch workflow does not contain.
+Those tests do not claim live evidence. See `fixtures/README.md` for recording
+limits. These public references describe the contracts:
 
 - [Issue search](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/)
 - [Issues, creation metadata and transitions](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issues/)
@@ -94,7 +106,9 @@ Detail values include Summary, Description, Assignee and Labels. Issue type uses
 Create metadata omits Project and Issue Type because `projectId` and the selected
 type supply those values. `lookupUsers(fieldId, query)` uses project-scoped
 assignable-user search for Assignee and user search for Reporter, returning Cloud
-account IDs or Data Center usernames. User search is read-only and bounded to 50
+account IDs or Data Center usernames. Assignee lookup without a configured project
+fails with `Jira project is required` before a request is sent; Reporter lookup
+does not require a project. User search is read-only and bounded to 50
 results; refine the query if the desired user is absent. The core create form
 accepts free labels and reports missing required values beside their controls.
 Parent issue keys are encoded as Jira `{key}` objects during creation.

@@ -1,13 +1,13 @@
 import { fieldSchema } from './model.js';
 
 export function creationPort(client, projectId) {
-  return async function createFields(itemType) {
+  return async function createFields(itemType, signal) {
     if (!projectId) throw new Error('Jira project is required');
     const base = `${client.api}/issue/createmeta/${encodeURIComponent(projectId)}/issuetypes`;
     if (!itemType) {
       const types = []; let start = 0;
       for (;;) {
-        const page = await client.request(`${base}?startAt=${start}&maxResults=100`);
+        const page = await client.request(`${base}?startAt=${start}&maxResults=100`, { signal });
         const batch = page.issueTypes ?? page.values;
         if (!Array.isArray(batch)) throw new Error('Invalid Jira issue type response');
         types.push(...batch.map((t) => ({ id: String(t.id), name: t.name }))); start += batch.length;
@@ -17,7 +17,7 @@ export function creationPort(client, projectId) {
     }
     const fields = []; let start = 0;
     for (;;) {
-      const page = await client.request(`${base}/${encodeURIComponent(itemType)}?startAt=${start}&maxResults=100`);
+      const page = await client.request(`${base}/${encodeURIComponent(itemType)}?startAt=${start}&maxResults=100`, { signal });
       const batch = page.fields ?? page.values;
       if (!Array.isArray(batch)) throw new Error('Invalid Jira create metadata response');
       fields.push(...batch.map(fieldSchema)); start += batch.length;
