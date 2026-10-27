@@ -60,12 +60,12 @@ export function createJiraProvider(options) {
     if (id === 'project' || id === 'issuetype' || id === 'status') throw new Error('Use a typed Jira project, type or transition');
     return field.value;
   }
-  async function act(ref, action) {
+  async function act(ref, action, signal) {
     if (action.kind === 'start_work') { checkRef(ref); return { kind: 'start_work', value: action.value }; }
     if (action.kind === 'create') {
       const value = action.value;
       if (!value.title.trim() || !value.itemType || !(options.projectId ?? value.fields.project?.value)) throw new Error('Jira title, project and issue type are required');
-      const schema = await createFields(value.itemType);
+      const schema = await createFields(value.itemType, signal);
       for (const field of schema) {
         const input = field.id === 'summary' ? value.title : field.id === 'description' ? value.body : value.fields[field.id]?.value;
         if (field.required && field.id !== 'project' && field.id !== 'issuetype' && (input == null || input === '' || Array.isArray(input) && !input.length)) throw new Error(`Jira required field: ${field.name}`);
@@ -75,26 +75,26 @@ export function createJiraProvider(options) {
       fields.issuetype = { id: value.itemType };
       fields.project = { id: options.projectId ?? value.fields.project.value };
       fields.description = cloud ? markdownToAdf(value.body) : value.body;
-      const created = await request(`${api}/issue`, { method: 'POST', body: { fields } });
-      return { kind: 'item', value: await detail({ providerId: 'jira', accountId: account.id, id: created.key }) };
+      const created = await request(`${api}/issue`, { method: 'POST', body: { fields }, signal });
+      return { kind: 'item', value: await detail({ providerId: 'jira', accountId: account.id, id: created.key }, signal) };
     }
     const path = checkRef(ref);
     if (action.kind === 'transition') {
-      const available = await request(`${path}/transitions`);
+      const available = await request(`${path}/transitions`, { signal });
       const transition = available.transitions.find((t) => String(t.id) === action.value);
       if (!transition) throw new Error('Jira transition is no longer available');
-      await request(`${path}/transitions`, { method: 'POST', body: { transition: { id: String(transition.id) } } });
+      await request(`${path}/transitions`, { method: 'POST', body: { transition: { id: String(transition.id) } }, signal });
     } else if (action.kind === 'comment') {
       if (!action.value.trim()) throw new Error('Jira comment cannot be empty');
-      await request(`${path}/comment`, { method: 'POST', body: { body: cloud ? markdownToAdf(action.value) : action.value } });
+      await request(`${path}/comment`, { method: 'POST', body: { body: cloud ? markdownToAdf(action.value) : action.value }, signal });
     } else if (action.kind === 'edit_field') {
       const { fieldId, value } = action.value;
       if (['status', 'project', 'issuetype'].includes(fieldId)) throw new Error('Use Jira transitions or create action');
-      const issue = await request(`${path}/editmeta`);
+      const issue = await request(`${path}/editmeta`, { signal });
       if (!issue.fields?.[fieldId]?.operations?.includes('set')) throw new Error('Jira field is not editable');
-      await request(path, { method: 'PUT', body: { fields: { [fieldId]: rawField(fieldId, value) } } });
+      await request(path, { method: 'PUT', body: { fields: { [fieldId]: rawField(fieldId, value) } }, signal });
     } else throw new Error('Unsupported Jira action');
-    return { kind: 'item', value: await detail(ref) };
+    return { kind: 'item', value: await detail(ref, signal) };
   }
   function resolveUrl(value) {
     let url;
@@ -118,9 +118,9 @@ export function createJiraProvider(options) {
     boards: (options.boards ?? []).map((b) => ({ id: String(b.id), name: b.name, fieldId: 'status', columns: [] })),
     savedFilters: presets.map((p) => ({ id: p.id, name: p.name, query: { ...emptyQuery, savedFilterId: p.id } })),
     async verify() { return request(`${api}/myself`); },
-    async list(query) { const page = await search(client, query); return { items: page.issues.map(toItem), nextCursor: page.nextCursor, ...(page.total === undefined ? {} : { total: page.total }) }; },
-    async grouped(query) {
-      const page = await this.list(query);
+    async list(query, signal) { const page = await search(client, query, true, signal); return { items: page.issues.map(toItem), nextCursor: page.nextCursor, ...(page.total === undefined ? {} : { total: page.total }) }; },
+    async grouped(query, signal) {
+      const page = await this.list(query, signal);
       const groups = new Map();
       for (const item of page.items) {
         const id = query.groupBy === 'assignee' ? item.assignees[0]?.id ?? '' : query.groupBy === 'issuetype' ? item.itemType : item.state.id;
@@ -132,12 +132,15 @@ export function createJiraProvider(options) {
     },
     // Jira user fields hold one user; a multi-user picker is an array field and never reaches this kind.
     singleUser: () => true,
-    async lookupUsers(fieldId, query) {
+    async lookupUsers(fieldId, query, signal) {
       if (!query.trim()) return [];
       const params = new URLSearchParams({ [cloud ? 'query' : 'username']: query.trim(), maxResults: '50' });
-      if (fieldId === 'assignee') params.set('project', options.projectId);
+      if (fieldId === 'assignee') {
+        if (!options.projectId) throw new Error('Jira project is required');
+        params.set('project', options.projectId);
+      }
       const path = fieldId === 'assignee' ? 'user/assignable/search' : 'user/search';
-      const users = await request(`${api}/${path}?${params}`);
+      const users = await request(`${api}/${path}?${params}`, { signal });
       if (!Array.isArray(users)) throw new Error('Invalid Jira user search response');
       return users.filter((u) => u.active !== false).map((u) => ({ id: cloud ? u.accountId : u.name, name: u.displayName ?? u.name })).filter((u) => u.id);
     },

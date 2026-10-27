@@ -9,7 +9,7 @@ for Jira Data Center (PAT). The site may contain a context path and explicit por
 ## Integration
 
 `createJiraProvider({account, fetch, projectId})` accepts an authenticated fetch
-port. The port receives `{url, method, body, headers}` and returns
+port. The port receives `{url, method, body, headers, signal}` and returns
 `{status, headers, json}`. Authentication is injected by Rust; never pass a token
 to this module. Non-browser `User-Agent` must be forwarded by the host HTTP port.
 The manifest declares `net:http` and the `jira` account descriptor; requests go through
@@ -50,6 +50,11 @@ code blocks, links, bold, italic, and strike. Unknown ADF containers preserve
 child text where available. Media, tables, extensions, complex overlapping
 marks, and rich metadata cannot round-trip through this subset. Do not use an
 edit of description to preserve unsupported rich content unchanged.
+
+All work-item request methods accept the optional caller `AbortSignal` and pass
+it to every fetch, including fallback searches, metadata pages, board transitions,
+action writes and detail refreshes. Cancellation does not undo a write that Jira
+has already accepted; read the item before retrying an interrupted write.
 
 Create metadata is retrieved per configured project and selected issue type.
 Comment pagination is independent of issue pagination. Core detail view owns
@@ -94,7 +99,9 @@ Detail values include Summary, Description, Assignee and Labels. Issue type uses
 Create metadata omits Project and Issue Type because `projectId` and the selected
 type supply those values. `lookupUsers(fieldId, query)` uses project-scoped
 assignable-user search for Assignee and user search for Reporter, returning Cloud
-account IDs or Data Center usernames. User search is read-only and bounded to 50
+account IDs or Data Center usernames. Assignee lookup without a configured project
+fails with `Jira project is required` before a request is sent; Reporter lookup
+does not require a project. User search is read-only and bounded to 50
 results; refine the query if the desired user is absent. The core create form
 accepts free labels and reports missing required values beside their controls.
 Parent issue keys are encoded as Jira `{key}` objects during creation.

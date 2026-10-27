@@ -14,9 +14,9 @@ async function mapCards(items, project) {
 }
 
 export function boardPort(client, toItem) {
-  async function configuration(id) {
+  async function configuration(id, signal) {
     if (!/^\d+$/.test(id)) throw new Error('Invalid Jira board ID');
-    const config = await client.request(`/rest/agile/1.0/board/${id}/configuration`);
+    const config = await client.request(`/rest/agile/1.0/board/${id}/configuration`, { signal });
     if (!Array.isArray(config?.columnConfig?.columns) || !config.filter?.id) throw new Error('Invalid Jira board configuration');
     return config;
   }
@@ -30,15 +30,15 @@ export function boardPort(client, toItem) {
     const statuses = new Set(column.statuses.map((s) => String(s.id)));
     return available.find((t) => statuses.has(String(t.to.id)));
   }
-  async function board(id, query) {
-    const config = await configuration(id);
+  async function board(id, query, signal) {
+    const config = await configuration(id, signal);
     // The board's saved filter owns membership; user's query only narrows it.
     // A selected preset supplies the narrowing; 'id IS NOT EMPTY' keeps resolved cards when neither is set.
     const hasPreset = presets.some((p) => p.id === query.savedFilterId);
     const searchPage = (textFallback) => {
       const jql = buildJql({ ...query, search: query.search || (hasPreset ? '' : 'id IS NOT EMPTY') }, textFallback);
       const { predicate, order } = splitOrder(jql);
-      return search(client, { ...query, filters: [], search: `filter = ${Number(config.filter.id)} AND (${predicate})${order}` }, false);
+      return search(client, { ...query, filters: [], search: `filter = ${Number(config.filter.id)} AND (${predicate})${order}` }, false, signal);
     };
     // Plain text is not JQL: Jira answers 400, so retry as text ~ like the list does.
     let page;
@@ -48,7 +48,7 @@ export function boardPort(client, toItem) {
       page = await searchPage(true);
     }
     const cards = await mapCards(page.issues, async (issue) => {
-      const available = await client.request(`${client.api}/issue/${encodeURIComponent(issue.key)}/transitions`);
+      const available = await client.request(`${client.api}/issue/${encodeURIComponent(issue.key)}/transitions`, { signal });
       return {
         item: toItem(issue),
         moves: config.columnConfig.columns.flatMap((column, index) => {
