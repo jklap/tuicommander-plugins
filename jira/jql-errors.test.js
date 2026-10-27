@@ -4,7 +4,7 @@ import test from 'node:test';
 import { createJiraProvider } from './provider.js';
 
 const live = JSON.parse(readFileSync(new URL('./fixtures/malformed-jql-live.json', import.meta.url), 'utf8'));
-const issue = JSON.parse(readFileSync(new URL('./fixtures/cloud.json', import.meta.url), 'utf8')).issue;
+const issue = JSON.parse(readFileSync(new URL('./fixtures/cloud-contract.json', import.meta.url), 'utf8')).issue;
 const account = { id: 'review', host: 'https://jira.example.invalid', kind: 'basic' };
 const query = { filters: [], savedFilterId: null, sort: null, cursor: null, limit: 100, groupBy: null };
 

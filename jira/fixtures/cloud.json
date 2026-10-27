@@ -1,37 +1,4380 @@
 {
-  "provenance": { "recorded": false, "source": "Atlassian Jira Cloud REST v3 public documentation shapes, synthetic values", "date": "2026-10-10" },
-  "issue": {
-    "id": "10001", "key": "DEMO-7",
-    "fields": {
-      "summary": "Preserve code and lists", "issuetype": { "id": "10004", "name": "Task" },
-      "status": { "id": "3", "name": "In progress", "statusCategory": { "key": "indeterminate" } },
-      "assignee": { "accountId": "synthetic-user", "displayName": "Example User" },
-      "labels": ["integration"], "updated": "2026-10-10T10:00:00.000+0000", "duedate": "2026-10-20",
-      "description": { "type": "doc", "version": 1, "content": [
-        { "type": "paragraph", "content": [{ "type": "text", "text": "Steps" }] },
-        { "type": "bulletList", "content": [
-          { "type": "listItem", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "First" }] }] },
-          { "type": "listItem", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Second" }] }] }
-        ] },
-        { "type": "codeBlock", "attrs": { "language": "js" }, "content": [{ "type": "text", "text": "const n = 1;" }] }
-      ] }
-    },
-    "editmeta": { "fields": { "summary": { "name": "Summary", "required": true, "operations": ["set"], "schema": { "type": "string" } } } }
+  "provenance": {
+    "recorded": true,
+    "source": "https://straus-team.atlassian.net",
+    "date": "2026-10-27",
+    "scrubRules": [
+      "Account IDs replaced with recorded-user-N",
+      "User display names, email addresses, avatar URLs and self links redacted",
+      "Exact test email, API key and Basic authorization payload removed"
+    ],
+    "records": [
+      {
+        "method": "GET",
+        "path": "/rest/api/3/myself",
+        "date": "2026-10-27T10:59:31.317Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "self": "[redacted]",
+          "accountId": "recorded-user-1",
+          "accountType": "atlassian",
+          "emailAddress": "[redacted]",
+          "avatarUrls": "[redacted]",
+          "displayName": "Recorded User",
+          "active": true,
+          "timeZone": "Europe/Madrid",
+          "locale": "en_US",
+          "groups": {
+            "size": 6,
+            "items": []
+          },
+          "applicationRoles": {
+            "size": 1,
+            "items": []
+          },
+          "expand": "groups,applicationRoles"
+        }
+      },
+      {
+        "method": "GET",
+        "path": "/rest/api/3/project/TUIC",
+        "date": "2026-10-27T10:59:31.649Z",
+        "status": 404,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "errorMessages": [
+            "No project could be found with key 'TUIC'."
+          ],
+          "errors": {}
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/rest/api/3/project",
+        "date": "2026-10-27T10:59:40.149Z",
+        "status": 201,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "self": "[redacted]",
+          "id": 10001,
+          "key": "TUIC"
+        }
+      },
+      {
+        "method": "GET",
+        "path": "/rest/api/3/issue/createmeta/10001/issuetypes",
+        "date": "2026-10-27T10:59:40.399Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "startAt": 0,
+          "maxResults": 50,
+          "total": 5,
+          "issueTypes": [
+            {
+              "self": "[redacted]",
+              "id": "10000",
+              "description": "A big user story that needs to be broken down. Created by Jira Software - do not edit or delete.",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/issuetypes/epic.svg",
+              "name": "Epic",
+              "untranslatedName": "Epic",
+              "subtask": false,
+              "hierarchyLevel": 1
+            },
+            {
+              "self": "[redacted]",
+              "id": "10005",
+              "description": "Stories track functionality or features expressed as user goals.",
+              "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10300?size=medium",
+              "name": "Story",
+              "untranslatedName": "Story",
+              "subtask": false,
+              "hierarchyLevel": 0
+            },
+            {
+              "self": "[redacted]",
+              "id": "10006",
+              "description": "A small, distinct piece of work.",
+              "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+              "name": "Task",
+              "untranslatedName": "Task",
+              "subtask": false,
+              "hierarchyLevel": 0
+            },
+            {
+              "self": "[redacted]",
+              "id": "10007",
+              "description": "A small piece of work that's part of a larger task.",
+              "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium",
+              "name": "Sub-task",
+              "untranslatedName": "Sub-task",
+              "subtask": true,
+              "hierarchyLevel": -1
+            },
+            {
+              "self": "[redacted]",
+              "id": "10008",
+              "description": "A problem or error.",
+              "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium",
+              "name": "Bug",
+              "untranslatedName": "Bug",
+              "subtask": false,
+              "hierarchyLevel": 0
+            }
+          ]
+        }
+      },
+      {
+        "method": "GET",
+        "path": "/rest/api/3/issue/createmeta/10001/issuetypes/10006",
+        "date": "2026-10-27T10:59:40.955Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "startAt": 0,
+          "maxResults": 50,
+          "total": 16,
+          "fields": [
+            {
+              "required": false,
+              "schema": {
+                "type": "user",
+                "system": "assignee"
+              },
+              "name": "Assignee",
+              "key": "assignee",
+              "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/3/user/assignable/search?project=TUIC&query=",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "fieldId": "assignee"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "attachment",
+                "system": "attachment"
+              },
+              "name": "Attachment",
+              "key": "attachment",
+              "hasDefaultValue": false,
+              "operations": [
+                "set",
+                "copy"
+              ],
+              "fieldId": "attachment"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "component",
+                "system": "components"
+              },
+              "name": "Components",
+              "key": "components",
+              "hasDefaultValue": false,
+              "operations": [
+                "add",
+                "set",
+                "remove"
+              ],
+              "allowedValues": [],
+              "fieldId": "components"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "team",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team",
+                "customId": 10001,
+                "configuration": {
+                  "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team": true
+                }
+              },
+              "name": "Team",
+              "key": "customfield_10001",
+              "autoCompleteUrl": "https://straus-team.atlassian.net/gateway/api/v1/recommendations",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "fieldId": "customfield_10001"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "date",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datepicker",
+                "customId": 10015
+              },
+              "name": "Start date",
+              "key": "customfield_10015",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "fieldId": "customfield_10015"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "json",
+                "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+                "customId": 10020
+              },
+              "name": "Sprint",
+              "key": "customfield_10020",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "fieldId": "customfield_10020"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "string",
+                "system": "description"
+              },
+              "name": "Description",
+              "key": "description",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "fieldId": "description"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "date",
+                "system": "duedate"
+              },
+              "name": "Due date",
+              "key": "duedate",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "fieldId": "duedate"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "version",
+                "system": "fixVersions"
+              },
+              "name": "Fix versions",
+              "key": "fixVersions",
+              "hasDefaultValue": false,
+              "operations": [
+                "set",
+                "add",
+                "remove"
+              ],
+              "allowedValues": [],
+              "fieldId": "fixVersions"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "issuelinks",
+                "system": "issuelinks"
+              },
+              "name": "Linked Issues",
+              "key": "issuelinks",
+              "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/3/issue/picker?currentProjectId=&showSubTaskParent=true&showSubTasks=true&currentIssueKey=null&query=",
+              "hasDefaultValue": false,
+              "operations": [
+                "add",
+                "copy"
+              ],
+              "fieldId": "issuelinks"
+            },
+            {
+              "required": true,
+              "schema": {
+                "type": "issuetype",
+                "system": "issuetype"
+              },
+              "name": "Issue Type",
+              "key": "issuetype",
+              "hasDefaultValue": false,
+              "operations": [],
+              "allowedValues": [
+                {
+                  "self": "[redacted]",
+                  "id": "10006",
+                  "description": "A small, distinct piece of work.",
+                  "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+                  "name": "Task",
+                  "subtask": false,
+                  "avatarId": 10318,
+                  "hierarchyLevel": 0
+                }
+              ],
+              "fieldId": "issuetype"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "string",
+                "system": "labels"
+              },
+              "name": "Labels",
+              "key": "labels",
+              "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/1.0/labels/suggest?query=",
+              "hasDefaultValue": false,
+              "operations": [
+                "add",
+                "set",
+                "remove"
+              ],
+              "fieldId": "labels"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "issuelink",
+                "system": "parent"
+              },
+              "name": "Parent",
+              "key": "parent",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "fieldId": "parent"
+            },
+            {
+              "required": false,
+              "schema": {
+                "type": "priority",
+                "system": "priority"
+              },
+              "name": "Priority",
+              "key": "priority",
+              "hasDefaultValue": true,
+              "operations": [
+                "set"
+              ],
+              "allowedValues": [
+                {
+                  "self": "[redacted]",
+                  "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/highest_new.svg",
+                  "name": "Highest",
+                  "id": "1"
+                },
+                {
+                  "self": "[redacted]",
+                  "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/high_new.svg",
+                  "name": "High",
+                  "id": "2"
+                },
+                {
+                  "self": "[redacted]",
+                  "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+                  "name": "Medium",
+                  "id": "3"
+                },
+                {
+                  "self": "[redacted]",
+                  "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/low_new.svg",
+                  "name": "Low",
+                  "id": "4"
+                },
+                {
+                  "self": "[redacted]",
+                  "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/lowest_new.svg",
+                  "name": "Lowest",
+                  "id": "5"
+                }
+              ],
+              "defaultValue": {
+                "self": "[redacted]",
+                "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+                "name": "Medium",
+                "id": "3"
+              },
+              "fieldId": "priority"
+            },
+            {
+              "required": true,
+              "schema": {
+                "type": "project",
+                "system": "project"
+              },
+              "name": "Project",
+              "key": "project",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "allowedValues": [
+                {
+                  "self": "[redacted]",
+                  "id": "10001",
+                  "key": "TUIC",
+                  "name": "TUICommander integration tests",
+                  "projectTypeKey": "software",
+                  "simplified": false,
+                  "avatarUrls": "[redacted]"
+                }
+              ],
+              "fieldId": "project"
+            },
+            {
+              "required": true,
+              "schema": {
+                "type": "string",
+                "system": "summary"
+              },
+              "name": "Summary",
+              "key": "summary",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "fieldId": "summary"
+            }
+          ]
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/rest/api/3/issue",
+        "date": "2026-10-27T11:00:53.529Z",
+        "status": 201,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "id": "10004",
+          "key": "TUIC-1",
+          "self": "[redacted]"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/rest/api/3/issue",
+        "date": "2026-10-27T11:00:54.418Z",
+        "status": 201,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "id": "10005",
+          "key": "TUIC-2",
+          "self": "[redacted]"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/rest/api/3/issue/TUIC-1/comment",
+        "date": "2026-10-27T11:00:54.962Z",
+        "status": 201,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "self": "[redacted]",
+          "id": "10000",
+          "author": {
+            "self": "[redacted]",
+            "accountId": "recorded-user-1",
+            "emailAddress": "[redacted]",
+            "avatarUrls": "[redacted]",
+            "displayName": "Recorded User",
+            "active": true,
+            "timeZone": "Europe/Madrid",
+            "accountType": "atlassian"
+          },
+          "body": {
+            "type": "doc",
+            "version": 1,
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Ready for review"
+                  }
+                ]
+              }
+            ]
+          },
+          "updateAuthor": {
+            "self": "[redacted]",
+            "accountId": "recorded-user-1",
+            "emailAddress": "[redacted]",
+            "avatarUrls": "[redacted]",
+            "displayName": "Recorded User",
+            "active": true,
+            "timeZone": "Europe/Madrid",
+            "accountType": "atlassian"
+          },
+          "created": "2026-10-27T12:00:54.768+0100",
+          "updated": "2026-10-27T12:00:54.768+0100",
+          "jsdPublic": true
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/rest/api/3/issue/TUIC-1/comment",
+        "date": "2026-10-27T11:00:55.455Z",
+        "status": 201,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "self": "[redacted]",
+          "id": "10001",
+          "author": {
+            "self": "[redacted]",
+            "accountId": "recorded-user-1",
+            "emailAddress": "[redacted]",
+            "avatarUrls": "[redacted]",
+            "displayName": "Recorded User",
+            "active": true,
+            "timeZone": "Europe/Madrid",
+            "accountType": "atlassian"
+          },
+          "body": {
+            "type": "doc",
+            "version": 1,
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Second comment with hard"
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "break"
+                  }
+                ]
+              }
+            ]
+          },
+          "updateAuthor": {
+            "self": "[redacted]",
+            "accountId": "recorded-user-1",
+            "emailAddress": "[redacted]",
+            "avatarUrls": "[redacted]",
+            "displayName": "Recorded User",
+            "active": true,
+            "timeZone": "Europe/Madrid",
+            "accountType": "atlassian"
+          },
+          "created": "2026-10-27T12:00:55.269+0100",
+          "updated": "2026-10-27T12:00:55.269+0100",
+          "jsdPublic": true
+        }
+      },
+      {
+        "method": "GET",
+        "path": "/rest/api/3/issue/TUIC-1/transitions",
+        "date": "2026-10-27T11:00:55.720Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "expand": "transitions",
+          "transitions": [
+            {
+              "id": "11",
+              "name": "To Do",
+              "to": {
+                "self": "[redacted]",
+                "description": "",
+                "iconUrl": "https://straus-team.atlassian.net/",
+                "name": "To Do",
+                "id": "10004",
+                "statusCategory": {
+                  "self": "[redacted]",
+                  "id": 2,
+                  "key": "new",
+                  "colorName": "blue-gray",
+                  "name": "To Do"
+                }
+              },
+              "hasScreen": false,
+              "isGlobal": true,
+              "isInitial": false,
+              "isAvailable": true,
+              "isConditional": false,
+              "isLooped": false
+            },
+            {
+              "id": "21",
+              "name": "In Progress",
+              "to": {
+                "self": "[redacted]",
+                "description": "This issue is being actively worked on at the moment by the assignee.",
+                "iconUrl": "https://straus-team.atlassian.net/images/icons/statuses/inprogress.png",
+                "name": "In Progress",
+                "id": "3",
+                "statusCategory": {
+                  "self": "[redacted]",
+                  "id": 4,
+                  "key": "indeterminate",
+                  "colorName": "yellow",
+                  "name": "In Progress"
+                }
+              },
+              "hasScreen": false,
+              "isGlobal": true,
+              "isInitial": false,
+              "isAvailable": true,
+              "isConditional": false,
+              "isLooped": false
+            },
+            {
+              "id": "31",
+              "name": "Done",
+              "to": {
+                "self": "[redacted]",
+                "description": "",
+                "iconUrl": "https://straus-team.atlassian.net/",
+                "name": "Done",
+                "id": "10005",
+                "statusCategory": {
+                  "self": "[redacted]",
+                  "id": 3,
+                  "key": "done",
+                  "colorName": "green",
+                  "name": "Done"
+                }
+              },
+              "hasScreen": false,
+              "isGlobal": true,
+              "isInitial": false,
+              "isAvailable": true,
+              "isConditional": false,
+              "isLooped": false
+            }
+          ]
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/rest/api/3/issue/TUIC-1/transitions",
+        "date": "2026-10-27T11:00:56.310Z",
+        "status": 204,
+        "headers": {},
+        "body": ""
+      },
+      {
+        "method": "GET",
+        "path": "/rest/api/3/issue/TUIC-1?expand=names,schema,editmeta",
+        "date": "2026-10-27T11:00:56.655Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations,customfield_10010.requestTypePractice",
+          "id": "10004",
+          "self": "[redacted]",
+          "key": "TUIC-1",
+          "names": {
+            "statuscategorychangedate": "Status category changed",
+            "issuetype": "Issue Type",
+            "timespent": "Time Spent",
+            "customfield_10030": "Work item created forms",
+            "project": "Project",
+            "customfield_10031": "Open forms",
+            "customfield_10032": "Submitted forms",
+            "fixVersions": "Fix versions",
+            "customfield_10033": "Locked forms",
+            "aggregatetimespent": "Σ Time Spent",
+            "customfield_10034": "Total forms",
+            "statusCategory": "Status category",
+            "resolution": "Resolution",
+            "customfield_10027": "[CHART] Date of First Response",
+            "customfield_10028": "[CHART] Time in Status",
+            "customfield_10029": "Goals",
+            "resolutiondate": "Resolved",
+            "workratio": "Work Ratio",
+            "watches": "Watchers",
+            "lastViewed": "Last Viewed",
+            "created": "Created",
+            "customfield_10020": "Sprint",
+            "customfield_10021": "Flagged",
+            "customfield_10022": "Target start",
+            "customfield_10023": "Target end",
+            "priority": "Priority",
+            "customfield_10024": "Sentiment",
+            "customfield_10025": "Approvals",
+            "labels": "Labels",
+            "customfield_10026": "Agent Sessions",
+            "customfield_10016": "Story point estimate",
+            "customfield_10017": "Issue color",
+            "customfield_10019": "Rank",
+            "timeestimate": "Remaining Estimate",
+            "aggregatetimeoriginalestimate": "Σ Original Estimate",
+            "versions": "Affects versions",
+            "issuelinks": "Linked Issues",
+            "assignee": "Assignee",
+            "updated": "Updated",
+            "status": "Status",
+            "components": "Components",
+            "timeoriginalestimate": "Original estimate",
+            "description": "Description",
+            "customfield_10010": "Request Type",
+            "customfield_10014": "Epic Link",
+            "timetracking": "Time tracking",
+            "customfield_10015": "Start date",
+            "customfield_10005": "Change type",
+            "customfield_10006": "Change risk",
+            "customfield_10007": "Change reason",
+            "security": "Security Level",
+            "customfield_10008": "Actual start",
+            "attachment": "Attachment",
+            "aggregatetimeestimate": "Σ Remaining Estimate",
+            "customfield_10009": "Actual end",
+            "summary": "Summary",
+            "creator": "Creator",
+            "subtasks": "Sub-tasks",
+            "customfield_10040": "Status pages",
+            "customfield_10042": "Project overview key",
+            "reporter": "Reporter",
+            "customfield_10043": "Project overview status",
+            "aggregateprogress": "Σ Progress",
+            "customfield_10001": "Team",
+            "customfield_10002": "Organizations",
+            "customfield_10003": "Approvers",
+            "customfield_10004": "Impact",
+            "customfield_10038": "Focus Areas",
+            "customfield_10039": "Incident manager",
+            "environment": "Environment",
+            "duedate": "Due date",
+            "progress": "Progress",
+            "votes": "Votes",
+            "comment": "Comment",
+            "worklog": "Log Work"
+          },
+          "schema": {
+            "statuscategorychangedate": {
+              "type": "datetime",
+              "system": "statuscategorychangedate"
+            },
+            "issuetype": {
+              "type": "issuetype",
+              "system": "issuetype"
+            },
+            "timespent": {
+              "type": "number",
+              "system": "timespent"
+            },
+            "customfield_10030": {
+              "type": "array",
+              "items": "Forms",
+              "custom": "com.atlassian.jira.plugins.proforma-managed-fields:proforma-forms-field-cftype",
+              "customId": 10030
+            },
+            "project": {
+              "type": "project",
+              "system": "project"
+            },
+            "customfield_10031": {
+              "type": "number",
+              "custom": "com.atlassian.jira.plugins.proforma-managed-fields:forms-open-field-cftype",
+              "customId": 10031
+            },
+            "customfield_10032": {
+              "type": "number",
+              "custom": "com.atlassian.jira.plugins.proforma-managed-fields:forms-submitted-field-cftype",
+              "customId": 10032
+            },
+            "fixVersions": {
+              "type": "array",
+              "items": "version",
+              "system": "fixVersions"
+            },
+            "customfield_10033": {
+              "type": "number",
+              "custom": "com.atlassian.jira.plugins.proforma-managed-fields:forms-locked-field-cftype",
+              "customId": 10033
+            },
+            "aggregatetimespent": {
+              "type": "number",
+              "system": "aggregatetimespent"
+            },
+            "customfield_10034": {
+              "type": "number",
+              "custom": "com.atlassian.jira.plugins.proforma-managed-fields:forms-total-field-cftype",
+              "customId": 10034
+            },
+            "statusCategory": {
+              "type": "statusCategory",
+              "system": "statusCategory"
+            },
+            "resolution": {
+              "type": "resolution",
+              "system": "resolution"
+            },
+            "customfield_10027": {
+              "type": "datetime",
+              "custom": "com.atlassian.jira.ext.charting:firstresponsedate",
+              "customId": 10027
+            },
+            "customfield_10028": {
+              "type": "any",
+              "custom": "com.atlassian.jira.ext.charting:timeinstatus",
+              "customId": 10028
+            },
+            "customfield_10029": {
+              "type": "array",
+              "items": "Goals",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:goals",
+              "customId": 10029
+            },
+            "resolutiondate": {
+              "type": "datetime",
+              "system": "resolutiondate"
+            },
+            "workratio": {
+              "type": "number",
+              "system": "workratio"
+            },
+            "watches": {
+              "type": "watches",
+              "system": "watches"
+            },
+            "lastViewed": {
+              "type": "datetime",
+              "system": "lastViewed"
+            },
+            "created": {
+              "type": "datetime",
+              "system": "created"
+            },
+            "customfield_10020": {
+              "type": "array",
+              "items": "json",
+              "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+              "customId": 10020
+            },
+            "customfield_10021": {
+              "type": "array",
+              "items": "option",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multicheckboxes",
+              "customId": 10021
+            },
+            "customfield_10022": {
+              "type": "date",
+              "custom": "com.atlassian.jpo:jpo-custom-field-baseline-start",
+              "customId": 10022
+            },
+            "customfield_10023": {
+              "type": "date",
+              "custom": "com.atlassian.jpo:jpo-custom-field-baseline-end",
+              "customId": 10023
+            },
+            "priority": {
+              "type": "priority",
+              "system": "priority"
+            },
+            "customfield_10024": {
+              "type": "array",
+              "items": "sd-sentiment",
+              "custom": "com.atlassian.servicedesk.sentiment:sd-sentiment",
+              "customId": 10024
+            },
+            "customfield_10025": {
+              "type": "sd-approvals",
+              "custom": "com.atlassian.servicedesk.approvals-plugin:sd-approvals",
+              "customId": 10025
+            },
+            "labels": {
+              "type": "array",
+              "items": "string",
+              "system": "labels"
+            },
+            "customfield_10026": {
+              "type": "array",
+              "items": "admin.customfield.type.agent.sessions.name",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:agent-sessions",
+              "customId": 10026
+            },
+            "customfield_10016": {
+              "type": "number",
+              "custom": "com.pyxis.greenhopper.jira:jsw-story-points",
+              "customId": 10016
+            },
+            "customfield_10017": {
+              "type": "string",
+              "custom": "com.pyxis.greenhopper.jira:jsw-issue-color",
+              "customId": 10017
+            },
+            "customfield_10019": {
+              "type": "any",
+              "custom": "com.pyxis.greenhopper.jira:gh-lexo-rank",
+              "customId": 10019
+            },
+            "timeestimate": {
+              "type": "number",
+              "system": "timeestimate"
+            },
+            "aggregatetimeoriginalestimate": {
+              "type": "number",
+              "system": "aggregatetimeoriginalestimate"
+            },
+            "versions": {
+              "type": "array",
+              "items": "version",
+              "system": "versions"
+            },
+            "issuelinks": {
+              "type": "array",
+              "items": "issuelinks",
+              "system": "issuelinks"
+            },
+            "assignee": {
+              "type": "user",
+              "system": "assignee"
+            },
+            "updated": {
+              "type": "datetime",
+              "system": "updated"
+            },
+            "status": {
+              "type": "status",
+              "system": "status"
+            },
+            "components": {
+              "type": "array",
+              "items": "component",
+              "system": "components"
+            },
+            "timeoriginalestimate": {
+              "type": "number",
+              "system": "timeoriginalestimate"
+            },
+            "description": {
+              "type": "string",
+              "system": "description"
+            },
+            "customfield_10010": {
+              "type": "sd-customerrequesttype",
+              "custom": "com.atlassian.servicedesk:vp-origin",
+              "customId": 10010
+            },
+            "customfield_10014": {
+              "type": "any",
+              "custom": "com.pyxis.greenhopper.jira:gh-epic-link",
+              "customId": 10014
+            },
+            "timetracking": {
+              "type": "timetracking",
+              "system": "timetracking"
+            },
+            "customfield_10015": {
+              "type": "date",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datepicker",
+              "customId": 10015
+            },
+            "customfield_10005": {
+              "type": "option",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+              "customId": 10005
+            },
+            "customfield_10006": {
+              "type": "option",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+              "customId": 10006
+            },
+            "customfield_10007": {
+              "type": "option",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+              "customId": 10007
+            },
+            "security": {
+              "type": "securitylevel",
+              "system": "security"
+            },
+            "customfield_10008": {
+              "type": "datetime",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datetime",
+              "customId": 10008
+            },
+            "attachment": {
+              "type": "array",
+              "items": "attachment",
+              "system": "attachment"
+            },
+            "aggregatetimeestimate": {
+              "type": "number",
+              "system": "aggregatetimeestimate"
+            },
+            "customfield_10009": {
+              "type": "datetime",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datetime",
+              "customId": 10009
+            },
+            "summary": {
+              "type": "string",
+              "system": "summary"
+            },
+            "creator": {
+              "type": "user",
+              "system": "creator"
+            },
+            "subtasks": {
+              "type": "array",
+              "items": "issuelinks",
+              "system": "subtasks"
+            },
+            "customfield_10040": {
+              "type": "array",
+              "items": "string",
+              "custom": "com.atlassian.jira.modules.servicemanagement.status-pages-entity:status-pages-entity-field-cftype",
+              "customId": 10040
+            },
+            "customfield_10042": {
+              "type": "string",
+              "custom": "read-only-string-issue-field",
+              "customId": 10042
+            },
+            "reporter": {
+              "type": "user",
+              "system": "reporter"
+            },
+            "customfield_10043": {
+              "type": "string",
+              "custom": "read-only-string-issue-field",
+              "customId": 10043
+            },
+            "aggregateprogress": {
+              "type": "progress",
+              "system": "aggregateprogress"
+            },
+            "customfield_10001": {
+              "type": "team",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team",
+              "customId": 10001,
+              "configuration": {
+                "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team": true
+              }
+            },
+            "customfield_10002": {
+              "type": "array",
+              "items": "sd-customerorganization",
+              "custom": "com.atlassian.servicedesk:sd-customer-organizations",
+              "customId": 10002
+            },
+            "customfield_10003": {
+              "type": "array",
+              "items": "user",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multiuserpicker",
+              "customId": 10003
+            },
+            "customfield_10004": {
+              "type": "option",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+              "customId": 10004
+            },
+            "customfield_10038": {
+              "type": "array",
+              "items": "Focus Areas",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:focus-areas",
+              "customId": 10038
+            },
+            "customfield_10039": {
+              "type": "user",
+              "custom": "com.atlassian.jira.plugin.system.customfieldtypes:userpicker",
+              "customId": 10039
+            },
+            "environment": {
+              "type": "string",
+              "system": "environment"
+            },
+            "duedate": {
+              "type": "date",
+              "system": "duedate"
+            },
+            "progress": {
+              "type": "progress",
+              "system": "progress"
+            },
+            "votes": {
+              "type": "votes",
+              "system": "votes"
+            },
+            "comment": {
+              "type": "comments-page",
+              "system": "comment"
+            },
+            "worklog": {
+              "type": "array",
+              "items": "worklog",
+              "system": "worklog"
+            }
+          },
+          "editmeta": {
+            "fields": {
+              "summary": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "system": "summary"
+                },
+                "name": "Summary",
+                "key": "summary",
+                "operations": [
+                  "set"
+                ]
+              },
+              "issuetype": {
+                "required": true,
+                "schema": {
+                  "type": "issuetype",
+                  "system": "issuetype"
+                },
+                "name": "Issue Type",
+                "key": "issuetype",
+                "operations": [],
+                "allowedValues": [
+                  {
+                    "self": "[redacted]",
+                    "id": "10006",
+                    "description": "A small, distinct piece of work.",
+                    "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+                    "name": "Task",
+                    "subtask": false,
+                    "avatarId": 10318,
+                    "hierarchyLevel": 0
+                  },
+                  {
+                    "self": "[redacted]",
+                    "id": "10005",
+                    "description": "Stories track functionality or features expressed as user goals.",
+                    "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10300?size=medium",
+                    "name": "Story",
+                    "subtask": false,
+                    "avatarId": 10300,
+                    "hierarchyLevel": 0
+                  },
+                  {
+                    "self": "[redacted]",
+                    "id": "10008",
+                    "description": "A problem or error.",
+                    "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium",
+                    "name": "Bug",
+                    "subtask": false,
+                    "avatarId": 10303,
+                    "hierarchyLevel": 0
+                  },
+                  {
+                    "self": "[redacted]",
+                    "id": "10000",
+                    "description": "A big user story that needs to be broken down. Created by Jira Software - do not edit or delete.",
+                    "iconUrl": "https://straus-team.atlassian.net/images/icons/issuetypes/epic.svg",
+                    "name": "Epic",
+                    "subtask": false,
+                    "hierarchyLevel": 1
+                  }
+                ]
+              },
+              "parent": {
+                "required": false,
+                "schema": {
+                  "type": "issuelink",
+                  "system": "parent"
+                },
+                "name": "Parent",
+                "key": "parent",
+                "hasDefaultValue": false,
+                "operations": [
+                  "set"
+                ]
+              },
+              "components": {
+                "required": false,
+                "schema": {
+                  "type": "array",
+                  "items": "component",
+                  "system": "components"
+                },
+                "name": "Components",
+                "key": "components",
+                "operations": [
+                  "add",
+                  "set",
+                  "remove"
+                ],
+                "allowedValues": []
+              },
+              "description": {
+                "required": false,
+                "schema": {
+                  "type": "string",
+                  "system": "description"
+                },
+                "name": "Description",
+                "key": "description",
+                "operations": [
+                  "set"
+                ]
+              },
+              "customfield_10020": {
+                "required": false,
+                "schema": {
+                  "type": "array",
+                  "items": "json",
+                  "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+                  "customId": 10020
+                },
+                "name": "Sprint",
+                "key": "customfield_10020",
+                "operations": [
+                  "set"
+                ]
+              },
+              "customfield_10021": {
+                "required": false,
+                "schema": {
+                  "type": "array",
+                  "items": "option",
+                  "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multicheckboxes",
+                  "customId": 10021
+                },
+                "name": "Flagged",
+                "key": "customfield_10021",
+                "operations": [
+                  "add",
+                  "set",
+                  "remove"
+                ],
+                "allowedValues": [
+                  {
+                    "self": "[redacted]",
+                    "value": "Impediment",
+                    "id": "10019"
+                  }
+                ]
+              },
+              "fixVersions": {
+                "required": false,
+                "schema": {
+                  "type": "array",
+                  "items": "version",
+                  "system": "fixVersions"
+                },
+                "name": "Fix versions",
+                "key": "fixVersions",
+                "operations": [
+                  "set",
+                  "add",
+                  "remove"
+                ],
+                "allowedValues": []
+              },
+              "customfield_10001": {
+                "required": false,
+                "schema": {
+                  "type": "team",
+                  "custom": "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team",
+                  "customId": 10001,
+                  "configuration": {
+                    "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team": true
+                  }
+                },
+                "name": "Team",
+                "key": "customfield_10001",
+                "autoCompleteUrl": "https://straus-team.atlassian.net/gateway/api/v1/recommendations",
+                "operations": [
+                  "set"
+                ]
+              },
+              "priority": {
+                "required": false,
+                "schema": {
+                  "type": "priority",
+                  "system": "priority"
+                },
+                "name": "Priority",
+                "key": "priority",
+                "operations": [
+                  "set"
+                ],
+                "allowedValues": [
+                  {
+                    "self": "[redacted]",
+                    "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/highest_new.svg",
+                    "name": "Highest",
+                    "id": "1"
+                  },
+                  {
+                    "self": "[redacted]",
+                    "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/high_new.svg",
+                    "name": "High",
+                    "id": "2"
+                  },
+                  {
+                    "self": "[redacted]",
+                    "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+                    "name": "Medium",
+                    "id": "3"
+                  },
+                  {
+                    "self": "[redacted]",
+                    "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/low_new.svg",
+                    "name": "Low",
+                    "id": "4"
+                  },
+                  {
+                    "self": "[redacted]",
+                    "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/lowest_new.svg",
+                    "name": "Lowest",
+                    "id": "5"
+                  }
+                ]
+              },
+              "customfield_10015": {
+                "required": false,
+                "schema": {
+                  "type": "date",
+                  "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datepicker",
+                  "customId": 10015
+                },
+                "name": "Start date",
+                "key": "customfield_10015",
+                "operations": [
+                  "set"
+                ]
+              },
+              "labels": {
+                "required": false,
+                "schema": {
+                  "type": "array",
+                  "items": "string",
+                  "system": "labels"
+                },
+                "name": "Labels",
+                "key": "labels",
+                "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/1.0/labels/10004/suggest?query=",
+                "operations": [
+                  "add",
+                  "set",
+                  "remove"
+                ]
+              },
+              "environment": {
+                "required": false,
+                "schema": {
+                  "type": "string",
+                  "system": "environment"
+                },
+                "name": "Environment",
+                "key": "environment",
+                "operations": [
+                  "set"
+                ]
+              },
+              "attachment": {
+                "required": false,
+                "schema": {
+                  "type": "array",
+                  "items": "attachment",
+                  "system": "attachment"
+                },
+                "name": "Attachment",
+                "key": "attachment",
+                "operations": [
+                  "set",
+                  "copy"
+                ]
+              },
+              "duedate": {
+                "required": false,
+                "schema": {
+                  "type": "date",
+                  "system": "duedate"
+                },
+                "name": "Due date",
+                "key": "duedate",
+                "operations": [
+                  "set"
+                ]
+              },
+              "comment": {
+                "required": false,
+                "schema": {
+                  "type": "comments-page",
+                  "system": "comment"
+                },
+                "name": "Comment",
+                "key": "comment",
+                "operations": [
+                  "add",
+                  "edit",
+                  "remove"
+                ]
+              },
+              "issuelinks": {
+                "required": false,
+                "schema": {
+                  "type": "array",
+                  "items": "issuelinks",
+                  "system": "issuelinks"
+                },
+                "name": "Linked Issues",
+                "key": "issuelinks",
+                "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/3/issue/picker?currentProjectId=&showSubTaskParent=true&showSubTasks=true&currentIssueKey=TUIC-1&query=",
+                "operations": [
+                  "add",
+                  "copy"
+                ]
+              },
+              "assignee": {
+                "required": false,
+                "schema": {
+                  "type": "user",
+                  "system": "assignee"
+                },
+                "name": "Assignee",
+                "key": "assignee",
+                "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/3/user/assignable/search?issueKey=TUIC-1&query=",
+                "operations": [
+                  "set"
+                ]
+              }
+            }
+          },
+          "fields": {
+            "statuscategorychangedate": "2026-10-27T12:00:56.003+0100",
+            "issuetype": {
+              "self": "[redacted]",
+              "id": "10006",
+              "description": "A small, distinct piece of work.",
+              "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+              "name": "Task",
+              "subtask": false,
+              "avatarId": 10318,
+              "hierarchyLevel": 0
+            },
+            "timespent": null,
+            "customfield_10030": null,
+            "project": {
+              "self": "[redacted]",
+              "id": "10001",
+              "key": "TUIC",
+              "name": "TUICommander integration tests",
+              "projectTypeKey": "software",
+              "simplified": false,
+              "avatarUrls": "[redacted]"
+            },
+            "customfield_10031": null,
+            "customfield_10032": null,
+            "fixVersions": [],
+            "customfield_10033": null,
+            "aggregatetimespent": null,
+            "customfield_10034": null,
+            "statusCategory": {
+              "self": "[redacted]",
+              "id": 4,
+              "key": "indeterminate",
+              "colorName": "yellow",
+              "name": "In Progress"
+            },
+            "resolution": null,
+            "customfield_10027": null,
+            "customfield_10028": null,
+            "customfield_10029": null,
+            "resolutiondate": null,
+            "workratio": -1,
+            "watches": {
+              "self": "[redacted]",
+              "watchCount": 1,
+              "isWatching": true
+            },
+            "lastViewed": null,
+            "created": "2026-10-27T12:00:52.842+0100",
+            "customfield_10020": null,
+            "customfield_10021": null,
+            "customfield_10022": null,
+            "customfield_10023": null,
+            "priority": {
+              "self": "[redacted]",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+              "name": "Medium",
+              "id": "3"
+            },
+            "customfield_10024": null,
+            "customfield_10025": null,
+            "labels": [
+              "integration"
+            ],
+            "customfield_10026": null,
+            "customfield_10016": null,
+            "customfield_10017": null,
+            "customfield_10019": "0|i0000n:",
+            "timeestimate": null,
+            "aggregatetimeoriginalestimate": null,
+            "versions": [],
+            "issuelinks": [],
+            "assignee": null,
+            "updated": "2026-10-27T12:00:56.003+0100",
+            "status": {
+              "self": "[redacted]",
+              "description": "This issue is being actively worked on at the moment by the assignee.",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/statuses/inprogress.png",
+              "name": "In Progress",
+              "id": "3",
+              "statusCategory": {
+                "self": "[redacted]",
+                "id": 4,
+                "key": "indeterminate",
+                "colorName": "yellow",
+                "name": "In Progress"
+              }
+            },
+            "components": [],
+            "timeoriginalestimate": null,
+            "description": {
+              "type": "doc",
+              "version": 1,
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Steps"
+                    }
+                  ]
+                },
+                {
+                  "type": "bulletList",
+                  "content": [
+                    {
+                      "type": "listItem",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "First"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "listItem",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Second"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "codeBlock",
+                  "attrs": {
+                    "language": "js"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "const n = 1;"
+                    }
+                  ]
+                }
+              ]
+            },
+            "customfield_10010": null,
+            "customfield_10014": null,
+            "timetracking": {},
+            "customfield_10015": null,
+            "customfield_10005": null,
+            "customfield_10006": null,
+            "customfield_10007": null,
+            "security": null,
+            "customfield_10008": null,
+            "attachment": [],
+            "aggregatetimeestimate": null,
+            "customfield_10009": null,
+            "summary": "Preserve code and lists",
+            "creator": {
+              "self": "[redacted]",
+              "accountId": "recorded-user-1",
+              "emailAddress": "[redacted]",
+              "avatarUrls": "[redacted]",
+              "displayName": "Recorded User",
+              "active": true,
+              "timeZone": "Europe/Madrid",
+              "accountType": "atlassian"
+            },
+            "subtasks": [],
+            "customfield_10040": [],
+            "customfield_10042": null,
+            "reporter": {
+              "self": "[redacted]",
+              "accountId": "recorded-user-1",
+              "emailAddress": "[redacted]",
+              "avatarUrls": "[redacted]",
+              "displayName": "Recorded User",
+              "active": true,
+              "timeZone": "Europe/Madrid",
+              "accountType": "atlassian"
+            },
+            "customfield_10043": null,
+            "aggregateprogress": {
+              "progress": 0,
+              "total": 0
+            },
+            "customfield_10001": null,
+            "customfield_10002": [],
+            "customfield_10003": null,
+            "customfield_10004": null,
+            "customfield_10038": null,
+            "customfield_10039": null,
+            "environment": null,
+            "duedate": null,
+            "progress": {
+              "progress": 0,
+              "total": 0
+            },
+            "votes": {
+              "self": "[redacted]",
+              "votes": 0,
+              "hasVoted": false
+            },
+            "comment": {
+              "comments": [
+                {
+                  "self": "[redacted]",
+                  "id": "10000",
+                  "author": {
+                    "self": "[redacted]",
+                    "accountId": "recorded-user-1",
+                    "emailAddress": "[redacted]",
+                    "avatarUrls": "[redacted]",
+                    "displayName": "Recorded User",
+                    "active": true,
+                    "timeZone": "Europe/Madrid",
+                    "accountType": "atlassian"
+                  },
+                  "body": {
+                    "type": "doc",
+                    "version": 1,
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Ready for review"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "updateAuthor": {
+                    "self": "[redacted]",
+                    "accountId": "recorded-user-1",
+                    "emailAddress": "[redacted]",
+                    "avatarUrls": "[redacted]",
+                    "displayName": "Recorded User",
+                    "active": true,
+                    "timeZone": "Europe/Madrid",
+                    "accountType": "atlassian"
+                  },
+                  "created": "2026-10-27T12:00:54.768+0100",
+                  "updated": "2026-10-27T12:00:54.768+0100",
+                  "jsdPublic": true
+                },
+                {
+                  "self": "[redacted]",
+                  "id": "10001",
+                  "author": {
+                    "self": "[redacted]",
+                    "accountId": "recorded-user-1",
+                    "emailAddress": "[redacted]",
+                    "avatarUrls": "[redacted]",
+                    "displayName": "Recorded User",
+                    "active": true,
+                    "timeZone": "Europe/Madrid",
+                    "accountType": "atlassian"
+                  },
+                  "body": {
+                    "type": "doc",
+                    "version": 1,
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Second comment with hard"
+                          },
+                          {
+                            "type": "hardBreak"
+                          },
+                          {
+                            "type": "text",
+                            "text": "break"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "updateAuthor": {
+                    "self": "[redacted]",
+                    "accountId": "recorded-user-1",
+                    "emailAddress": "[redacted]",
+                    "avatarUrls": "[redacted]",
+                    "displayName": "Recorded User",
+                    "active": true,
+                    "timeZone": "Europe/Madrid",
+                    "accountType": "atlassian"
+                  },
+                  "created": "2026-10-27T12:00:55.269+0100",
+                  "updated": "2026-10-27T12:00:55.269+0100",
+                  "jsdPublic": true
+                }
+              ],
+              "self": "[redacted]",
+              "maxResults": 2,
+              "total": 2,
+              "startAt": 0
+            },
+            "worklog": {
+              "startAt": 0,
+              "maxResults": 20,
+              "total": 0,
+              "worklogs": []
+            }
+          }
+        }
+      },
+      {
+        "method": "GET",
+        "path": "/rest/api/3/issue/TUIC-1/transitions",
+        "date": "2026-10-27T11:00:56.954Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "expand": "transitions",
+          "transitions": [
+            {
+              "id": "11",
+              "name": "To Do",
+              "to": {
+                "self": "[redacted]",
+                "description": "",
+                "iconUrl": "https://straus-team.atlassian.net/",
+                "name": "To Do",
+                "id": "10004",
+                "statusCategory": {
+                  "self": "[redacted]",
+                  "id": 2,
+                  "key": "new",
+                  "colorName": "blue-gray",
+                  "name": "To Do"
+                }
+              },
+              "hasScreen": false,
+              "isGlobal": true,
+              "isInitial": false,
+              "isAvailable": true,
+              "isConditional": false,
+              "isLooped": false
+            },
+            {
+              "id": "21",
+              "name": "In Progress",
+              "to": {
+                "self": "[redacted]",
+                "description": "This issue is being actively worked on at the moment by the assignee.",
+                "iconUrl": "https://straus-team.atlassian.net/images/icons/statuses/inprogress.png",
+                "name": "In Progress",
+                "id": "3",
+                "statusCategory": {
+                  "self": "[redacted]",
+                  "id": 4,
+                  "key": "indeterminate",
+                  "colorName": "yellow",
+                  "name": "In Progress"
+                }
+              },
+              "hasScreen": false,
+              "isGlobal": true,
+              "isInitial": false,
+              "isAvailable": true,
+              "isConditional": false,
+              "isLooped": false
+            },
+            {
+              "id": "31",
+              "name": "Done",
+              "to": {
+                "self": "[redacted]",
+                "description": "",
+                "iconUrl": "https://straus-team.atlassian.net/",
+                "name": "Done",
+                "id": "10005",
+                "statusCategory": {
+                  "self": "[redacted]",
+                  "id": 3,
+                  "key": "done",
+                  "colorName": "green",
+                  "name": "Done"
+                }
+              },
+              "hasScreen": false,
+              "isGlobal": true,
+              "isInitial": false,
+              "isAvailable": true,
+              "isConditional": false,
+              "isLooped": false
+            }
+          ]
+        }
+      },
+      {
+        "method": "GET",
+        "path": "/rest/api/3/issue/TUIC-1/comment?startAt=0&maxResults=1&orderBy=created",
+        "date": "2026-10-27T11:00:57.279Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "startAt": 0,
+          "maxResults": 1,
+          "total": 2,
+          "comments": [
+            {
+              "self": "[redacted]",
+              "id": "10000",
+              "author": {
+                "self": "[redacted]",
+                "accountId": "recorded-user-1",
+                "emailAddress": "[redacted]",
+                "avatarUrls": "[redacted]",
+                "displayName": "Recorded User",
+                "active": true,
+                "timeZone": "Europe/Madrid",
+                "accountType": "atlassian"
+              },
+              "body": {
+                "type": "doc",
+                "version": 1,
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Ready for review"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "updateAuthor": {
+                "self": "[redacted]",
+                "accountId": "recorded-user-1",
+                "emailAddress": "[redacted]",
+                "avatarUrls": "[redacted]",
+                "displayName": "Recorded User",
+                "active": true,
+                "timeZone": "Europe/Madrid",
+                "accountType": "atlassian"
+              },
+              "created": "2026-10-27T12:00:54.768+0100",
+              "updated": "2026-10-27T12:00:54.768+0100",
+              "jsdPublic": true
+            }
+          ]
+        }
+      },
+      {
+        "method": "GET",
+        "path": "/rest/api/3/issue/TUIC-1/comment?startAt=1&maxResults=1&orderBy=created",
+        "date": "2026-10-27T11:00:57.517Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "startAt": 1,
+          "maxResults": 1,
+          "total": 2,
+          "comments": [
+            {
+              "self": "[redacted]",
+              "id": "10001",
+              "author": {
+                "self": "[redacted]",
+                "accountId": "recorded-user-1",
+                "emailAddress": "[redacted]",
+                "avatarUrls": "[redacted]",
+                "displayName": "Recorded User",
+                "active": true,
+                "timeZone": "Europe/Madrid",
+                "accountType": "atlassian"
+              },
+              "body": {
+                "type": "doc",
+                "version": 1,
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Second comment with hard"
+                      },
+                      {
+                        "type": "hardBreak"
+                      },
+                      {
+                        "type": "text",
+                        "text": "break"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "updateAuthor": {
+                "self": "[redacted]",
+                "accountId": "recorded-user-1",
+                "emailAddress": "[redacted]",
+                "avatarUrls": "[redacted]",
+                "displayName": "Recorded User",
+                "active": true,
+                "timeZone": "Europe/Madrid",
+                "accountType": "atlassian"
+              },
+              "created": "2026-10-27T12:00:55.269+0100",
+              "updated": "2026-10-27T12:00:55.269+0100",
+              "jsdPublic": true
+            }
+          ]
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/rest/api/3/search/jql",
+        "date": "2026-10-27T11:00:58.055Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "issues": [
+            {
+              "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+              "id": "10004",
+              "self": "[redacted]",
+              "key": "TUIC-1",
+              "fields": {
+                "summary": "Preserve code and lists",
+                "issuetype": {
+                  "self": "[redacted]",
+                  "id": "10006",
+                  "description": "A small, distinct piece of work.",
+                  "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+                  "name": "Task",
+                  "subtask": false,
+                  "avatarId": 10318,
+                  "hierarchyLevel": 0
+                },
+                "created": "2026-10-27T12:00:52.842+0100",
+                "duedate": null,
+                "project": {
+                  "self": "[redacted]",
+                  "id": "10001",
+                  "key": "TUIC",
+                  "name": "TUICommander integration tests",
+                  "projectTypeKey": "software",
+                  "simplified": false,
+                  "avatarUrls": "[redacted]"
+                },
+                "description": {
+                  "type": "doc",
+                  "version": 1,
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Steps"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "bulletList",
+                      "content": [
+                        {
+                          "type": "listItem",
+                          "content": [
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "First"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "listItem",
+                          "content": [
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Second"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "codeBlock",
+                      "attrs": {
+                        "language": "js"
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "const n = 1;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "assignee": null,
+                "priority": {
+                  "self": "[redacted]",
+                  "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+                  "name": "Medium",
+                  "id": "3"
+                },
+                "updated": "2026-10-27T12:00:56.003+0100",
+                "status": {
+                  "self": "[redacted]",
+                  "description": "This issue is being actively worked on at the moment by the assignee.",
+                  "iconUrl": "https://straus-team.atlassian.net/images/icons/statuses/inprogress.png",
+                  "name": "In Progress",
+                  "id": "3",
+                  "statusCategory": {
+                    "self": "[redacted]",
+                    "id": 4,
+                    "key": "indeterminate",
+                    "colorName": "yellow",
+                    "name": "In Progress"
+                  }
+                },
+                "labels": [
+                  "integration"
+                ]
+              }
+            }
+          ],
+          "nextPageToken": "EAEY9fuU6Jc0Ih9wcm9qZWN0ID0gVFVJQyBPUkRFUiBCWSBrZXkgQVNDKgJbXTIgVEVOQU5UX05PVF9GT1VORF9JTl9URU5BTlRfU1RPUkU=",
+          "isLast": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/rest/api/3/search/jql",
+        "date": "2026-10-27T11:00:58.440Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "issues": [
+            {
+              "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+              "id": "10005",
+              "self": "[redacted]",
+              "key": "TUIC-2",
+              "fields": {
+                "summary": "Second pagination issue",
+                "issuetype": {
+                  "self": "[redacted]",
+                  "id": "10006",
+                  "description": "A small, distinct piece of work.",
+                  "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+                  "name": "Task",
+                  "subtask": false,
+                  "avatarId": 10318,
+                  "hierarchyLevel": 0
+                },
+                "created": "2026-10-27T12:00:53.876+0100",
+                "duedate": null,
+                "project": {
+                  "self": "[redacted]",
+                  "id": "10001",
+                  "key": "TUIC",
+                  "name": "TUICommander integration tests",
+                  "projectTypeKey": "software",
+                  "simplified": false,
+                  "avatarUrls": "[redacted]"
+                },
+                "description": {
+                  "type": "doc",
+                  "version": 1,
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Steps"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "bulletList",
+                      "content": [
+                        {
+                          "type": "listItem",
+                          "content": [
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "First"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "listItem",
+                          "content": [
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Second"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "codeBlock",
+                      "attrs": {
+                        "language": "js"
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "const n = 1;"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "assignee": null,
+                "priority": {
+                  "self": "[redacted]",
+                  "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+                  "name": "Medium",
+                  "id": "3"
+                },
+                "updated": "2026-10-27T12:00:53.966+0100",
+                "status": {
+                  "self": "[redacted]",
+                  "description": "",
+                  "iconUrl": "https://straus-team.atlassian.net/",
+                  "name": "To Do",
+                  "id": "10004",
+                  "statusCategory": {
+                    "self": "[redacted]",
+                    "id": 2,
+                    "key": "new",
+                    "colorName": "blue-gray",
+                    "name": "To Do"
+                  }
+                },
+                "labels": [
+                  "integration"
+                ]
+              }
+            }
+          ],
+          "nextPageToken": "EAIY7_6U6Jc0Ih9wcm9qZWN0ID0gVFVJQyBPUkRFUiBCWSBrZXkgQVNDKgJbXTIgVEVOQU5UX05PVF9GT1VORF9JTl9URU5BTlRfU1RPUkU=",
+          "isLast": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/rest/api/3/search/jql",
+        "date": "2026-10-27T11:00:58.646Z",
+        "status": 400,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "errorMessages": [
+            "Error in the JQL Query: Expecting a field name at the end of the query."
+          ],
+          "errors": {}
+        }
+      },
+      {
+        "method": "GET",
+        "path": "/rest/agile/1.0/board?projectKeyOrId=TUIC",
+        "date": "2026-10-27T11:00:58.975Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "maxResults": 50,
+          "startAt": 0,
+          "total": 1,
+          "isLast": true,
+          "values": [
+            {
+              "id": 2,
+              "self": "[redacted]",
+              "name": "TUIC board",
+              "type": "scrum",
+              "location": {
+                "projectId": 10001,
+                "displayName": "Recorded User",
+                "projectName": "TUICommander integration tests",
+                "projectKey": "TUIC",
+                "projectTypeKey": "software",
+                "avatarURI": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10425?size=small",
+                "name": "TUICommander integration tests (TUIC)"
+              },
+              "isPrivate": false
+            }
+          ]
+        }
+      },
+      {
+        "method": "GET",
+        "path": "/rest/agile/1.0/board/2/configuration",
+        "date": "2026-10-27T11:06:22.487Z",
+        "status": 200,
+        "headers": {
+          "content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "id": 2,
+          "name": "TUIC board",
+          "type": "scrum",
+          "self": "[redacted]",
+          "location": {
+            "type": "project",
+            "key": "TUIC",
+            "id": "10001",
+            "self": "[redacted]",
+            "name": "TUICommander integration tests"
+          },
+          "filter": {
+            "id": "10001",
+            "self": "[redacted]"
+          },
+          "columnConfig": {
+            "columns": [
+              {
+                "name": "To Do",
+                "statuses": [
+                  {
+                    "id": "10004",
+                    "self": "[redacted]"
+                  }
+                ]
+              },
+              {
+                "name": "In Progress",
+                "statuses": [
+                  {
+                    "id": "3",
+                    "self": "[redacted]"
+                  }
+                ]
+              },
+              {
+                "name": "Done",
+                "statuses": [
+                  {
+                    "id": "10005",
+                    "self": "[redacted]"
+                  }
+                ]
+              }
+            ],
+            "constraintType": "none"
+          },
+          "estimation": {
+            "type": "field",
+            "field": {
+              "fieldId": "customfield_10041",
+              "displayName": "Story Points"
+            }
+          },
+          "ranking": {
+            "rankCustomFieldId": 10019
+          }
+        }
+      }
+    ]
   },
-  "transitions": { "transitions": [
-    { "id": "31", "name": "Start progress", "to": { "id": "3", "name": "In progress" } },
-    { "id": "91", "name": "Finish", "to": { "id": "5", "name": "Done" } }
-  ] },
-  "comments": { "startAt": 0, "maxResults": 50, "total": 1, "comments": [
-    { "id": "10000", "author": { "accountId": "synthetic-user", "displayName": "Example User" }, "created": "2026-10-10T10:00:00.000+0000", "body": { "type": "doc", "version": 1, "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Ready for review" }] }] } }
-  ] },
-  "board": { "id": 42, "name": "Example board", "filter": { "id": "10010" }, "columnConfig": { "columns": [
-    { "name": "To do", "statuses": [{ "id": "1" }] },
-    { "name": "In progress", "statuses": [{ "id": "3" }] },
-    { "name": "Done", "statuses": [{ "id": "5" }] }
-  ] } },
-  "createmeta": { "startAt": 0, "maxResults": 50, "total": 2, "fields": [
-    { "fieldId": "summary", "name": "Summary", "required": true, "operations": ["set"], "schema": { "type": "string" } },
-    { "fieldId": "priority", "name": "Priority", "required": false, "operations": ["set"], "schema": { "type": "priority" }, "allowedValues": [{ "id": "2", "name": "High" }] }
-  ] }
+  "issue": {
+    "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations,customfield_10010.requestTypePractice",
+    "id": "10004",
+    "self": "[redacted]",
+    "key": "TUIC-1",
+    "names": {
+      "statuscategorychangedate": "Status category changed",
+      "issuetype": "Issue Type",
+      "timespent": "Time Spent",
+      "customfield_10030": "Work item created forms",
+      "project": "Project",
+      "customfield_10031": "Open forms",
+      "customfield_10032": "Submitted forms",
+      "fixVersions": "Fix versions",
+      "customfield_10033": "Locked forms",
+      "aggregatetimespent": "Σ Time Spent",
+      "customfield_10034": "Total forms",
+      "statusCategory": "Status category",
+      "resolution": "Resolution",
+      "customfield_10027": "[CHART] Date of First Response",
+      "customfield_10028": "[CHART] Time in Status",
+      "customfield_10029": "Goals",
+      "resolutiondate": "Resolved",
+      "workratio": "Work Ratio",
+      "watches": "Watchers",
+      "lastViewed": "Last Viewed",
+      "created": "Created",
+      "customfield_10020": "Sprint",
+      "customfield_10021": "Flagged",
+      "customfield_10022": "Target start",
+      "customfield_10023": "Target end",
+      "priority": "Priority",
+      "customfield_10024": "Sentiment",
+      "customfield_10025": "Approvals",
+      "labels": "Labels",
+      "customfield_10026": "Agent Sessions",
+      "customfield_10016": "Story point estimate",
+      "customfield_10017": "Issue color",
+      "customfield_10019": "Rank",
+      "timeestimate": "Remaining Estimate",
+      "aggregatetimeoriginalestimate": "Σ Original Estimate",
+      "versions": "Affects versions",
+      "issuelinks": "Linked Issues",
+      "assignee": "Assignee",
+      "updated": "Updated",
+      "status": "Status",
+      "components": "Components",
+      "timeoriginalestimate": "Original estimate",
+      "description": "Description",
+      "customfield_10010": "Request Type",
+      "customfield_10014": "Epic Link",
+      "timetracking": "Time tracking",
+      "customfield_10015": "Start date",
+      "customfield_10005": "Change type",
+      "customfield_10006": "Change risk",
+      "customfield_10007": "Change reason",
+      "security": "Security Level",
+      "customfield_10008": "Actual start",
+      "attachment": "Attachment",
+      "aggregatetimeestimate": "Σ Remaining Estimate",
+      "customfield_10009": "Actual end",
+      "summary": "Summary",
+      "creator": "Creator",
+      "subtasks": "Sub-tasks",
+      "customfield_10040": "Status pages",
+      "customfield_10042": "Project overview key",
+      "reporter": "Reporter",
+      "customfield_10043": "Project overview status",
+      "aggregateprogress": "Σ Progress",
+      "customfield_10001": "Team",
+      "customfield_10002": "Organizations",
+      "customfield_10003": "Approvers",
+      "customfield_10004": "Impact",
+      "customfield_10038": "Focus Areas",
+      "customfield_10039": "Incident manager",
+      "environment": "Environment",
+      "duedate": "Due date",
+      "progress": "Progress",
+      "votes": "Votes",
+      "comment": "Comment",
+      "worklog": "Log Work"
+    },
+    "schema": {
+      "statuscategorychangedate": {
+        "type": "datetime",
+        "system": "statuscategorychangedate"
+      },
+      "issuetype": {
+        "type": "issuetype",
+        "system": "issuetype"
+      },
+      "timespent": {
+        "type": "number",
+        "system": "timespent"
+      },
+      "customfield_10030": {
+        "type": "array",
+        "items": "Forms",
+        "custom": "com.atlassian.jira.plugins.proforma-managed-fields:proforma-forms-field-cftype",
+        "customId": 10030
+      },
+      "project": {
+        "type": "project",
+        "system": "project"
+      },
+      "customfield_10031": {
+        "type": "number",
+        "custom": "com.atlassian.jira.plugins.proforma-managed-fields:forms-open-field-cftype",
+        "customId": 10031
+      },
+      "customfield_10032": {
+        "type": "number",
+        "custom": "com.atlassian.jira.plugins.proforma-managed-fields:forms-submitted-field-cftype",
+        "customId": 10032
+      },
+      "fixVersions": {
+        "type": "array",
+        "items": "version",
+        "system": "fixVersions"
+      },
+      "customfield_10033": {
+        "type": "number",
+        "custom": "com.atlassian.jira.plugins.proforma-managed-fields:forms-locked-field-cftype",
+        "customId": 10033
+      },
+      "aggregatetimespent": {
+        "type": "number",
+        "system": "aggregatetimespent"
+      },
+      "customfield_10034": {
+        "type": "number",
+        "custom": "com.atlassian.jira.plugins.proforma-managed-fields:forms-total-field-cftype",
+        "customId": 10034
+      },
+      "statusCategory": {
+        "type": "statusCategory",
+        "system": "statusCategory"
+      },
+      "resolution": {
+        "type": "resolution",
+        "system": "resolution"
+      },
+      "customfield_10027": {
+        "type": "datetime",
+        "custom": "com.atlassian.jira.ext.charting:firstresponsedate",
+        "customId": 10027
+      },
+      "customfield_10028": {
+        "type": "any",
+        "custom": "com.atlassian.jira.ext.charting:timeinstatus",
+        "customId": 10028
+      },
+      "customfield_10029": {
+        "type": "array",
+        "items": "Goals",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:goals",
+        "customId": 10029
+      },
+      "resolutiondate": {
+        "type": "datetime",
+        "system": "resolutiondate"
+      },
+      "workratio": {
+        "type": "number",
+        "system": "workratio"
+      },
+      "watches": {
+        "type": "watches",
+        "system": "watches"
+      },
+      "lastViewed": {
+        "type": "datetime",
+        "system": "lastViewed"
+      },
+      "created": {
+        "type": "datetime",
+        "system": "created"
+      },
+      "customfield_10020": {
+        "type": "array",
+        "items": "json",
+        "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+        "customId": 10020
+      },
+      "customfield_10021": {
+        "type": "array",
+        "items": "option",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multicheckboxes",
+        "customId": 10021
+      },
+      "customfield_10022": {
+        "type": "date",
+        "custom": "com.atlassian.jpo:jpo-custom-field-baseline-start",
+        "customId": 10022
+      },
+      "customfield_10023": {
+        "type": "date",
+        "custom": "com.atlassian.jpo:jpo-custom-field-baseline-end",
+        "customId": 10023
+      },
+      "priority": {
+        "type": "priority",
+        "system": "priority"
+      },
+      "customfield_10024": {
+        "type": "array",
+        "items": "sd-sentiment",
+        "custom": "com.atlassian.servicedesk.sentiment:sd-sentiment",
+        "customId": 10024
+      },
+      "customfield_10025": {
+        "type": "sd-approvals",
+        "custom": "com.atlassian.servicedesk.approvals-plugin:sd-approvals",
+        "customId": 10025
+      },
+      "labels": {
+        "type": "array",
+        "items": "string",
+        "system": "labels"
+      },
+      "customfield_10026": {
+        "type": "array",
+        "items": "admin.customfield.type.agent.sessions.name",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:agent-sessions",
+        "customId": 10026
+      },
+      "customfield_10016": {
+        "type": "number",
+        "custom": "com.pyxis.greenhopper.jira:jsw-story-points",
+        "customId": 10016
+      },
+      "customfield_10017": {
+        "type": "string",
+        "custom": "com.pyxis.greenhopper.jira:jsw-issue-color",
+        "customId": 10017
+      },
+      "customfield_10019": {
+        "type": "any",
+        "custom": "com.pyxis.greenhopper.jira:gh-lexo-rank",
+        "customId": 10019
+      },
+      "timeestimate": {
+        "type": "number",
+        "system": "timeestimate"
+      },
+      "aggregatetimeoriginalestimate": {
+        "type": "number",
+        "system": "aggregatetimeoriginalestimate"
+      },
+      "versions": {
+        "type": "array",
+        "items": "version",
+        "system": "versions"
+      },
+      "issuelinks": {
+        "type": "array",
+        "items": "issuelinks",
+        "system": "issuelinks"
+      },
+      "assignee": {
+        "type": "user",
+        "system": "assignee"
+      },
+      "updated": {
+        "type": "datetime",
+        "system": "updated"
+      },
+      "status": {
+        "type": "status",
+        "system": "status"
+      },
+      "components": {
+        "type": "array",
+        "items": "component",
+        "system": "components"
+      },
+      "timeoriginalestimate": {
+        "type": "number",
+        "system": "timeoriginalestimate"
+      },
+      "description": {
+        "type": "string",
+        "system": "description"
+      },
+      "customfield_10010": {
+        "type": "sd-customerrequesttype",
+        "custom": "com.atlassian.servicedesk:vp-origin",
+        "customId": 10010
+      },
+      "customfield_10014": {
+        "type": "any",
+        "custom": "com.pyxis.greenhopper.jira:gh-epic-link",
+        "customId": 10014
+      },
+      "timetracking": {
+        "type": "timetracking",
+        "system": "timetracking"
+      },
+      "customfield_10015": {
+        "type": "date",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datepicker",
+        "customId": 10015
+      },
+      "customfield_10005": {
+        "type": "option",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+        "customId": 10005
+      },
+      "customfield_10006": {
+        "type": "option",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+        "customId": 10006
+      },
+      "customfield_10007": {
+        "type": "option",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+        "customId": 10007
+      },
+      "security": {
+        "type": "securitylevel",
+        "system": "security"
+      },
+      "customfield_10008": {
+        "type": "datetime",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datetime",
+        "customId": 10008
+      },
+      "attachment": {
+        "type": "array",
+        "items": "attachment",
+        "system": "attachment"
+      },
+      "aggregatetimeestimate": {
+        "type": "number",
+        "system": "aggregatetimeestimate"
+      },
+      "customfield_10009": {
+        "type": "datetime",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datetime",
+        "customId": 10009
+      },
+      "summary": {
+        "type": "string",
+        "system": "summary"
+      },
+      "creator": {
+        "type": "user",
+        "system": "creator"
+      },
+      "subtasks": {
+        "type": "array",
+        "items": "issuelinks",
+        "system": "subtasks"
+      },
+      "customfield_10040": {
+        "type": "array",
+        "items": "string",
+        "custom": "com.atlassian.jira.modules.servicemanagement.status-pages-entity:status-pages-entity-field-cftype",
+        "customId": 10040
+      },
+      "customfield_10042": {
+        "type": "string",
+        "custom": "read-only-string-issue-field",
+        "customId": 10042
+      },
+      "reporter": {
+        "type": "user",
+        "system": "reporter"
+      },
+      "customfield_10043": {
+        "type": "string",
+        "custom": "read-only-string-issue-field",
+        "customId": 10043
+      },
+      "aggregateprogress": {
+        "type": "progress",
+        "system": "aggregateprogress"
+      },
+      "customfield_10001": {
+        "type": "team",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team",
+        "customId": 10001,
+        "configuration": {
+          "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team": true
+        }
+      },
+      "customfield_10002": {
+        "type": "array",
+        "items": "sd-customerorganization",
+        "custom": "com.atlassian.servicedesk:sd-customer-organizations",
+        "customId": 10002
+      },
+      "customfield_10003": {
+        "type": "array",
+        "items": "user",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multiuserpicker",
+        "customId": 10003
+      },
+      "customfield_10004": {
+        "type": "option",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+        "customId": 10004
+      },
+      "customfield_10038": {
+        "type": "array",
+        "items": "Focus Areas",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:focus-areas",
+        "customId": 10038
+      },
+      "customfield_10039": {
+        "type": "user",
+        "custom": "com.atlassian.jira.plugin.system.customfieldtypes:userpicker",
+        "customId": 10039
+      },
+      "environment": {
+        "type": "string",
+        "system": "environment"
+      },
+      "duedate": {
+        "type": "date",
+        "system": "duedate"
+      },
+      "progress": {
+        "type": "progress",
+        "system": "progress"
+      },
+      "votes": {
+        "type": "votes",
+        "system": "votes"
+      },
+      "comment": {
+        "type": "comments-page",
+        "system": "comment"
+      },
+      "worklog": {
+        "type": "array",
+        "items": "worklog",
+        "system": "worklog"
+      }
+    },
+    "editmeta": {
+      "fields": {
+        "summary": {
+          "required": true,
+          "schema": {
+            "type": "string",
+            "system": "summary"
+          },
+          "name": "Summary",
+          "key": "summary",
+          "operations": [
+            "set"
+          ]
+        },
+        "issuetype": {
+          "required": true,
+          "schema": {
+            "type": "issuetype",
+            "system": "issuetype"
+          },
+          "name": "Issue Type",
+          "key": "issuetype",
+          "operations": [],
+          "allowedValues": [
+            {
+              "self": "[redacted]",
+              "id": "10006",
+              "description": "A small, distinct piece of work.",
+              "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+              "name": "Task",
+              "subtask": false,
+              "avatarId": 10318,
+              "hierarchyLevel": 0
+            },
+            {
+              "self": "[redacted]",
+              "id": "10005",
+              "description": "Stories track functionality or features expressed as user goals.",
+              "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10300?size=medium",
+              "name": "Story",
+              "subtask": false,
+              "avatarId": 10300,
+              "hierarchyLevel": 0
+            },
+            {
+              "self": "[redacted]",
+              "id": "10008",
+              "description": "A problem or error.",
+              "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium",
+              "name": "Bug",
+              "subtask": false,
+              "avatarId": 10303,
+              "hierarchyLevel": 0
+            },
+            {
+              "self": "[redacted]",
+              "id": "10000",
+              "description": "A big user story that needs to be broken down. Created by Jira Software - do not edit or delete.",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/issuetypes/epic.svg",
+              "name": "Epic",
+              "subtask": false,
+              "hierarchyLevel": 1
+            }
+          ]
+        },
+        "parent": {
+          "required": false,
+          "schema": {
+            "type": "issuelink",
+            "system": "parent"
+          },
+          "name": "Parent",
+          "key": "parent",
+          "hasDefaultValue": false,
+          "operations": [
+            "set"
+          ]
+        },
+        "components": {
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": "component",
+            "system": "components"
+          },
+          "name": "Components",
+          "key": "components",
+          "operations": [
+            "add",
+            "set",
+            "remove"
+          ],
+          "allowedValues": []
+        },
+        "description": {
+          "required": false,
+          "schema": {
+            "type": "string",
+            "system": "description"
+          },
+          "name": "Description",
+          "key": "description",
+          "operations": [
+            "set"
+          ]
+        },
+        "customfield_10020": {
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": "json",
+            "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+            "customId": 10020
+          },
+          "name": "Sprint",
+          "key": "customfield_10020",
+          "operations": [
+            "set"
+          ]
+        },
+        "customfield_10021": {
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": "option",
+            "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multicheckboxes",
+            "customId": 10021
+          },
+          "name": "Flagged",
+          "key": "customfield_10021",
+          "operations": [
+            "add",
+            "set",
+            "remove"
+          ],
+          "allowedValues": [
+            {
+              "self": "[redacted]",
+              "value": "Impediment",
+              "id": "10019"
+            }
+          ]
+        },
+        "fixVersions": {
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": "version",
+            "system": "fixVersions"
+          },
+          "name": "Fix versions",
+          "key": "fixVersions",
+          "operations": [
+            "set",
+            "add",
+            "remove"
+          ],
+          "allowedValues": []
+        },
+        "customfield_10001": {
+          "required": false,
+          "schema": {
+            "type": "team",
+            "custom": "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team",
+            "customId": 10001,
+            "configuration": {
+              "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team": true
+            }
+          },
+          "name": "Team",
+          "key": "customfield_10001",
+          "autoCompleteUrl": "https://straus-team.atlassian.net/gateway/api/v1/recommendations",
+          "operations": [
+            "set"
+          ]
+        },
+        "priority": {
+          "required": false,
+          "schema": {
+            "type": "priority",
+            "system": "priority"
+          },
+          "name": "Priority",
+          "key": "priority",
+          "operations": [
+            "set"
+          ],
+          "allowedValues": [
+            {
+              "self": "[redacted]",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/highest_new.svg",
+              "name": "Highest",
+              "id": "1"
+            },
+            {
+              "self": "[redacted]",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/high_new.svg",
+              "name": "High",
+              "id": "2"
+            },
+            {
+              "self": "[redacted]",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+              "name": "Medium",
+              "id": "3"
+            },
+            {
+              "self": "[redacted]",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/low_new.svg",
+              "name": "Low",
+              "id": "4"
+            },
+            {
+              "self": "[redacted]",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/lowest_new.svg",
+              "name": "Lowest",
+              "id": "5"
+            }
+          ]
+        },
+        "customfield_10015": {
+          "required": false,
+          "schema": {
+            "type": "date",
+            "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datepicker",
+            "customId": 10015
+          },
+          "name": "Start date",
+          "key": "customfield_10015",
+          "operations": [
+            "set"
+          ]
+        },
+        "labels": {
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": "string",
+            "system": "labels"
+          },
+          "name": "Labels",
+          "key": "labels",
+          "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/1.0/labels/10004/suggest?query=",
+          "operations": [
+            "add",
+            "set",
+            "remove"
+          ]
+        },
+        "environment": {
+          "required": false,
+          "schema": {
+            "type": "string",
+            "system": "environment"
+          },
+          "name": "Environment",
+          "key": "environment",
+          "operations": [
+            "set"
+          ]
+        },
+        "attachment": {
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": "attachment",
+            "system": "attachment"
+          },
+          "name": "Attachment",
+          "key": "attachment",
+          "operations": [
+            "set",
+            "copy"
+          ]
+        },
+        "duedate": {
+          "required": false,
+          "schema": {
+            "type": "date",
+            "system": "duedate"
+          },
+          "name": "Due date",
+          "key": "duedate",
+          "operations": [
+            "set"
+          ]
+        },
+        "comment": {
+          "required": false,
+          "schema": {
+            "type": "comments-page",
+            "system": "comment"
+          },
+          "name": "Comment",
+          "key": "comment",
+          "operations": [
+            "add",
+            "edit",
+            "remove"
+          ]
+        },
+        "issuelinks": {
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": "issuelinks",
+            "system": "issuelinks"
+          },
+          "name": "Linked Issues",
+          "key": "issuelinks",
+          "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/3/issue/picker?currentProjectId=&showSubTaskParent=true&showSubTasks=true&currentIssueKey=TUIC-1&query=",
+          "operations": [
+            "add",
+            "copy"
+          ]
+        },
+        "assignee": {
+          "required": false,
+          "schema": {
+            "type": "user",
+            "system": "assignee"
+          },
+          "name": "Assignee",
+          "key": "assignee",
+          "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/3/user/assignable/search?issueKey=TUIC-1&query=",
+          "operations": [
+            "set"
+          ]
+        }
+      }
+    },
+    "fields": {
+      "statuscategorychangedate": "2026-10-27T12:00:56.003+0100",
+      "issuetype": {
+        "self": "[redacted]",
+        "id": "10006",
+        "description": "A small, distinct piece of work.",
+        "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+        "name": "Task",
+        "subtask": false,
+        "avatarId": 10318,
+        "hierarchyLevel": 0
+      },
+      "timespent": null,
+      "customfield_10030": null,
+      "project": {
+        "self": "[redacted]",
+        "id": "10001",
+        "key": "TUIC",
+        "name": "TUICommander integration tests",
+        "projectTypeKey": "software",
+        "simplified": false,
+        "avatarUrls": "[redacted]"
+      },
+      "customfield_10031": null,
+      "customfield_10032": null,
+      "fixVersions": [],
+      "customfield_10033": null,
+      "aggregatetimespent": null,
+      "customfield_10034": null,
+      "statusCategory": {
+        "self": "[redacted]",
+        "id": 4,
+        "key": "indeterminate",
+        "colorName": "yellow",
+        "name": "In Progress"
+      },
+      "resolution": null,
+      "customfield_10027": null,
+      "customfield_10028": null,
+      "customfield_10029": null,
+      "resolutiondate": null,
+      "workratio": -1,
+      "watches": {
+        "self": "[redacted]",
+        "watchCount": 1,
+        "isWatching": true
+      },
+      "lastViewed": null,
+      "created": "2026-10-27T12:00:52.842+0100",
+      "customfield_10020": null,
+      "customfield_10021": null,
+      "customfield_10022": null,
+      "customfield_10023": null,
+      "priority": {
+        "self": "[redacted]",
+        "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+        "name": "Medium",
+        "id": "3"
+      },
+      "customfield_10024": null,
+      "customfield_10025": null,
+      "labels": [
+        "integration"
+      ],
+      "customfield_10026": null,
+      "customfield_10016": null,
+      "customfield_10017": null,
+      "customfield_10019": "0|i0000n:",
+      "timeestimate": null,
+      "aggregatetimeoriginalestimate": null,
+      "versions": [],
+      "issuelinks": [],
+      "assignee": null,
+      "updated": "2026-10-27T12:00:56.003+0100",
+      "status": {
+        "self": "[redacted]",
+        "description": "This issue is being actively worked on at the moment by the assignee.",
+        "iconUrl": "https://straus-team.atlassian.net/images/icons/statuses/inprogress.png",
+        "name": "In Progress",
+        "id": "3",
+        "statusCategory": {
+          "self": "[redacted]",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "yellow",
+          "name": "In Progress"
+        }
+      },
+      "components": [],
+      "timeoriginalestimate": null,
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Steps"
+              }
+            ]
+          },
+          {
+            "type": "bulletList",
+            "content": [
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "First"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Second"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "codeBlock",
+            "attrs": {
+              "language": "js"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "const n = 1;"
+              }
+            ]
+          }
+        ]
+      },
+      "customfield_10010": null,
+      "customfield_10014": null,
+      "timetracking": {},
+      "customfield_10015": null,
+      "customfield_10005": null,
+      "customfield_10006": null,
+      "customfield_10007": null,
+      "security": null,
+      "customfield_10008": null,
+      "attachment": [],
+      "aggregatetimeestimate": null,
+      "customfield_10009": null,
+      "summary": "Preserve code and lists",
+      "creator": {
+        "self": "[redacted]",
+        "accountId": "recorded-user-1",
+        "emailAddress": "[redacted]",
+        "avatarUrls": "[redacted]",
+        "displayName": "Recorded User",
+        "active": true,
+        "timeZone": "Europe/Madrid",
+        "accountType": "atlassian"
+      },
+      "subtasks": [],
+      "customfield_10040": [],
+      "customfield_10042": null,
+      "reporter": {
+        "self": "[redacted]",
+        "accountId": "recorded-user-1",
+        "emailAddress": "[redacted]",
+        "avatarUrls": "[redacted]",
+        "displayName": "Recorded User",
+        "active": true,
+        "timeZone": "Europe/Madrid",
+        "accountType": "atlassian"
+      },
+      "customfield_10043": null,
+      "aggregateprogress": {
+        "progress": 0,
+        "total": 0
+      },
+      "customfield_10001": null,
+      "customfield_10002": [],
+      "customfield_10003": null,
+      "customfield_10004": null,
+      "customfield_10038": null,
+      "customfield_10039": null,
+      "environment": null,
+      "duedate": null,
+      "progress": {
+        "progress": 0,
+        "total": 0
+      },
+      "votes": {
+        "self": "[redacted]",
+        "votes": 0,
+        "hasVoted": false
+      },
+      "comment": {
+        "comments": [
+          {
+            "self": "[redacted]",
+            "id": "10000",
+            "author": {
+              "self": "[redacted]",
+              "accountId": "recorded-user-1",
+              "emailAddress": "[redacted]",
+              "avatarUrls": "[redacted]",
+              "displayName": "Recorded User",
+              "active": true,
+              "timeZone": "Europe/Madrid",
+              "accountType": "atlassian"
+            },
+            "body": {
+              "type": "doc",
+              "version": 1,
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Ready for review"
+                    }
+                  ]
+                }
+              ]
+            },
+            "updateAuthor": {
+              "self": "[redacted]",
+              "accountId": "recorded-user-1",
+              "emailAddress": "[redacted]",
+              "avatarUrls": "[redacted]",
+              "displayName": "Recorded User",
+              "active": true,
+              "timeZone": "Europe/Madrid",
+              "accountType": "atlassian"
+            },
+            "created": "2026-10-27T12:00:54.768+0100",
+            "updated": "2026-10-27T12:00:54.768+0100",
+            "jsdPublic": true
+          },
+          {
+            "self": "[redacted]",
+            "id": "10001",
+            "author": {
+              "self": "[redacted]",
+              "accountId": "recorded-user-1",
+              "emailAddress": "[redacted]",
+              "avatarUrls": "[redacted]",
+              "displayName": "Recorded User",
+              "active": true,
+              "timeZone": "Europe/Madrid",
+              "accountType": "atlassian"
+            },
+            "body": {
+              "type": "doc",
+              "version": 1,
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Second comment with hard"
+                    },
+                    {
+                      "type": "hardBreak"
+                    },
+                    {
+                      "type": "text",
+                      "text": "break"
+                    }
+                  ]
+                }
+              ]
+            },
+            "updateAuthor": {
+              "self": "[redacted]",
+              "accountId": "recorded-user-1",
+              "emailAddress": "[redacted]",
+              "avatarUrls": "[redacted]",
+              "displayName": "Recorded User",
+              "active": true,
+              "timeZone": "Europe/Madrid",
+              "accountType": "atlassian"
+            },
+            "created": "2026-10-27T12:00:55.269+0100",
+            "updated": "2026-10-27T12:00:55.269+0100",
+            "jsdPublic": true
+          }
+        ],
+        "self": "[redacted]",
+        "maxResults": 2,
+        "total": 2,
+        "startAt": 0
+      },
+      "worklog": {
+        "startAt": 0,
+        "maxResults": 20,
+        "total": 0,
+        "worklogs": []
+      }
+    }
+  },
+  "transitions": {
+    "expand": "transitions",
+    "transitions": [
+      {
+        "id": "11",
+        "name": "To Do",
+        "to": {
+          "self": "[redacted]",
+          "description": "",
+          "iconUrl": "https://straus-team.atlassian.net/",
+          "name": "To Do",
+          "id": "10004",
+          "statusCategory": {
+            "self": "[redacted]",
+            "id": 2,
+            "key": "new",
+            "colorName": "blue-gray",
+            "name": "To Do"
+          }
+        },
+        "hasScreen": false,
+        "isGlobal": true,
+        "isInitial": false,
+        "isAvailable": true,
+        "isConditional": false,
+        "isLooped": false
+      },
+      {
+        "id": "21",
+        "name": "In Progress",
+        "to": {
+          "self": "[redacted]",
+          "description": "This issue is being actively worked on at the moment by the assignee.",
+          "iconUrl": "https://straus-team.atlassian.net/images/icons/statuses/inprogress.png",
+          "name": "In Progress",
+          "id": "3",
+          "statusCategory": {
+            "self": "[redacted]",
+            "id": 4,
+            "key": "indeterminate",
+            "colorName": "yellow",
+            "name": "In Progress"
+          }
+        },
+        "hasScreen": false,
+        "isGlobal": true,
+        "isInitial": false,
+        "isAvailable": true,
+        "isConditional": false,
+        "isLooped": false
+      },
+      {
+        "id": "31",
+        "name": "Done",
+        "to": {
+          "self": "[redacted]",
+          "description": "",
+          "iconUrl": "https://straus-team.atlassian.net/",
+          "name": "Done",
+          "id": "10005",
+          "statusCategory": {
+            "self": "[redacted]",
+            "id": 3,
+            "key": "done",
+            "colorName": "green",
+            "name": "Done"
+          }
+        },
+        "hasScreen": false,
+        "isGlobal": true,
+        "isInitial": false,
+        "isAvailable": true,
+        "isConditional": false,
+        "isLooped": false
+      }
+    ]
+  },
+  "comments": {
+    "startAt": 0,
+    "maxResults": 1,
+    "total": 2,
+    "comments": [
+      {
+        "self": "[redacted]",
+        "id": "10000",
+        "author": {
+          "self": "[redacted]",
+          "accountId": "recorded-user-1",
+          "emailAddress": "[redacted]",
+          "avatarUrls": "[redacted]",
+          "displayName": "Recorded User",
+          "active": true,
+          "timeZone": "Europe/Madrid",
+          "accountType": "atlassian"
+        },
+        "body": {
+          "type": "doc",
+          "version": 1,
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Ready for review"
+                }
+              ]
+            }
+          ]
+        },
+        "updateAuthor": {
+          "self": "[redacted]",
+          "accountId": "recorded-user-1",
+          "emailAddress": "[redacted]",
+          "avatarUrls": "[redacted]",
+          "displayName": "Recorded User",
+          "active": true,
+          "timeZone": "Europe/Madrid",
+          "accountType": "atlassian"
+        },
+        "created": "2026-10-27T12:00:54.768+0100",
+        "updated": "2026-10-27T12:00:54.768+0100",
+        "jsdPublic": true
+      }
+    ]
+  },
+  "commentPages": [
+    {
+      "startAt": 0,
+      "maxResults": 1,
+      "total": 2,
+      "comments": [
+        {
+          "self": "[redacted]",
+          "id": "10000",
+          "author": {
+            "self": "[redacted]",
+            "accountId": "recorded-user-1",
+            "emailAddress": "[redacted]",
+            "avatarUrls": "[redacted]",
+            "displayName": "Recorded User",
+            "active": true,
+            "timeZone": "Europe/Madrid",
+            "accountType": "atlassian"
+          },
+          "body": {
+            "type": "doc",
+            "version": 1,
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Ready for review"
+                  }
+                ]
+              }
+            ]
+          },
+          "updateAuthor": {
+            "self": "[redacted]",
+            "accountId": "recorded-user-1",
+            "emailAddress": "[redacted]",
+            "avatarUrls": "[redacted]",
+            "displayName": "Recorded User",
+            "active": true,
+            "timeZone": "Europe/Madrid",
+            "accountType": "atlassian"
+          },
+          "created": "2026-10-27T12:00:54.768+0100",
+          "updated": "2026-10-27T12:00:54.768+0100",
+          "jsdPublic": true
+        }
+      ]
+    },
+    {
+      "startAt": 1,
+      "maxResults": 1,
+      "total": 2,
+      "comments": [
+        {
+          "self": "[redacted]",
+          "id": "10001",
+          "author": {
+            "self": "[redacted]",
+            "accountId": "recorded-user-1",
+            "emailAddress": "[redacted]",
+            "avatarUrls": "[redacted]",
+            "displayName": "Recorded User",
+            "active": true,
+            "timeZone": "Europe/Madrid",
+            "accountType": "atlassian"
+          },
+          "body": {
+            "type": "doc",
+            "version": 1,
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Second comment with hard"
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "break"
+                  }
+                ]
+              }
+            ]
+          },
+          "updateAuthor": {
+            "self": "[redacted]",
+            "accountId": "recorded-user-1",
+            "emailAddress": "[redacted]",
+            "avatarUrls": "[redacted]",
+            "displayName": "Recorded User",
+            "active": true,
+            "timeZone": "Europe/Madrid",
+            "accountType": "atlassian"
+          },
+          "created": "2026-10-27T12:00:55.269+0100",
+          "updated": "2026-10-27T12:00:55.269+0100",
+          "jsdPublic": true
+        }
+      ]
+    }
+  ],
+  "board": {
+    "id": 2,
+    "name": "TUIC board",
+    "type": "scrum",
+    "self": "[redacted]",
+    "location": {
+      "type": "project",
+      "key": "TUIC",
+      "id": "10001",
+      "self": "[redacted]",
+      "name": "TUICommander integration tests"
+    },
+    "filter": {
+      "id": "10001",
+      "self": "[redacted]"
+    },
+    "columnConfig": {
+      "columns": [
+        {
+          "name": "To Do",
+          "statuses": [
+            {
+              "id": "10004",
+              "self": "[redacted]"
+            }
+          ]
+        },
+        {
+          "name": "In Progress",
+          "statuses": [
+            {
+              "id": "3",
+              "self": "[redacted]"
+            }
+          ]
+        },
+        {
+          "name": "Done",
+          "statuses": [
+            {
+              "id": "10005",
+              "self": "[redacted]"
+            }
+          ]
+        }
+      ],
+      "constraintType": "none"
+    },
+    "estimation": {
+      "type": "field",
+      "field": {
+        "fieldId": "customfield_10041",
+        "displayName": "Story Points"
+      }
+    },
+    "ranking": {
+      "rankCustomFieldId": 10019
+    }
+  },
+  "createmeta": {
+    "startAt": 0,
+    "maxResults": 50,
+    "total": 16,
+    "fields": [
+      {
+        "required": false,
+        "schema": {
+          "type": "user",
+          "system": "assignee"
+        },
+        "name": "Assignee",
+        "key": "assignee",
+        "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/3/user/assignable/search?project=TUIC&query=",
+        "hasDefaultValue": false,
+        "operations": [
+          "set"
+        ],
+        "fieldId": "assignee"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": "attachment",
+          "system": "attachment"
+        },
+        "name": "Attachment",
+        "key": "attachment",
+        "hasDefaultValue": false,
+        "operations": [
+          "set",
+          "copy"
+        ],
+        "fieldId": "attachment"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": "component",
+          "system": "components"
+        },
+        "name": "Components",
+        "key": "components",
+        "hasDefaultValue": false,
+        "operations": [
+          "add",
+          "set",
+          "remove"
+        ],
+        "allowedValues": [],
+        "fieldId": "components"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "team",
+          "custom": "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team",
+          "customId": 10001,
+          "configuration": {
+            "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team": true
+          }
+        },
+        "name": "Team",
+        "key": "customfield_10001",
+        "autoCompleteUrl": "https://straus-team.atlassian.net/gateway/api/v1/recommendations",
+        "hasDefaultValue": false,
+        "operations": [
+          "set"
+        ],
+        "fieldId": "customfield_10001"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "date",
+          "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datepicker",
+          "customId": 10015
+        },
+        "name": "Start date",
+        "key": "customfield_10015",
+        "hasDefaultValue": false,
+        "operations": [
+          "set"
+        ],
+        "fieldId": "customfield_10015"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": "json",
+          "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+          "customId": 10020
+        },
+        "name": "Sprint",
+        "key": "customfield_10020",
+        "hasDefaultValue": false,
+        "operations": [
+          "set"
+        ],
+        "fieldId": "customfield_10020"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "string",
+          "system": "description"
+        },
+        "name": "Description",
+        "key": "description",
+        "hasDefaultValue": false,
+        "operations": [
+          "set"
+        ],
+        "fieldId": "description"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "date",
+          "system": "duedate"
+        },
+        "name": "Due date",
+        "key": "duedate",
+        "hasDefaultValue": false,
+        "operations": [
+          "set"
+        ],
+        "fieldId": "duedate"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": "version",
+          "system": "fixVersions"
+        },
+        "name": "Fix versions",
+        "key": "fixVersions",
+        "hasDefaultValue": false,
+        "operations": [
+          "set",
+          "add",
+          "remove"
+        ],
+        "allowedValues": [],
+        "fieldId": "fixVersions"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": "issuelinks",
+          "system": "issuelinks"
+        },
+        "name": "Linked Issues",
+        "key": "issuelinks",
+        "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/3/issue/picker?currentProjectId=&showSubTaskParent=true&showSubTasks=true&currentIssueKey=null&query=",
+        "hasDefaultValue": false,
+        "operations": [
+          "add",
+          "copy"
+        ],
+        "fieldId": "issuelinks"
+      },
+      {
+        "required": true,
+        "schema": {
+          "type": "issuetype",
+          "system": "issuetype"
+        },
+        "name": "Issue Type",
+        "key": "issuetype",
+        "hasDefaultValue": false,
+        "operations": [],
+        "allowedValues": [
+          {
+            "self": "[redacted]",
+            "id": "10006",
+            "description": "A small, distinct piece of work.",
+            "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+            "name": "Task",
+            "subtask": false,
+            "avatarId": 10318,
+            "hierarchyLevel": 0
+          }
+        ],
+        "fieldId": "issuetype"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": "string",
+          "system": "labels"
+        },
+        "name": "Labels",
+        "key": "labels",
+        "autoCompleteUrl": "https://straus-team.atlassian.net/rest/api/1.0/labels/suggest?query=",
+        "hasDefaultValue": false,
+        "operations": [
+          "add",
+          "set",
+          "remove"
+        ],
+        "fieldId": "labels"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "issuelink",
+          "system": "parent"
+        },
+        "name": "Parent",
+        "key": "parent",
+        "hasDefaultValue": false,
+        "operations": [
+          "set"
+        ],
+        "fieldId": "parent"
+      },
+      {
+        "required": false,
+        "schema": {
+          "type": "priority",
+          "system": "priority"
+        },
+        "name": "Priority",
+        "key": "priority",
+        "hasDefaultValue": true,
+        "operations": [
+          "set"
+        ],
+        "allowedValues": [
+          {
+            "self": "[redacted]",
+            "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/highest_new.svg",
+            "name": "Highest",
+            "id": "1"
+          },
+          {
+            "self": "[redacted]",
+            "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/high_new.svg",
+            "name": "High",
+            "id": "2"
+          },
+          {
+            "self": "[redacted]",
+            "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+            "name": "Medium",
+            "id": "3"
+          },
+          {
+            "self": "[redacted]",
+            "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/low_new.svg",
+            "name": "Low",
+            "id": "4"
+          },
+          {
+            "self": "[redacted]",
+            "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/lowest_new.svg",
+            "name": "Lowest",
+            "id": "5"
+          }
+        ],
+        "defaultValue": {
+          "self": "[redacted]",
+          "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+          "name": "Medium",
+          "id": "3"
+        },
+        "fieldId": "priority"
+      },
+      {
+        "required": true,
+        "schema": {
+          "type": "project",
+          "system": "project"
+        },
+        "name": "Project",
+        "key": "project",
+        "hasDefaultValue": false,
+        "operations": [
+          "set"
+        ],
+        "allowedValues": [
+          {
+            "self": "[redacted]",
+            "id": "10001",
+            "key": "TUIC",
+            "name": "TUICommander integration tests",
+            "projectTypeKey": "software",
+            "simplified": false,
+            "avatarUrls": "[redacted]"
+          }
+        ],
+        "fieldId": "project"
+      },
+      {
+        "required": true,
+        "schema": {
+          "type": "string",
+          "system": "summary"
+        },
+        "name": "Summary",
+        "key": "summary",
+        "hasDefaultValue": false,
+        "operations": [
+          "set"
+        ],
+        "fieldId": "summary"
+      }
+    ]
+  },
+  "issueTypes": {
+    "startAt": 0,
+    "maxResults": 50,
+    "total": 5,
+    "issueTypes": [
+      {
+        "self": "[redacted]",
+        "id": "10000",
+        "description": "A big user story that needs to be broken down. Created by Jira Software - do not edit or delete.",
+        "iconUrl": "https://straus-team.atlassian.net/images/icons/issuetypes/epic.svg",
+        "name": "Epic",
+        "untranslatedName": "Epic",
+        "subtask": false,
+        "hierarchyLevel": 1
+      },
+      {
+        "self": "[redacted]",
+        "id": "10005",
+        "description": "Stories track functionality or features expressed as user goals.",
+        "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10300?size=medium",
+        "name": "Story",
+        "untranslatedName": "Story",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "self": "[redacted]",
+        "id": "10006",
+        "description": "A small, distinct piece of work.",
+        "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+        "name": "Task",
+        "untranslatedName": "Task",
+        "subtask": false,
+        "hierarchyLevel": 0
+      },
+      {
+        "self": "[redacted]",
+        "id": "10007",
+        "description": "A small piece of work that's part of a larger task.",
+        "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium",
+        "name": "Sub-task",
+        "untranslatedName": "Sub-task",
+        "subtask": true,
+        "hierarchyLevel": -1
+      },
+      {
+        "self": "[redacted]",
+        "id": "10008",
+        "description": "A problem or error.",
+        "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium",
+        "name": "Bug",
+        "untranslatedName": "Bug",
+        "subtask": false,
+        "hierarchyLevel": 0
+      }
+    ]
+  },
+  "searchPages": [
+    {
+      "issues": [
+        {
+          "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+          "id": "10004",
+          "self": "[redacted]",
+          "key": "TUIC-1",
+          "fields": {
+            "summary": "Preserve code and lists",
+            "issuetype": {
+              "self": "[redacted]",
+              "id": "10006",
+              "description": "A small, distinct piece of work.",
+              "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+              "name": "Task",
+              "subtask": false,
+              "avatarId": 10318,
+              "hierarchyLevel": 0
+            },
+            "created": "2026-10-27T12:00:52.842+0100",
+            "duedate": null,
+            "project": {
+              "self": "[redacted]",
+              "id": "10001",
+              "key": "TUIC",
+              "name": "TUICommander integration tests",
+              "projectTypeKey": "software",
+              "simplified": false,
+              "avatarUrls": "[redacted]"
+            },
+            "description": {
+              "type": "doc",
+              "version": 1,
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Steps"
+                    }
+                  ]
+                },
+                {
+                  "type": "bulletList",
+                  "content": [
+                    {
+                      "type": "listItem",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "First"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "listItem",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Second"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "codeBlock",
+                  "attrs": {
+                    "language": "js"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "const n = 1;"
+                    }
+                  ]
+                }
+              ]
+            },
+            "assignee": null,
+            "priority": {
+              "self": "[redacted]",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+              "name": "Medium",
+              "id": "3"
+            },
+            "updated": "2026-10-27T12:00:56.003+0100",
+            "status": {
+              "self": "[redacted]",
+              "description": "This issue is being actively worked on at the moment by the assignee.",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/statuses/inprogress.png",
+              "name": "In Progress",
+              "id": "3",
+              "statusCategory": {
+                "self": "[redacted]",
+                "id": 4,
+                "key": "indeterminate",
+                "colorName": "yellow",
+                "name": "In Progress"
+              }
+            },
+            "labels": [
+              "integration"
+            ]
+          }
+        }
+      ],
+      "nextPageToken": "EAEY9fuU6Jc0Ih9wcm9qZWN0ID0gVFVJQyBPUkRFUiBCWSBrZXkgQVNDKgJbXTIgVEVOQU5UX05PVF9GT1VORF9JTl9URU5BTlRfU1RPUkU=",
+      "isLast": false
+    },
+    {
+      "issues": [
+        {
+          "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+          "id": "10005",
+          "self": "[redacted]",
+          "key": "TUIC-2",
+          "fields": {
+            "summary": "Second pagination issue",
+            "issuetype": {
+              "self": "[redacted]",
+              "id": "10006",
+              "description": "A small, distinct piece of work.",
+              "iconUrl": "https://straus-team.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+              "name": "Task",
+              "subtask": false,
+              "avatarId": 10318,
+              "hierarchyLevel": 0
+            },
+            "created": "2026-10-27T12:00:53.876+0100",
+            "duedate": null,
+            "project": {
+              "self": "[redacted]",
+              "id": "10001",
+              "key": "TUIC",
+              "name": "TUICommander integration tests",
+              "projectTypeKey": "software",
+              "simplified": false,
+              "avatarUrls": "[redacted]"
+            },
+            "description": {
+              "type": "doc",
+              "version": 1,
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Steps"
+                    }
+                  ]
+                },
+                {
+                  "type": "bulletList",
+                  "content": [
+                    {
+                      "type": "listItem",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "First"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "listItem",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Second"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "codeBlock",
+                  "attrs": {
+                    "language": "js"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "const n = 1;"
+                    }
+                  ]
+                }
+              ]
+            },
+            "assignee": null,
+            "priority": {
+              "self": "[redacted]",
+              "iconUrl": "https://straus-team.atlassian.net/images/icons/priorities/medium_new.svg",
+              "name": "Medium",
+              "id": "3"
+            },
+            "updated": "2026-10-27T12:00:53.966+0100",
+            "status": {
+              "self": "[redacted]",
+              "description": "",
+              "iconUrl": "https://straus-team.atlassian.net/",
+              "name": "To Do",
+              "id": "10004",
+              "statusCategory": {
+                "self": "[redacted]",
+                "id": 2,
+                "key": "new",
+                "colorName": "blue-gray",
+                "name": "To Do"
+              }
+            },
+            "labels": [
+              "integration"
+            ]
+          }
+        }
+      ],
+      "nextPageToken": "EAIY7_6U6Jc0Ih9wcm9qZWN0ID0gVFVJQyBPUkRFUiBCWSBrZXkgQVNDKgJbXTIgVEVOQU5UX05PVF9GT1VORF9JTl9URU5BTlRfU1RPUkU=",
+      "isLast": false
+    }
+  ],
+  "jqlError": {
+    "errorMessages": [
+      "Error in the JQL Query: Expecting a field name at the end of the query."
+    ],
+    "errors": {}
+  },
+  "create": {
+    "id": "10004",
+    "key": "TUIC-1",
+    "self": "[redacted]"
+  }
 }
