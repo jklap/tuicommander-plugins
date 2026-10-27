@@ -4,7 +4,7 @@ import test from 'node:test';
 import { createJiraProvider } from './provider.js';
 import { adfToMarkdown, markdownToAdf } from './adf.js';
 
-const fixture = JSON.parse(readFileSync(new URL('./fixtures/cloud.json', import.meta.url), 'utf8'));
+const fixture = JSON.parse(readFileSync(new URL('./fixtures/cloud-contract.json', import.meta.url), 'utf8'));
 const account = { id: 'site-one', host: 'https://jira.example.invalid', kind: 'basic' };
 const ref = { providerId: 'jira', accountId: 'site-one', id: 'DEMO-7' };
 const query = { search: '', filters: [], savedFilterId: null, sort: null, cursor: null, limit: 25 };

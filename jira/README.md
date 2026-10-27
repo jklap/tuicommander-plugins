@@ -57,10 +57,17 @@ visible-only 60-second periodic refresh, not the provider.
 
 ## Fixtures and live confirmation
 
-`fixtures/cloud.json` is **unrecorded**, hand-authored from public Jira REST v3
-shapes with synthetic values. It is a test assumption, not a production recording.
-Other files contain scrubbed Jira Cloud recordings; see `fixtures/README.md`
-for their provenance and limits. These sources guide the synthetic fixture:
+`fixtures/cloud.json` contains scrubbed responses recorded from the authorized
+`straus-team.atlassian.net` scratch site on 2026-10-27. It includes enhanced search
+pages, a real JQL 400, issue detail, transitions, independent comment pages, board
+configuration, create metadata and a successful create response. Each response
+retains method, path, date, status and relevant headers in `provenance.records`.
+`recorded-cloud.test.js` replays these boundaries through the real provider.
+
+`fixtures/cloud-contract.json` preserves the previous, explicitly synthetic
+contract inputs for edge cases that the scratch workflow does not contain.
+Those tests do not claim live evidence. See `fixtures/README.md` for recording
+limits. These public references describe the contracts:
 
 - [Issue search](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/)
 - [Issues, creation metadata and transitions](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issues/)
