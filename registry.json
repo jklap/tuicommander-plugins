@@ -5,8 +5,8 @@
     "description": "Retries a Codex turn that failed with \"Selected model is at capacity\". Waits 1 minute, then sends \"retry last request\". Blocks after more than 3 retries in one hour.",
     "author": "sstraus",
     "repo": "sstraus/tuicommander-plugins",
-    "latestVersion": "1.0.0",
-    "minAppVersion": "1.0.3",
+    "latestVersion": "1.0.1",
+    "minAppVersion": "1.8.0",
     "capabilities": [
       "pty:write",
       "pty:read",
@@ -18,7 +18,7 @@
       "codex"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/at-capacity-retry.zip",
-    "contentSha256": "438c809ccd4b340fc850bfb06fc2c7e9bde9f05bd514ce2372e48e77ef9e2a59"
+    "contentSha256": "7d83e397167044a2c2eb1d4dc7c3ed7cc477e6f4f796af2c66fc8259030737d5"
   },
   {
     "id": "docx-preview",
@@ -115,8 +115,8 @@
     "description": "Wakes Claude Code when it stalls without asking a question. Sends a verification prompt after idle timeout; accepts done as completion signal.",
     "author": "sstraus",
     "repo": "sstraus/tuicommander-plugins",
-    "latestVersion": "1.0.0",
-    "minAppVersion": "1.0.3",
+    "latestVersion": "1.0.1",
+    "minAppVersion": "1.8.0",
     "capabilities": [
       "pty:write",
       "pty:read",
@@ -127,7 +127,7 @@
       "claude"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/claude-wakeup.zip",
-    "contentSha256": "ef04f7a7805858ccd1b2cea78cc79d6c4c7f9d2e51a5f55c24af58383508f8dd"
+    "contentSha256": "a9190eb6a2134b8a1125684026517e6d34a28626cc920a79241ed10a70af21fa"
   },
   {
     "id": "rtk-dashboard",

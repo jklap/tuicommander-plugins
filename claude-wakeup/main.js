@@ -255,7 +255,7 @@ function checkWakeups() {
     const revision = session.revision;
     host
       .invoke("get_input_buffer_content", { sessionId })
-      .then((content) => {
+      .then(async (content) => {
         if (hostRef !== host || sessions.get(sessionId) !== session) return;
         if (session.revision !== revision || !session.pendingWake || session.pendingWakeAt !== now) {
           if (session.pendingWake && session.pendingWakeAt === now) {
@@ -281,7 +281,20 @@ function checkWakeups() {
           session.lastUserInputAt = now;
           return;
         }
-        return host.sendAgentInput(sessionId, WAKE_MESSAGE);
+        // Composer inspection is advisory; only the host transaction can
+        // authorize a send against a draft typed without a structured event.
+        const sent = await host.sendAgentInputIfEmpty(sessionId, WAKE_MESSAGE);
+        if (hostRef !== host || sessions.get(sessionId) !== session) return;
+        if (sent !== true && session.pendingWake && session.pendingWakeAt === now) {
+          session.pendingWake = false;
+          session.pendingWakeAt = 0;
+          session.wakeBusySeen = false;
+          session.wakeCount = Math.max(0, session.wakeCount - 1);
+          session.totalWakesEver = Math.max(0, session.totalWakesEver - 1);
+          // Back off on a rejected transaction just as for a visible draft.
+          session.lastUserInputAt = now;
+          host.log("debug", `Wakeup skipped — composer or agent no longer ready in ${sessionId.slice(0, 8)}`);
+        }
       })
       .catch((err) => {
         if (hostRef !== host || sessions.get(sessionId) !== session) return;
@@ -680,6 +693,9 @@ export default {
           ttlMs: 15000,
         });
 
+        // DEFERRED (2026-10-27) — error-loop nudges run while busy, so the
+        // idle-only sendAgentInputIfEmpty cannot replace this path. A separate
+        // busy-safe queue/cancellation policy must protect drafts here too.
         host.sendAgentInput(sessionId, ERROR_LOOP_MESSAGE).catch((err) => {
           host.log("error", `Error-loop nudge failed: ${err}`);
         });

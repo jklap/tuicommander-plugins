@@ -338,7 +338,14 @@ async function fireRetry(sessionId) {
   }
 
   try {
-    await host.sendAgentInput(sessionId, config.retryText);
+    // The earlier read only cancels obsolete decisions. The host transaction
+    // must re-check the current composer: draft typing emits no state event.
+    const sent = await host.sendAgentInputIfEmpty(sessionId, config.retryText);
+    if (hostRef !== host || sessions.get(sessionId) !== session) return;
+    if (sent !== true) {
+      skipRetry(sessionId, session, "composer or agent no longer ready");
+      return;
+    }
   } catch (err) {
     const msg = String(err);
     if (msg.includes("not found") || msg.includes("No such session")) {

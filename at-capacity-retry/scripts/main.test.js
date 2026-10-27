@@ -65,8 +65,10 @@ function makeHost() {
     async playNotificationSound(sound) {
       host.sounds.push(sound);
     },
-    async sendAgentInput(sessionId, text) {
+    async sendAgentInputIfEmpty(sessionId, text) {
+      if (host.inputBuffer !== "") return false;
       host.sent.push({ sessionId, text });
+      return true;
     },
     async invoke(cmd, args) {
       if (cmd === "read_plugin_data") return host.pluginData.get(args.path) ?? null;
@@ -98,7 +100,7 @@ function emitEvent(host, type, payload, sessionId = SESSION) {
 
 /**
  * Advance fake time and let the microtask queue drain, so the async retry path
- * (input-buffer probe → sendAgentInput) completes before assertions run.
+ * (input-buffer probe → guarded submission) completes before assertions run.
  */
 async function advance(ms) {
   mock.timers.tick(ms);

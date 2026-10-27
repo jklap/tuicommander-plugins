@@ -1,8 +1,8 @@
 {
   "id": "claude-wakeup",
   "name": "Claude Wakeup",
-  "version": "1.0.0",
-  "minAppVersion": "1.0.3",
+  "version": "1.0.1",
+  "minAppVersion": "1.8.0",
   "main": "main.js",
   "description": "Wakes Claude Code when it stops without asking a question. Sends a verification prompt after 20s of idle-without-question; accepts `done` as completion signal.",
   "author": "TUICommander",

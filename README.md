@@ -61,7 +61,12 @@ requests cannot recreate a panel after it closes or the plugin unloads.
 
 Retry and wakeup plugins revalidate session state after composer inspection. State
 changes, awaiting dialogs, session closure and unload invalidate an outstanding
-decision. A failed retry composer read does not submit input.
+decision. A failed retry composer read does not submit input. These reads are advisory:
+`sendAgentInputIfEmpty` checks the current composer atomically before the idle
+retry or wakeup submits. Rejection skips the retry or releases the pending wake
+and its counters. Draft typing does not need to emit a structured event.
+The wakeup error-loop nudge is a separate busy-time path; its draft-safe queue
+policy is deferred at the call site and is not covered by this idle-send fix.
 
 CSV, DOCX and XLSX preview panels use the full file path for identity. Equal file
 names in different repositories open separate panels; reopening the same file
