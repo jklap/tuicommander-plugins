@@ -119,3 +119,11 @@ read-only enhanced search. It contains no credentials or user identities.
 The DC error test reuses its shape as an assumption, not a live DC recording.
 
 Task details declare the `edit_field` action for API-editable schema fields. The host enables only fields marked editable; Jira requires an explicit `set` operation and keeps project, issue type and status on their typed workflows. Save errors remain visible without discarding the draft.
+
+Description and supported custom-field editors start with the typed current issue
+value. Missing or unsupported structured values are not editable. Literal Markdown
+punctuation in ADF text is escaped and decoded on write, so plain text does not
+become formatting or HTML. Create metadata retains Description for validation of
+the fixed body input; a required empty or whitespace-only body is rejected before
+any create request. Tasks setup reads the registered core Jira account kind and
+stores it with the provider binding, including Data Center Bearer accounts.

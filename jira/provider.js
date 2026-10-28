@@ -1,7 +1,7 @@
 import { createClient } from './client.js';
 import { search, presets } from './query.js';
 import { adfToMarkdown, markdownToAdf } from './adf.js';
-import { issueToItem, commentPage, fieldSchema } from './model.js';
+import { issueToItem, commentPage, fieldSchema, editableValue } from './model.js';
 import { boardPort } from './board.js';
 import { creationPort } from './fields.js';
 
@@ -34,8 +34,14 @@ export function createJiraProvider(options) {
       ...fieldSchema({ ...f, fieldId: id }),
       editable: !['project', 'issuetype', 'status'].includes(id) && !!f.operations?.includes('set'),
     }));
+    const item = toItem(issue);
+    for (const field of fields) {
+      const value = editableValue(field, issue.fields[field.id]);
+      if (value === undefined) field.editable = false;
+      else item.fields[field.id] = value;
+    }
     return {
-      item: toItem(issue), body: adfToMarkdown(issue.fields.description),
+      item, body: adfToMarkdown(issue.fields.description),
       fields,
       actions: [
         ...(fields.some((field) => field.editable) ? [{ id: 'edit_field', name: 'Edit field', kind: 'edit_field', enabled: true, disabledReason: null }] : []),
@@ -68,7 +74,7 @@ export function createJiraProvider(options) {
       const schema = await createFields(value.itemType, signal);
       for (const field of schema) {
         const input = field.id === 'summary' ? value.title : field.id === 'description' ? value.body : value.fields[field.id]?.value;
-        if (field.required && field.id !== 'project' && field.id !== 'issuetype' && (input == null || input === '' || Array.isArray(input) && !input.length)) throw new Error(`Jira required field: ${field.name}`);
+        if (field.required && field.id !== 'project' && field.id !== 'issuetype' && (input == null || typeof input === 'string' && !input.trim() || Array.isArray(input) && !input.length)) throw new Error(`Jira required field: ${field.name}`);
       }
       const fields = Object.fromEntries(Object.entries(value.fields).filter(([id, f]) => id !== 'project' && f != null).map(([id, f]) => [id, rawField(id, f)]));
       fields.summary = value.title;

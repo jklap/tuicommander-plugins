@@ -6,7 +6,8 @@ export function adfToMarkdown(node) {
   switch (node.type) {
     case 'doc': return children().trimEnd();
     case 'text': {
-      let text = node.text ?? '';
+      const code = node.marks?.some((mark) => mark.type === 'code');
+      let text = code ? node.text ?? '' : (node.text ?? '').replace(/[\\`*_{}\[\]()#+\-.!>~<>&|]/g, '\\$&');
       for (const mark of node.marks ?? []) {
         if (mark.type === 'strong') text = `**${text}**`;
         else if (mark.type === 'em') text = `*${text}*`;
@@ -38,16 +39,35 @@ export function adfToMarkdown(node) {
   }
 }
 
+const unescapeText = (text) => text.replace(/\\([\\`*_{}\[\]()#+\-.!>~<>&|])/g, '$1');
+
 function inline(text) {
-  const pattern = /(\*\*(.+?)\*\*|~~(.+?)~~|`([^`]+)`|\[([^\]]+)\]\(([^)]+)\)|\*([^*]+)\*)/g;
-  const content = []; let offset = 0;
-  for (const match of text.matchAll(pattern)) {
-    if (match.index > offset) content.push({ type: 'text', text: text.slice(offset, match.index) });
-    const mark = match[2] ? { type: 'strong' } : match[3] ? { type: 'strike' } : match[4] ? { type: 'code' } : match[5] ? { type: 'link', attrs: { href: match[6] } } : { type: 'em' };
-    content.push({ type: 'text', text: match[2] ?? match[3] ?? match[4] ?? match[5] ?? match[7], marks: [mark] });
-    offset = match.index + match[0].length;
+  const content = [];
+  const plain = (value) => {
+    if (!value) return;
+    const last = content.at(-1);
+    if (last && !last.marks) last.text += value;
+    else content.push({ type: 'text', text: value });
+  };
+  for (let i = 0; i < text.length;) {
+    const rest = text.slice(i);
+    const escape = rest.match(/^\\([\\`*_{}\[\]()#+\-.!>~<>&|])/);
+    if (escape) { plain(escape[1]); i += escape[0].length; continue; }
+    const patterns = [
+      [/^\*\*((?:\\.|[^*\\])+?)\*\*/, { type: 'strong' }],
+      [/^~~((?:\\.|[^~\\])+?)~~/, { type: 'strike' }],
+      [/^`([^`]+)`/, { type: 'code' }],
+      [/^\[((?:\\.|[^\]\\])+)\]\(([^)]+)\)/, { type: 'link' }],
+      [/^\*((?:\\.|[^*\\])+)\*/, { type: 'em' }],
+    ];
+    const found = patterns.map(([pattern, mark]) => [rest.match(pattern), mark]).find(([match]) => match);
+    if (found) {
+      const [match, mark] = found;
+      if (mark.type === 'link') mark.attrs = { href: match[2] };
+      content.push({ type: 'text', text: mark.type === 'code' ? match[1] : unescapeText(match[1]), marks: [mark] });
+      i += match[0].length;
+    } else { plain(text[i]); i++; }
   }
-  if (offset < text.length) content.push({ type: 'text', text: text.slice(offset) });
   return content;
 }
 
