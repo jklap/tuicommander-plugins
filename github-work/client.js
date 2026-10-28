@@ -1,10 +1,11 @@
 /** Account-scoped port. Authentication and request budgets belong to the host. */
 export class GitHubError extends Error {
-  constructor(status, retryAfter = null, message = "GitHub request failed") {
+  constructor(status, retryAfter = null, message = "GitHub request failed", types = []) {
     super(message);
     this.name = "GitHubError";
     this.status = status;
     this.retryAfter = retryAfter;
+    this.types = types;
   }
 }
 
@@ -14,7 +15,9 @@ export function createClient(fetch, apiUrl = "https://api.github.com") {
     throw new Error("GitHub API must be an HTTPS origin/path without credentials");
   }
   const root = base.href.replace(/\/$/, "");
+  let oauthScopes = null;
   return {
+    get oauthScopes() { return oauthScopes; },
     async request(path, method = "GET", body, signal) {
       signal?.throwIfAborted();
       const url = new URL(`${root}/${path.replace(/^\//, "")}`);
@@ -22,6 +25,8 @@ export function createClient(fetch, apiUrl = "https://api.github.com") {
       const response = await fetch({ url: url.href, method, ...(body === undefined ? {} : { body }) });
       signal?.throwIfAborted();
       const headers = Object.fromEntries(Object.entries(response.headers).map(([k, v]) => [k.toLowerCase(), v]));
+      // Fine-grained and App tokens do not advertise classic OAuth scopes.
+      oauthScopes = headers["x-oauth-scopes"]?.trim() ? headers["x-oauth-scopes"].split(/[ ,]+/).filter(Boolean) : null;
       if (response.status < 200 || response.status >= 300) {
         const reason = response.json?.message ?? response.json?.errors?.[0]?.message;
         throw new GitHubError(
@@ -40,6 +45,7 @@ export function createClient(fetch, apiUrl = "https://api.github.com") {
           200,
           null,
           `GitHub GraphQL request failed${typeof reason === "string" && reason ? `: ${reason}` : ""}`,
+          json.errors.map((error) => error.type),
         );
       }
       if (!json?.data) throw new Error("GitHub response has no GraphQL data");

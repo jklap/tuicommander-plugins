@@ -1,5 +1,5 @@
 import { field, item } from "./model.js";
-import { pageSize } from "./client.js";
+import { GitHubError, pageSize } from "./client.js";
 
 const PROJECT = `query Project($id:ID!,$after:String,$limit:Int!) { node(id:$id) { ... on ProjectV2 {
  id title fields(first:100) { nodes { ... on ProjectV2Field { id name dataType }
@@ -14,6 +14,9 @@ const PROJECT = `query Project($id:ID!,$after:String,$limit:Int!) { node(id:$id)
  ... on ProjectV2ItemFieldNumberValue { number field { ... on ProjectV2Field { id } } }
  ... on ProjectV2ItemFieldTextValue { text field { ... on ProjectV2Field { id } } } } } } } } } }`;
 
+const SCOPE_MESSAGE = "Projects writes require the project scope. Log in again in Settings > Git & GitHub, or update your token and grant organization access.";
+const ACCESS_MESSAGE = "GitHub denied writes to this project. Grant project write and organization access, or log in again with the project scope. Reload Tasks after updating access.";
+
 /** Projects metadata is always read from GitHub, never inferred from issue state. */
 export class Projects {
   constructor(client, accountId) {
@@ -21,6 +24,11 @@ export class Projects {
     this.accountId = accountId;
     this.memberships = new Map();
     this.fields = new Map();
+    this.writeDenials = new Map();
+  }
+  writeDisabledReason(projectId) {
+    if (this.client.oauthScopes && !this.client.oauthScopes.includes("project")) return SCOPE_MESSAGE;
+    return this.writeDenials.get(projectId) ?? null;
   }
   async list(signal) {
     const boards = [];
@@ -58,7 +66,7 @@ export class Projects {
     const schemas = project.fields.nodes.flatMap((f) => {
       const kind = { TEXT: "text", DATE: "date", NUMBER: "number", SINGLE_SELECT: "enum" }[f.dataType];
       if (!kind) return [];
-      const schema = field(`project:${projectId}:${f.id}`, f.name, kind, true, f.options ?? []);
+      const schema = field(`project:${projectId}:${f.id}`, f.name, kind, !this.writeDisabledReason(projectId), f.options ?? []);
       this.fields.set(schema.id, { projectId, fieldId: f.id, schema });
       return [schema];
     });
@@ -93,15 +101,34 @@ export class Projects {
     const page = project.items.pageInfo;
     return { project, schemas, items, nextCursor: page.hasNextPage ? page.endCursor : null };
   }
+  // DEFERRED (2026-10-25) — live mutation round trip needs an explicitly authorized scratch project.
+  async mutate(projectId, query, variables, signal) {
+    try {
+      return await this.client.graphql(query, variables, signal);
+    } catch (error) {
+      // A project-local authorization rejection must never disable repository actions.
+      if (error instanceof GitHubError && (
+        error.types.some((type) => ["FORBIDDEN", "INSUFFICIENT_SCOPES"].includes(type)) ||
+        (error.status === 403 && /resource not accessible|forbidden|not authorized|permission|SAML|SSO/i.test(error.message))
+      )) {
+        this.writeDenials.set(projectId, ACCESS_MESSAGE);
+        for (const field of this.fields.values()) if (field.projectId === projectId) field.schema.editable = false;
+        throw new Error(`${this.writeDisabledReason(projectId)} ${error.message}`);
+      }
+      throw error;
+    }
+  }
   async edit(reference, edit, signal) {
     const definition = this.fields.get(edit.fieldId);
     if (!definition) throw new Error("Load the project before editing its fields");
     const { projectId, fieldId, schema } = definition;
+    const reason = this.writeDisabledReason(projectId);
+    if (reason) throw new Error(reason);
     const itemId = this.memberships.get(`${projectId}:${reference.id}`);
     if (!itemId) throw new Error("Item is not a loaded member of this project");
     const input = { projectId, itemId, fieldId };
     if (edit.value === null) {
-      return this.client.graphql(
+      return this.mutate(projectId,
         "mutation Clear($input:ClearProjectV2ItemFieldValueInput!) { clearProjectV2ItemFieldValue(input:$input) { projectV2Item { id } } }",
         { input },
         signal,
@@ -114,7 +141,7 @@ export class Projects {
       throw new Error("Invalid project value");
     if (schema.kind === "date" && !/^\d{4}-\d{2}-\d{2}$/.test(v)) throw new Error("Invalid project date");
     input.value = { [{ enum: "singleSelectOptionId", date: "date", number: "number", text: "text" }[schema.kind]]: v };
-    return this.client.graphql(
+    return this.mutate(projectId,
       "mutation Move($input:UpdateProjectV2ItemFieldValueInput!) { updateProjectV2ItemFieldValue(input:$input) { projectV2Item { id } } }",
       { input },
       signal,

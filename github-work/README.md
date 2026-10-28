@@ -91,7 +91,7 @@ Opening Tasks Board discovers the current user Projects v2 through paged `viewer
 
 Account-scoped runtime ports and issue-type discovery already exist. To verify
 integration, the operator must provide a logged-in test account with
-`repo read:project` consent, an accessible issue and PR, and a Projects v2 project.
+`repo project` consent, an accessible issue and PR, and a Projects v2 project.
 The TUIC checkout's `scripts/github-work-live-check.mjs --help` describes the
 read-only installed-module probe. It is not a Tasks rendering or issue-create E2E.
 
@@ -106,3 +106,16 @@ connected to an isolated headless backend therefore cannot by itself prove this
 plugin loaded. Do not inject a fake Tauri object or replace account HTTP with a
 test double and call it loaded-plugin E2E. Keep the integration criteria open
 until an approved runtime and the required account access are available.
+
+## Projects write consent
+
+GitHub's API guide requires `project` for mutations; `read:project` only permits
+queries. See `fixtures/projects-permissions.md` for the retrieved documentation.
+When `x-oauth-scopes` advertises a list without `project`, board cards remain readable
+but legal moves are empty and project field schemas are non-editable. The board's
+`writeDisabledReason` explains how to log in again or grant access. Direct writes
+reject before the mutation request. Missing/empty scope headers do not prove denial
+for fine-grained/App tokens. A mutation authorization rejection disables only that
+project's writes until Tasks reloads. Issue fields, comments and PR actions are not
+changed. Live writes remain unverified and require an explicitly authorized scratch
+project; documentation and request-contract tests are not a live write round trip.

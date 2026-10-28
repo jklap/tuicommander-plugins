@@ -189,7 +189,8 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
           action: { kind: "edit_field", value: { fieldId: status.id, value: { kind: "enum", value: o.id } } },
         })),
       ];
-      const board = { id: projectId, name: page.project.title, fieldId: status.id, columns };
+      const writeDisabledReason = projects.writeDisabledReason(projectId);
+      const board = { id: projectId, name: page.project.title, fieldId: status.id, columns, writeDisabledReason };
       const index = this.boards.findIndex((b) => b.id === projectId);
       if (index < 0) this.boards.push(board);
       else this.boards[index] = board;
@@ -199,7 +200,7 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
           .filter((i) => (i.fields[status.id]?.value ?? "") === c.id)
           .map((i) => ({
             item: i,
-            moves: columns
+            moves: (writeDisabledReason ? [] : columns)
               .filter((other) => other.id !== c.id)
               .map((other) => ({ columnId: other.id, action: other.action })),
           })),

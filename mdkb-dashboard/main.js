@@ -325,7 +325,24 @@ export function renderDashboard(data, repoPath, opts = {}) {
   }
 
   // --- Hook health ---
-  if (stats?.hooks?.events?.length) {
+  if (stats?.hooks?.telemetry_enabled === false) {
+    sections.push(`
+      <div class="dash-section">
+        <h2 class="dash-section-title">Hooks</h2>
+        <div class="empty-state">
+          <p>Hook telemetry is off</p>
+          <p class="hint">Hook activity and timing metrics are not collected. This does not mean hooks are inactive.</p>
+        </div>
+      </div>
+    `);
+  } else if (stats?.hooks?.telemetry_enabled === true && !stats.hooks.events?.length) {
+    sections.push(`
+      <div class="dash-section">
+        <h2 class="dash-section-title">Hooks</h2>
+        <div class="empty-state"><p>No hook activity recorded</p></div>
+      </div>
+    `);
+  } else if (stats?.hooks?.events?.length) {
     const h = stats.hooks;
     const rows = h.events.map((e) =>
       `<tr>
