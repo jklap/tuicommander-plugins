@@ -28,6 +28,15 @@ provider views. The plugin registers a URL resolver for configured Jira accounts
 pasting an owned issue URL offers a link and a drafted start-work brief. Unload
 removes both provider and URL-resolver registrations.
 
+The resolver passes the caller's `AbortSignal` through issue, transition and
+comment reads to the account HTTP adapter. Cancelling a pasted URL stops the
+pending native request; an aborted lookup does not return a work-item link.
+The native scratch-site check on 2026-10-27 resolved `TUIC-3`, cancelled a
+pending lookup and resolved a fresh lookup afterward. It used the installed
+plugin and the production registry, not a replacement host. The parent TUIC
+repository records the executable check and timings in
+`docs/backend/jira-cloud-live-2026-10-27.md` and its resolver JSON evidence.
+
 Settings > Plugins > Jira exposes an optional **Default project ID** in the
 schema-backed `data/config.json`. A project selected for an account in Tasks setup
 takes precedence. Keep account configuration in `data/work-items.json`; do not
