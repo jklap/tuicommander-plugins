@@ -39,3 +39,17 @@ export function fieldSchema(field) {
   const kind = field.fieldId === 'description' ? 'markdown' : type === 'user' ? 'user' : field.allowedValues?.length ? 'enum' : type === 'number' ? 'number' : type === 'date' ? 'date' : type === 'array' && field.schema.items === 'string' ? 'labels' : 'text';
   return { sortable: false, groupable: false, filterable: false, id: field.fieldId, name: field.name, kind, required: !!field.required && !field.hasDefaultValue, editable: (field.operations ?? ['set']).includes('set'), options: (field.allowedValues ?? []).map((o) => ({ id: String(typeof o === 'string' ? o : o.accountId ?? o.id ?? o.value ?? o.name), name: typeof o === 'string' ? o : o.name ?? o.value ?? o.displayName })) };
 }
+
+/** Undefined means the host cannot safely represent this value as an editor. */
+export function editableValue(field, raw) {
+  if (raw === undefined) return undefined;
+  if (raw === null) return null;
+  if (field.kind === 'markdown') return { kind: 'markdown', value: adfToMarkdown(raw) };
+  if (field.kind === 'user') return raw.accountId || raw.name ? { kind: 'user', value: [user(raw)] } : undefined;
+  if (field.kind === 'labels') return Array.isArray(raw) && raw.every((v) => typeof v === 'string')
+    ? { kind: 'labels', value: raw.map((name) => ({ id: name, name })) } : undefined;
+  if (field.kind === 'enum') return raw.id != null ? { kind: 'enum', value: String(raw.id) }
+    : typeof raw === 'string' ? { kind: 'enum', value: raw } : undefined;
+  if (field.kind === 'number') return typeof raw === 'number' ? { kind: 'number', value: raw } : undefined;
+  return typeof raw === 'string' ? { kind: field.kind, value: raw } : undefined;
+}
