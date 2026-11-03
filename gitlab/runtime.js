@@ -1,11 +1,13 @@
 /** Fetch port over host.httpFetch: Rust injects the account PAT, the plugin never holds a token. */
 export function accountFetch(host, accountId) {
-  return async ({ url, method = 'GET', headers = {}, body }) => {
+  return async ({ url, method = 'GET', headers = {}, body, timeoutMs, maxResponseBytes }) => {
     const payload = body === undefined || typeof body === 'string' ? body : JSON.stringify(body);
     const response = await host.httpFetch(url, {
       method,
       headers: { 'User-Agent': 'TUICommander-gitlab', ...headers },
       ...(payload === undefined ? {} : { body: payload }),
+      ...(timeoutMs === undefined ? {} : { timeoutMs }),
+      ...(maxResponseBytes === undefined ? {} : { maxResponseBytes }),
       account: accountId,
     });
     let json;

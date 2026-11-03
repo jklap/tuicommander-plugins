@@ -2,7 +2,7 @@ import { createClient, nextCursor, pageNumber, pageSize, GitLabError } from './c
 import { parseId, itemPath, idFromUrl, idFromReference } from './refs.js';
 import { toItem as mapItem, discussionEntries } from './model.js';
 import { mergeActions, mergeBody } from './merge.js';
-import { latestPipeline, jobsMarkdown, pipelineActions, retryPath, cleanTrace } from './pipelines.js';
+import { latestPipeline, jobsMarkdown, pipelineActions, retryPath, cleanTrace, TRACE_BUDGET } from './pipelines.js';
 import { boardPort } from './board.js';
 import { listFields, roadmapFields, presets, issueParams, search } from './query.js';
 
@@ -175,7 +175,7 @@ export function createGitLabProvider(options) {
     async jobTrace(ref, jobId, signal) {
       const { mr, encoded } = checkRef(ref);
       if (!mr || !/^[1-9]\d{0,15}$/.test(String(jobId))) throw new Error('Job logs belong to merge request pipelines');
-      return cleanTrace((await request(`projects/${encoded}/jobs/${jobId}/trace`, { signal, text: true })).text);
+      return cleanTrace((await request(`projects/${encoded}/jobs/${jobId}/trace`, { signal, text: true, budget: TRACE_BUDGET })).text);
     },
     resolveUrl(url) {
       const id = idFromUrl(base, url);

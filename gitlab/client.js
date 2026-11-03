@@ -28,13 +28,13 @@ export function createClient({ account, fetch, now = Date.now }) {
   const base = instanceBase(account.host);
   const api = `${base}/api/v4`;
   let blockedUntil = 0;
-  async function request(path, { method = 'GET', body, signal, text = false } = {}) {
+  async function request(path, { method = 'GET', body, signal, text = false, budget = {} } = {}) {
     signal?.throwIfAborted();
     if (now() < blockedUntil) throw new GitLabError(429, blockedUntil - now());
     const url = new URL(`${api}/${path.replace(/^\//, '')}`);
     if (!url.href.startsWith(`${api}/`)) throw new Error('Cross-instance GitLab request');
     const response = await fetch({
-      url: url.href, method, ...(body === undefined ? {} : { body }),
+      url: url.href, method, ...(body === undefined ? {} : { body }), ...budget,
       headers: { Accept: text ? 'text/plain' : 'application/json', ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) },
     });
     signal?.throwIfAborted();

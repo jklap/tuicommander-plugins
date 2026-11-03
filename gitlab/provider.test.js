@@ -207,6 +207,19 @@ test('job_trace_is_plain_text', async () => {
   await assert.rejects(provider.jobTrace(issueRef, failedJob.id), /merge request/);
 });
 
+// Catches: a job log over the 10 MiB host default failing instead of showing its tail,
+// or the large budget leaking onto ordinary API calls.
+test('job_trace_asks_for_the_large_log_budget_only', async () => {
+  const requests = [];
+  const provider = createGitLabProvider({ account, fetch: async (req) => { requests.push(req); return { status: 200, headers: {}, json: null, text: '' }; } });
+  await provider.jobTrace(mrRef, failedJob.id);
+  assert.equal(requests.at(-1).timeoutMs, 120_000);
+  assert.equal(requests.at(-1).maxResponseBytes, 100 * 1024 * 1024);
+  await provider.comments(mrRef, null, 20).catch(() => {});
+  assert.ok(requests.length > 1);
+  for (const req of requests.slice(1)) assert.equal('maxResponseBytes' in req || 'timeoutMs' in req, false);
+});
+
 // Catches: a retry storm against an instance that answered 429.
 test('retry_after_honored', async () => {
   let clock = 50_000; let calls = 0;

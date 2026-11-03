@@ -1,6 +1,12 @@
 /** Merge request pipelines: latest pipeline, its jobs, retry and job logs. */
 const RETRYABLE = new Set(['failed', 'canceled']);
 const TRACE_LIMIT = 256 * 1024;
+/**
+ * A job log is fetched whole and only its tail is kept. GitLab allows job logs up to
+ * 100 MB by default, past the 10 MiB host default, so this one call asks for the host's
+ * largest finite budget: 100 MiB in at most 120 s.
+ */
+export const TRACE_BUDGET = Object.freeze({ timeoutMs: 120_000, maxResponseBytes: 100 * 1024 * 1024 });
 const MAX_JOB_ACTIONS = 10;
 
 /** Newest pipeline of the MR and its jobs, or null when the MR never ran CI. */

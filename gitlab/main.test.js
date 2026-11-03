@@ -62,7 +62,8 @@ test('pasted_issue_url_links_and_drafts_start_work', async () => {
 });
 
 // Catches: the plugin sending the request without the account (anonymous call), a non-string body
-// (Rust expects a string), or a non-JSON body (job trace) throwing inside the adapter.
+// (Rust expects a string), a non-JSON body (job trace) throwing inside the adapter, or a per-call
+// HTTP budget dropped before host.httpFetch.
 test('account_fetch_sends_account_serialised_body_and_keeps_text', async () => {
   const calls = [];
   const host = { httpFetch: async (url, options) => { calls.push({ url, options }); return { status: 200, headers: {}, body: calls.length === 1 ? '{"a":1}' : 'plain trace' }; } };
@@ -74,6 +75,10 @@ test('account_fetch_sends_account_serialised_body_and_keeps_text', async () => {
   const second = await fetch({ url: `${HOST}/api/v4/job/trace` });
   assert.equal(second.json, undefined);
   assert.equal(second.text, 'plain trace');
+  assert.equal('timeoutMs' in calls[1].options || 'maxResponseBytes' in calls[1].options, false);
+  await fetch({ url: `${HOST}/api/v4/job/trace`, timeoutMs: 120000, maxResponseBytes: 5 });
+  assert.equal(calls[2].options.timeoutMs, 120000);
+  assert.equal(calls[2].options.maxResponseBytes, 5);
 });
 
 // Catches: the manifest missing the descriptor/net:http, which makes Rust refuse every account request.
