@@ -246,7 +246,7 @@
       "net:http"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/gitlab.zip",
-    "contentSha256": "3244efeba5b75c299b8b25d2943593bb93567ae93d8b9ee6b36ff1a2012868a7"
+    "contentSha256": "592f875ff44c68fd0539c019c8bed371dac68f567a37f3486d78df0ca3faa41a"
   },
   {
     "id": "jira",
@@ -261,5 +261,21 @@
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/jira.zip",
     "contentSha256": "7cc71f638894115e4b6f41ebb62901e2a43c914a99802be054c1eb5848d7d924"
+  },
+  {
+    "id": "parquet-preview",
+    "name": "Parquet Preview",
+    "description": "Read Parquet schema and paged rows with on-demand binary reads.",
+    "author": "sstraus",
+    "repo": "sstraus/tuicommander-plugins",
+    "latestVersion": "1.0.0",
+    "minAppVersion": "2.0.1",
+    "capabilities": [
+      "ui:file-preview",
+      "ui:panel",
+      "fs:read"
+    ],
+    "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/parquet-preview.zip",
+    "contentSha256": "a483c79daf5c62a7101cc79266019d64f14320193d586cd4ce060466021d4d64"
   }
 ]

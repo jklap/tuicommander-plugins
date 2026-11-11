@@ -1,0 +1,1 @@
+{"producer": "pyarrow 26.0.1", "rows": 205, "row_group_starts": [0, 60, 120, 180], "data_offsets": [118, 1310, 2486, 3608]}

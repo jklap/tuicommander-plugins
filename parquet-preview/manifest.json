@@ -1,0 +1,10 @@
+{
+  "id": "parquet-preview",
+  "name": "Parquet Preview",
+  "version": "1.0.0",
+  "minAppVersion": "2.0.1",
+  "main": "main.js",
+  "description": "Read Parquet schema and paged rows with on-demand binary reads.",
+  "author": "sstraus",
+  "capabilities": ["ui:file-preview", "ui:panel", "fs:read"]
+}
