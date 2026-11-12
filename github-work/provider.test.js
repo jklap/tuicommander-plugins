@@ -228,13 +228,15 @@ test("merged_pull_request_in_project_keeps_merged_state", async () => {
   assert.equal(page.items[0].state.name, "Merged");
 });
 
-// Catches: create fields show no live labels/milestones, or allow direct PR creation.
+// Catches: create fields show no live labels/milestones/assignees, or allow direct PR creation.
 test("create_fields_use_recorded_repository_metadata", async () => {
-  const { provider } = setup([{ json: fixture("labels") }, { json: fixture("milestones") }]);
+  const { provider, requests } = setup([{ json: fixture("labels") }, { json: fixture("milestones") }, { json: fixture("assignees") }]);
   const fields = await provider.createFields("issue");
   assert.deepEqual(fields.map((f) => f.id), ["labels", "milestone", "assignees"]);
   assert.ok(fields.find((f) => f.id === "labels").options.some((o) => o.id === "area: github"));
   assert.equal(fields.find((f) => f.id === "milestone").options.length, 2);
+  assert.equal(new URL(requests[2].url).pathname, "/repos/sstraus/tuicommander/assignees");
+  assert.deepEqual(fields.find((f) => f.id === "assignees").options.map((o) => o.name), fixture("assignees").map((u) => u.login));
   await assert.rejects(provider.createFields("pull"), /core PR flow/);
 });
 

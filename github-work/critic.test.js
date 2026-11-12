@@ -21,6 +21,7 @@ function harness() {
       return { status: 200, headers: {}, json: fixture("milestones.json") };
     }
     if (parsed.pathname.endsWith("/labels")) return { status: 200, headers: {}, json: fixture("labels.json") };
+    if (parsed.pathname.endsWith("/assignees")) return { status: 200, headers: {}, json: fixture("assignees.json") };
     throw new Error(`Unexpected request ${url}`);
   };
   const provider = createGitHubProvider({ accountId: "acct", repository: "sstraus/tuicommander", fetch });

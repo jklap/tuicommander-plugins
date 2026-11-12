@@ -1,5 +1,5 @@
 import { createClient, nextPage, pageNumber, pageSize } from "./client.js";
-import { FIELDS, LIST_FIELDS, comment, field, identity, item, parseReference, resolveUrl } from "./model.js";
+import { FIELDS, LIST_FIELDS, comment, field, identity, item, parseReference, resolveUrl, user } from "./model.js";
 import { searchPath, savedFilters } from "./query.js";
 import { Projects } from "./projects.js";
 
@@ -91,10 +91,11 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
       };
       const labels = await options("labels", (l) => ({ id: l.name, name: l.name }));
       const milestones = await options("milestones", (m) => ({ id: String(m.number), name: m.title }));
+      const assignees = await options("assignees", user);
       return [
         field("labels", "Labels", "labels", true, labels),
         field("milestone", "Milestone", "enum", true, milestones),
-        field("assignees", "Assignees", "user"),
+        field("assignees", "Assignees", "user", true, assignees),
       ];
     },
     async detail(reference, signal) {

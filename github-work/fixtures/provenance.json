@@ -124,5 +124,12 @@
     "url": "https://api.github.com/repos/github/roadmap/issues/1093",
     "recordedAt": "2026-10-15T00:07:21.928053+00:00",
     "note": "Trimmed to detail fields; email addresses scrubbed. No credentials or headers recorded."
+  },
+  {
+    "file": "assignees.json",
+    "method": "GET",
+    "url": "https://api.github.com/repos/sstraus/tuicommander/assignees?per_page=100",
+    "recordedAt": "2026-11-12T02:56:00+00:00",
+    "note": "Unauthenticated public read. No credentials or headers recorded."
   }
 ]
