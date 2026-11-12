@@ -246,7 +246,7 @@
       "net:http"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/gitlab.zip",
-    "contentSha256": "592f875ff44c68fd0539c019c8bed371dac68f567a37f3486d78df0ca3faa41a"
+    "contentSha256": "f1d7f05a6d7d30c182d079e32a513e43d7ca7f513c02f35a508ce842b0a0a983"
   },
   {
     "id": "jira",

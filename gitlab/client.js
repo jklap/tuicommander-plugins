@@ -34,7 +34,7 @@ export function createClient({ account, fetch, now = Date.now }) {
     const url = new URL(`${api}/${path.replace(/^\//, '')}`);
     if (!url.href.startsWith(`${api}/`)) throw new Error('Cross-instance GitLab request');
     const response = await fetch({
-      url: url.href, method, ...(body === undefined ? {} : { body }), ...budget,
+      url: url.href, method, ...(body === undefined ? {} : { body }), ...(signal ? { signal } : {}), ...budget,
       headers: { Accept: text ? 'text/plain' : 'application/json', ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) },
     });
     signal?.throwIfAborted();

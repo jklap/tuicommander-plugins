@@ -235,6 +235,16 @@ test('retry_after_honored', async () => {
   assert.deepEqual(await provider.list(query), { items: [], nextCursor: null });
 });
 
+// Catches: the caller's AbortSignal checked around fetch but never handed to it, so an
+// in-flight GitLab request cannot be cancelled.
+test('caller_signal_reaches_every_fetch', async () => {
+  const requests = [];
+  const signal = new AbortController().signal;
+  await createGitLabProvider({ account, fetch: gitlab(null, requests) }).detail(issueRef, signal);
+  assert.ok(requests.length > 1);
+  assert.deepEqual(requests.filter((req) => req.signal !== signal).map((req) => req.url), []);
+});
+
 // Catches: a direct item lookup for `!${MR}` or a pasted URL replaced by a text search.
 test('search_by_reference_opens_the_item', async () => {
   const requests = [];
