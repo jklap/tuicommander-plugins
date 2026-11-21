@@ -43,9 +43,10 @@ test("plan ignores a marker completion from the previous repository", async (t) 
 // Catches: an older scan overwrites B's current count.
 test("stories keeps the current repository count when the old scan finishes last", async (t) => {
   const h = host(); const pending = deferred();
-  h.listDirectory = (path) => path.startsWith("/a/") ? pending.promise : Promise.resolve(["current-ready.md"]);
+  h.watchStoryCount = async () => ({ dispose() {} });
+  h.getStoryCount = (path) => path === "/a" ? pending.promise : Promise.resolve({ openCount: 1 });
   stories.onload(h); t.after(() => stories.onunload());
-  h.switchRepo("/b"); await settle(); pending.resolve(["old-ready.md", "older-ready.md"]); await settle();
+  await settle(); h.switchRepo("/b"); await settle(); pending.resolve({ openCount: 2 }); await settle();
   assert.equal(h.tickers.at(-1).text, "1 open");
 });
 
@@ -69,8 +70,9 @@ test("rtk does not open a dashboard after unload during its fetch", async () => 
 
 // Catches: a failed scan after unload reads the now-null host in its error path.
 test("stories does not write a ticker after unload during its scan", async () => {
-  const h = host(); const pending = deferred(); h.listDirectory = () => pending.promise;
-  stories.onload(h); stories.onunload(); pending.resolve(["old-ready.md"]); await settle();
+  const h = host(); const pending = deferred();
+  h.watchStoryCount = async () => ({ dispose() {} }); h.getStoryCount = () => pending.promise;
+  stories.onload(h); await settle(); stories.onunload(); pending.resolve({ openCount: 1 }); await settle();
   assert.deepEqual(h.tickers, []);
 });
 
