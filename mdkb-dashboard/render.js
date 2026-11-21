@@ -34,8 +34,8 @@ export function renderDashboard(data, repoPath, opts = {}) {
       `<tr>
         <td><span class="badge ${SEVERITY_BADGE[f.severity] || "badge-muted"}">${esc(f.severity)}</span></td>
         <td><code>${esc(f.id)}</code></td>
-        <td>${esc(f.message)}</td>
-        <td>${f.fix ? `<code>${esc(f.fix)}</code>` : ""}</td>
+        <td class="diagnostic-detail">${esc(f.message)}</td>
+        <td>${f.fix ? `<code class="diagnostic-command">${esc(f.fix)}</code>` : ""}</td>
       </tr>`
     ).join("");
     sections.push(`
@@ -69,6 +69,32 @@ export function renderDashboard(data, repoPath, opts = {}) {
           ${statCard(collCount, "Collections")}
           ${statCard(formatBytes(header.db_size_bytes), "DB Size", fragExtra)}
         </div>
+      </div>
+    `);
+  }
+
+  // --- Embedding identities: SQLite and the code archive can differ. ---
+  const embeddings = [
+    ["Documents and memories", stats?.embedding],
+    ["Code", stats?.code_embedding],
+  ].filter(([, embedding]) => embedding);
+  if (embeddings.length) {
+    let needsReembed = false;
+    const rows = embeddings.map(([label, embedding]) => {
+      const pending = embedding.pending_model;
+      const stale = embedding.stale || embedding.ambiguous || (embedding.current_model && embedding.current_model !== embedding.selected_model);
+      needsReembed ||= !!(pending || stale);
+      const state = pending ? "Re-embedding incomplete" : stale ? "Re-embedding required" : embedding.current_model ? "Current" : "No stored generation";
+      const badge = pending || stale ? "badge-warning" : embedding.current_model ? "badge-success" : "badge-muted";
+      return `<tr><td>${label}</td><td><code class="embedding-model">${esc(embedding.selected_model)}</code></td>
+        <td><code class="embedding-model">${esc(embedding.current_model || "No stored identity")}</code></td>
+        <td><span class="badge ${badge}">${state}</span>${pending ? `<br>Pending: <code class="embedding-model">${esc(pending)}</code>` : ""}</td></tr>`;
+    }).join("");
+    sections.push(`
+      <div class="dash-section">
+        <h2 class="dash-section-title">Embeddings</h2>
+        <table><thead><tr><th>Store</th><th>Selected model</th><th>Stored model</th><th>State</th></tr></thead><tbody>${rows}</tbody></table>
+        ${needsReembed ? `<p class="hint">Stale vectors are excluded while the selected model is rebuilt; lexical retrieval remains available. Re-embed is available for a manual rebuild or retry.</p>` : ""}
       </div>
     `);
   }

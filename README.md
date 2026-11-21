@@ -9,7 +9,7 @@ Community plugin registry and distributable plugins for [TUICommander](https://g
 | [at-capacity-retry](at-capacity-retry/) | Retries a Codex turn that hit "Selected model is at capacity", with a 3-per-hour circuit breaker | `pty:write`, `pty:read`, `ui:ticker`, `ui:markdown`, `ui:sound` |
 | [cache-keepalive](cache-keepalive/) | Prevents Claude API prompt cache expiry during idle periods | `pty:write`, `ui:ticker` |
 | [docx-preview](docx-preview/) | Preview Word `.docx`/`.dotx` files as clean HTML with Mammoth.js | `ui:file-preview`, `ui:panel`, `fs:read` |
-| [mdkb-dashboard](mdkb-dashboard/) | mdkb knowledge base status, memories, config | `exec:cli`, `fs:read`, `ui:panel`, `ui:ticker` |
+| [mdkb-dashboard](mdkb-dashboard/) | mdkb knowledge base status, memories, embedding model identity, config | `exec:cli`, `fs:read`, `ui:panel`, `ui:ticker` |
 | [plan](plan/) | Tracks agent plan files and opens active plans in background tabs | `fs:read`, `fs:list`, `fs:watch`, `ui:markdown` |
 | [sqlite-viewer](sqlite-viewer/) | Inspect, filter, explain, and safely edit SQLite databases in self-contained WebAssembly | `ui:file-preview`, `ui:panel`, `fs:read`, `fs:write` |
 | [stories-ticker](stories-ticker/) | Shows the active repository's open story count | `fs:list`, `fs:watch`, `ui:ticker` |
@@ -54,6 +54,12 @@ Open a PR adding your entry to `registry.json`. Requirements:
 See the [plugin docs](https://github.com/sstraus/tuicommander/blob/main/docs/plugins.md) for the full API reference and examples.
 
 Join [TUICommander & Co on Discord](https://discord.gg/4DQ7Ah6hSh) and use **#plugins** in the **TUICommander** category to showcase and discuss plugins, ask for plugin development help, or request plugins. The server is checked once a day. Report reproducible bugs in [GitHub issues](https://github.com/sstraus/tuicommander-plugins/issues).
+
+The MDKB dashboard shows the selected and stored embedding model identities, and
+warns when vectors are stale or regeneration is incomplete. Its **Re-embed** action
+runs `mdkb --format json embed --reembed` to regenerate with the configured model;
+this can download model weights. Plain `embed` only fills missing vectors and is
+not a model migration. This action requires an mdkb version with `--reembed` support.
 
 Repository-aware scanners discard completions from a previous repository or plugin
 lifetime. The MDKB ticker refreshes when the active repository changes; dashboard

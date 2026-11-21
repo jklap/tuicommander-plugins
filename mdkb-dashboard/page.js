@@ -55,6 +55,8 @@ export function buildPage(repoName, version, body, opts = {}) {
   .dash-stat-sub.warn { color: var(--warning); }
   .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
   .run-banner { padding: 6px 10px; border-radius: 4px; font-size: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
+  /* Encoder signatures must not push the stored model and state outside the panel. */
+  .embedding-model, .diagnostic-detail, .diagnostic-command { overflow-wrap: anywhere; }
   .run-banner.ok { color: var(--success); border-color: var(--success); }
   .run-banner.err { color: var(--error); border-color: var(--error); }
   .run-banner.running { color: var(--fg-secondary); }

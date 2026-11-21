@@ -82,8 +82,11 @@ async function runAction(host, repo, cmdId) {
   try {
     const argv = action.noFormat ? action.argv : ["--format", "json", ...action.argv];
     const out = await host.execCli("mdkb", argv, repo.path);
-    lastResult = { ok: true, text: `✓ ${action.label}: ${summarizeResult(cmdId, out)}` };
-    host.log("info", `mdkb ${action.argv.join(" ")} completed`);
+    const summary = summarizeResult(cmdId, out);
+    lastResult = summary.ok
+      ? { ok: true, text: `✓ ${action.label}: ${summary.text}` }
+      : { ok: false, text: `✗ ${action.label} incomplete: ${summary.text}` };
+    host.log(summary.ok ? "info" : "warn", `mdkb ${action.argv.join(" ")} ${summary.ok ? "completed" : "reported errors"}`);
   } catch (err) {
     lastResult = { ok: false, text: `✗ ${action.label} failed: ${err.message || err}` };
     host.log("error", `mdkb ${action.argv.join(" ")} failed`, { error: String(err) });
@@ -97,22 +100,27 @@ async function runAction(host, repo, cmdId) {
   void refreshTicker(host);
 }
 
-/** Short human summary of an action's stdout. `update`/`compact` have no clean
- *  JSON, so we just confirm completion; embed/code-force emit parseable JSON. */
+/** Short human summary of an action's stdout as `{ ok, text }`. `update`/`compact`
+ *  have no clean JSON, so we just confirm completion; embed/code-force emit
+ *  parseable JSON. `embed` reports `errors` (string[]) next to generated/skipped:
+ *  a non-empty list means the regeneration is incomplete, never a success. */
 function summarizeResult(cmdId, out) {
   try {
     if (cmdId === "embed") {
       const r = JSON.parse(out);
-      return `${r.generated ?? 0} generated, ${r.skipped ?? 0} skipped`;
+      const errors = Array.isArray(r.errors) ? r.errors : [];
+      const counts = `${r.generated ?? 0} generated, ${r.skipped ?? 0} skipped`;
+      if (errors.length) return { ok: false, text: `${counts}, ${errors.length} errors (${errors[0]})` };
+      return { ok: true, text: counts };
     }
     if (cmdId === "code-force") {
       const r = JSON.parse(out);
-      return `${r.files_indexed ?? 0} files, ${r.symbols_indexed ?? 0} symbols`;
+      return { ok: true, text: `${r.files_indexed ?? 0} files, ${r.symbols_indexed ?? 0} symbols` };
     }
   } catch {
     // fall through to generic
   }
-  return "done";
+  return { ok: true, text: "done" };
 }
 
 // ---------------------------------------------------------------------------

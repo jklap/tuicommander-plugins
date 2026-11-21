@@ -58,7 +58,7 @@
     "description": "View mdkb knowledge base status, collections, memories, and configuration in an interactive panel.",
     "author": "sstraus",
     "repo": "sstraus/tuicommander-plugins",
-    "latestVersion": "1.3.1",
+    "latestVersion": "1.4.1",
     "minAppVersion": "1.7.6",
     "capabilities": [
       "exec:cli",
@@ -71,7 +71,7 @@
       "mdkb"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/mdkb-dashboard.zip",
-    "contentSha256": "dc77d6b6c94bff543d865208820259e7cfc6b7963cafb0e9c121b24f64904208"
+    "contentSha256": "0bf86aea44cb5f488aefa374c509af9829aa407b4bb90a1b360e746808e0dd7d"
   },
   {
     "id": "tuic-vscode-icons",
