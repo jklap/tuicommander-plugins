@@ -1,21 +1,10 @@
 const PLUGIN_ID = "stories-ticker";
 const TICKER_ID = "open-count";
-const CLOSED_STATUSES = ["-complete-", "-wontfix-"];
 
 let hostRef = null;
 let watchDisposable = null;
 let watchGeneration = 0;
 let refreshGeneration = 0;
-
-function joinPath(root, relative) {
-  const separator = root.includes("\\") ? "\\" : "/";
-  return `${root.replace(/[\\/]+$/, "")}${separator}${relative.replace(/^[\\/]+/, "")}`;
-}
-
-function isMissing(error) {
-  const message = String(error);
-  return message.includes("not found") || message.includes("No such file");
-}
 
 function stopWatch() {
   watchGeneration += 1;
@@ -29,17 +18,16 @@ async function refresh(repoPath) {
   const generation = ++refreshGeneration;
   if (!host) return;
   try {
-    const names = await host.listDirectory(joinPath(repoPath, "stories"), "*.md");
+    const snapshot = await host.getStoryCount(repoPath);
     if (hostRef !== host || generation !== refreshGeneration) return;
-    const openCount = names.filter((name) => !CLOSED_STATUSES.some((status) => name.includes(status))).length;
-    if (openCount > 0) {
-      host.setTicker({ id: TICKER_ID, text: `${openCount} open`, label: "Stories", priority: 15, ttlMs: 0 });
+    if (snapshot.openCount > 0) {
+      host.setTicker({ id: TICKER_ID, text: `${snapshot.openCount} open`, label: "Stories", priority: 15, ttlMs: 0 });
     } else {
       host.clearTicker(TICKER_ID);
     }
   } catch (error) {
     if (hostRef !== host || generation !== refreshGeneration) return;
-    if (!isMissing(error)) host.log("warn", "Failed to scan stories", String(error));
+    host.log("warn", "Failed to read story count", String(error));
     host.clearTicker(TICKER_ID);
   }
 }
@@ -49,22 +37,26 @@ async function watchStories(repoPath) {
   const host = hostRef;
   if (!host) return;
   try {
-    const disposable = await host.watchPath(joinPath(repoPath, "stories"), () => { if (hostRef === host && generation === watchGeneration) void refresh(repoPath); });
-    if (!hostRef || generation !== watchGeneration) disposable.dispose();
-    else watchDisposable = disposable;
+    const disposable = await host.watchStoryCount(repoPath, () => {
+      if (hostRef === host && generation === watchGeneration) void refresh(repoPath);
+    });
+    if (hostRef !== host || generation !== watchGeneration) disposable.dispose();
+    else {
+      watchDisposable = disposable;
+      await refresh(repoPath);
+    }
   } catch (error) {
-    if (!isMissing(error)) hostRef?.log("warn", "Failed to watch stories", String(error));
+    if (hostRef !== host || generation !== watchGeneration) return;
+    host.log("warn", "Failed to watch story count", String(error));
+    host.clearTicker(TICKER_ID);
   }
 }
 
 function activateRepo(repoPath) {
   stopWatch();
-  if (!repoPath) {
-    hostRef?.clearTicker(TICKER_ID);
-    return;
-  }
-  void refresh(repoPath);
-  void watchStories(repoPath);
+  // Never keep a previous repository/backend's count while its replacement loads.
+  hostRef?.clearTicker(TICKER_ID);
+  if (repoPath) void watchStories(repoPath);
 }
 
 export default {

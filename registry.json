@@ -193,15 +193,14 @@
     "description": "Shows the active repository's open story count in the status bar.",
     "author": "sstraus",
     "repo": "sstraus/tuicommander-plugins",
-    "latestVersion": "1.0.0",
-    "minAppVersion": "1.7.7",
+    "latestVersion": "1.1.0",
+    "minAppVersion": "2.1.2",
     "capabilities": [
-      "fs:list",
-      "fs:watch",
+      "stories:read",
       "ui:ticker"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/stories-ticker.zip",
-    "contentSha256": "71893f31cbfbb642f07116481ecf787f04fed097ef82312dd41d307521ac842e"
+    "contentSha256": "1ab45154a67cf4df195fd7c59d154d32c2e74e3f00fe0a10c9527fef17a582df"
   },
   {
     "id": "sqlite-viewer",

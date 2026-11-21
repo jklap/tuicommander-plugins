@@ -9,3 +9,5 @@ tuic-voice/data/
 github-work/data/
 gitlab/data/
 jira/data/
+.codex/**
+.mdkb/**
