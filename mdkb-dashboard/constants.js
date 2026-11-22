@@ -6,12 +6,12 @@ export const DB_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 
  * Maintenance actions surfaced as header buttons. `argv` is appended after
  * `["--format", "json"]` (except compact, which ignores --format). `json:false`
  * means stdout is not a single parseable JSON document — we run fire-and-forget
- * and re-read state from `stats` afterwards.
+ * and re-read state from `status` afterwards.
  */
 export const ACTIONS = {
   update: { label: "Reindex", argv: ["update"], json: false, slow: true },
   "update-force": { label: "Force reindex", argv: ["update", "--force"], json: false, slow: true },
-  "code-force": { label: "Rebuild code", argv: ["code", "index", "--force"], json: true, slow: true },
-  embed: { label: "Re-embed", argv: ["embed", "--reembed"], json: true, slow: true },
+  "code-force": { label: "Rebuild code", argv: ["update", "--code", "--force"], json: true, slow: true },
+  embed: { label: "Re-embed", argv: ["update", "--reembed"], json: true, slow: true },
   compact: { label: "Compact", argv: ["compact"], json: false, slow: true, noFormat: true },
 };

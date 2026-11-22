@@ -6,9 +6,9 @@
  * HTML panel, and exposes one-click maintenance actions (reindex, code rebuild,
  * re-embed, compact).
  *
- * All data comes from a single `mdkb --format json stats` call plus
+ * All data comes from a single `mdkb --format json status` call plus
  * `mdkb --format json memory list`. The old `status` CLI subcommand was removed
- * upstream (mdkb ≥ 3.x) — `stats` now carries index + collections + code +
+ * upstream (mdkb ≥ 3.x) — `status` now carries index + collections + code +
  * sessions + hooks. Field paths mirror `src/cli/stats_report.rs` in the mdkb
  * repo; keep them in sync if that struct changes.
  *
@@ -187,7 +187,7 @@ async function refreshTicker(host) {
     return;
   }
   try {
-    const out = await host.execCli("mdkb", ["--format", "json", "stats"], repo.path);
+    const out = await host.execCli("mdkb", ["--format", "json", "status"], repo.path);
     if (hostRef !== host || request !== tickerGeneration || host.getActiveRepo()?.path !== repo.path) return;
     updateTicker(host, JSON.parse(out));
   } catch {

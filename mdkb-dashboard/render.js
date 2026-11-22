@@ -25,7 +25,7 @@ export function renderDashboard(data, repoPath, opts = {}) {
   const header = stats?.header || {};
 
   // --- Doctor (`stats.doctor`, absent from older mdkb) ---
-  // First, because a finding is something to act on. Read from `stats`, not
+  // First, because a finding is something to act on. Read from `status`, not
   // `mdkb doctor`: execCli drops stdout on a non-zero exit, and doctor exits
   // non-zero exactly when it has an error to show.
   if (stats?.doctor?.length) {
