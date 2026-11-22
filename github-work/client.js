@@ -1,10 +1,19 @@
 /** Account-scoped port. Authentication and request budgets belong to the host. */
 export class GitHubError extends Error {
-  constructor(status, retryAfter = null, message = "GitHub request failed", types = []) {
+  constructor(status, retryAfter = null, message = "GitHub request failed", types = [], resetAt = null) {
     super(message);
     this.name = "GitHubError";
     this.status = status;
     this.retryAfter = retryAfter;
+    // Epoch seconds of the primary-limit reset, set only when the quota is spent.
+    this.resetAt = resetAt;
+    if (status === 429) {
+      // The typed shape core commands use too: when the gateway lets the call through again.
+      const seconds = Number(retryAfter);
+      this.kind = "rate_limited";
+      this.bucket = null;
+      this.retry_at = Date.now() + (Number.isFinite(seconds) && retryAfter !== null ? seconds : 60) * 1000;
+    }
     this.types = types;
   }
 }
@@ -33,6 +42,8 @@ export function createClient(fetch, apiUrl = "https://api.github.com") {
           response.status,
           headers["retry-after"] ?? null,
           typeof reason === "string" && reason ? `GitHub request failed: ${reason}` : undefined,
+          [],
+          headers["x-ratelimit-remaining"] === "0" ? (headers["x-ratelimit-reset"] ?? null) : null,
         );
       }
       return { json: response.json, headers };

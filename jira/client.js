@@ -4,6 +4,12 @@ export class JiraError extends Error {
     super(status === 429 ? 'Jira rate limit; retry later' : `Jira request failed (${status})${detail ? `: ${detail}` : ''}`);
     this.status = status;
     this.retryAfterMs = retryAfterMs;
+    if (status === 429) {
+      // The typed shape core commands use too: when the gateway lets the call through again.
+      this.kind = 'rate_limited';
+      this.bucket = null;
+      this.retry_at = Date.now() + (retryAfterMs ?? 60_000);
+    }
   }
 }
 
