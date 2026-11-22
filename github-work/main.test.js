@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import plugin, { registerGitHubAccounts } from "./main.js";
+import { createClient } from "./client.js";
 import { accountFetch } from "./runtime.js";
 
 const manifest = JSON.parse(readFileSync(new URL("./manifest.json", import.meta.url), "utf8"));
@@ -53,6 +54,26 @@ test("account_fetch_sends_account_and_serialised_body", async () => {
   assert.equal(options.headers["Content-Type"], "application/json");
   assert.ok(options.headers["User-Agent"]);
   assert.deepEqual(response.json, { ok: true });
+});
+
+// Catches: list cancellation never reaching the host, so an abandoned request keeps spending quota.
+test("account_fetch_forwards_the_abort_signal_to_the_host", async () => {
+  const host = fakeHost({ responses: [{ ok: true }] });
+  const signal = new AbortController().signal;
+  await accountFetch(host, "github.com")({ url: "https://api.github.com/x", signal });
+  assert.equal(host.calls[0].options.signal, signal);
+});
+
+// Catches: the client dropping the provider's signal before the fetch port.
+test("client_request_passes_the_signal_to_the_fetch_port", async () => {
+  const signal = new AbortController().signal;
+  let seen;
+  const client = createClient(async (request) => {
+    seen = request.signal;
+    return { status: 200, headers: {}, json: {} };
+  });
+  await client.request("x", "GET", undefined, signal);
+  assert.equal(seen, signal);
 });
 
 // Catches: a non-JSON body (a log, an HTML error page) throwing inside the adapter instead of reaching the client.

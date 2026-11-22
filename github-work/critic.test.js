@@ -17,6 +17,7 @@ function harness() {
       searches.push(parsed.searchParams.get("q"));
       return { status: 200, headers: {}, json: fixture("pull-search.json") };
     }
+    if (parsed.pathname === "/repos/sstraus/tuicommander/issues") return { status: 200, headers: {}, json: fixture("pull-search.json").items };
     if (parsed.pathname.endsWith("/milestones")) {
       return { status: 200, headers: {}, json: fixture("milestones.json") };
     }

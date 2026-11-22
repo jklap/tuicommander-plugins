@@ -1,7 +1,9 @@
 import { createClient, nextPage, pageNumber, pageSize } from "./client.js";
 import { FIELDS, LIST_FIELDS, comment, field, identity, item, parseReference, resolveUrl, user } from "./model.js";
-import { searchPath, savedFilters } from "./query.js";
+import { isUnfiltered, issuesPath, searchPath, savedFilters } from "./query.js";
 import { Projects } from "./projects.js";
+
+const MAX_METADATA_PAGES = 10;
 
 export function createGitHubProvider({ accountId, repository, fetch, apiUrl, webOrigin, core }) {
   identity(repository, "issue", 1);
@@ -47,11 +49,22 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
     },
     resolveUrl: (url) => resolveUrl(url, accountId, webOrigin),
     async list(query, signal) {
+      const current = pageNumber(query.cursor);
+      if (isUnfiltered(query)) {
+        const { json, headers } = await client.request(issuesPath(repository, query), "GET", undefined, signal);
+        if (!Array.isArray(json)) throw new Error("Malformed GitHub issues response");
+        const nextCursor = nextPage(headers, current);
+        // The core endpoint has no total; a first page without a successor is the whole scope.
+        return {
+          items: json.map((v) => item(v, accountId)),
+          nextCursor,
+          total: current === 1 && !nextCursor ? json.length : null,
+        };
+      }
       const { json, headers } = await client.request(searchPath(repository, query), "GET", undefined, signal);
       if (!Array.isArray(json?.items) || typeof json.total_count !== "number")
         throw new Error("Malformed GitHub search response");
       if (json.incomplete_results) throw new Error("GitHub search returned incomplete results; narrow the query");
-      const current = pageNumber(query.cursor);
       return { items: json.items.map((v) => item(v, accountId)), nextCursor: nextPage(headers, current), total: json.total_count };
     },
     async duplicates(title, signal) {
@@ -76,6 +89,7 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
       const options = async (endpoint, map) => {
         const values = [];
         let cursor = 1;
+        // Bounded: a repository with endless pages must not hold the form open.
         do {
           const { json, headers } = await client.request(
             `repos/${repository}/${endpoint}?per_page=100&page=${cursor}`,
@@ -85,7 +99,7 @@ export function createGitHubProvider({ accountId, repository, fetch, apiUrl, web
           );
           if (!Array.isArray(json)) throw new Error("Malformed GitHub create metadata");
           values.push(...json.map(map));
-          cursor = nextPage(headers, cursor) ? cursor + 1 : null;
+          cursor = nextPage(headers, cursor) && cursor < MAX_METADATA_PAGES ? cursor + 1 : null;
         } while (cursor);
         return values;
       };

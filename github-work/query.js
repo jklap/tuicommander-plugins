@@ -16,6 +16,25 @@ export const savedFilters = [
   ["pulls", "Pull requests", "is:pr"],
 ].map(([id, name, search]) => ({ id, name, query: { ...emptyQuery(), search } }));
 
+const sortFields = { updatedAt: "updated", createdAt: "created", comments: "comments" };
+
+/** A scope with no saved view, text or filters needs no qualifier, so the core issues endpoint serves it. */
+export const isUnfiltered = (query) => !query.savedFilterId && !query.search && query.filters.length === 0;
+
+/** Core issues list (5,000/h, ETag). It includes pull requests, marked by `pull_request`. */
+export function issuesPath(repository, query) {
+  const sort = query.sort ? sortFields[query.sort.fieldId] : "updated";
+  if (!sort) throw new Error("Unsupported GitHub sort");
+  const parameters = new URLSearchParams({
+    state: "all",
+    sort,
+    direction: !query.sort || query.sort.descending ? "desc" : "asc",
+    per_page: String(pageSize(query.limit)),
+    page: String(pageNumber(query.cursor)),
+  });
+  return `repos/${repository}/issues?${parameters}`;
+}
+
 export function searchPath(repository, query) {
   const preset = query.savedFilterId ? savedFilters.find((f) => f.id === query.savedFilterId) : null;
   if (query.savedFilterId && !preset) throw new Error("Unknown saved filter");
@@ -62,7 +81,7 @@ export function searchPath(repository, query) {
     page: String(pageNumber(query.cursor)),
   });
   if (query.sort) {
-    const sort = { updatedAt: "updated", createdAt: "created", comments: "comments" }[query.sort.fieldId];
+    const sort = sortFields[query.sort.fieldId];
     if (!sort) throw new Error("Unsupported GitHub sort");
     parameters.set("sort", sort);
     parameters.set("order", query.sort.descending ? "desc" : "asc");

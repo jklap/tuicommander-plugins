@@ -50,6 +50,68 @@ test("qualifier_query_maps_to_search_api", async () => {
   assert.equal(url.searchParams.get("sort"), "updated");
 });
 
+// Catches: search quota (30/min, no ETag) is spent on plain listing instead of the core issues endpoint.
+test("unfiltered_scope_lists_through_repos_issues_endpoint_with_since", async () => {
+  const { provider, requests } = setup([
+    { json: [fixture("search").items[0]], headers: { Link: '<https://api.github.com/repositories/1/issues?page=2>; rel="next"' } },
+    { json: [] },
+  ]);
+  const query = { ...emptyQuery(), limit: 100, sort: { fieldId: "createdAt", descending: false } };
+  const first = await provider.list(query);
+  assert.equal(first.items[0].title, "[Bug] when I resize a window I can see white background");
+  assert.equal(first.nextCursor, "2");
+  assert.equal(first.total, null);
+  await provider.list({ ...emptyQuery(), cursor: "2" });
+  const url = new URL(requests[0].url);
+  assert.equal(url.pathname, "/repos/sstraus/tuicommander/issues");
+  assert.equal(url.searchParams.get("state"), "all");
+  assert.equal(url.searchParams.get("sort"), "created");
+  assert.equal(url.searchParams.get("direction"), "asc");
+  assert.equal(url.searchParams.get("per_page"), "100");
+  const second = new URL(requests[1].url);
+  assert.equal(second.searchParams.get("sort"), "updated");
+  assert.equal(second.searchParams.get("direction"), "desc");
+  assert.equal(second.searchParams.get("page"), "2");
+});
+
+// Catches: a single complete page reports an unknown total, so the host cannot recognise a small complete scope.
+test("core_issues_single_page_reports_its_size_as_total", async () => {
+  const { provider } = setup([{ json: fixture("search").items }]);
+  const page = await provider.list(emptyQuery());
+  assert.equal(page.nextCursor, null);
+  assert.equal(page.total, fixture("search").items.length);
+});
+
+// Catches: a malformed (non-array) core response becomes an empty successful list.
+test("core_issues_rejects_a_non_array_response", async () => {
+  const { provider } = setup([{ json: fixture("search") }]);
+  await assert.rejects(provider.list(emptyQuery()), /Malformed GitHub issues response/);
+});
+
+// Catches: a filter or saved view silently drops its qualifiers by moving to the core endpoint.
+test("qualifier_queries_still_use_search", async () => {
+  const { provider, requests } = setup(Array.from({ length: 3 }, () => ({ json: fixture("search") })));
+  await provider.list({ ...emptyQuery(), savedFilterId: "open" });
+  await provider.list({ ...emptyQuery(), search: "crash" });
+  await provider.list({ ...emptyQuery(), filters: [{ fieldId: "state", values: [{ kind: "enum", value: "open" }] }] });
+  assert.deepEqual(requests.map((r) => new URL(r.url).pathname), ["/search/issues", "/search/issues", "/search/issues"]);
+});
+
+// Catches: create-metadata loops run unbounded against a repository with endless pages.
+test("create_metadata_loops_stop_after_ten_pages", async () => {
+  const requests = [];
+  const provider = createGitHubProvider({
+    accountId: "a",
+    repository: "demo/widgets",
+    fetch: async (request) => {
+      requests.push(request.url);
+      return { status: 200, headers: { link: '<https://api.github.com/x?page=2>; rel="next"' }, json: [{ name: "l", id: 1, login: "u", number: 1, title: "t" }] };
+    },
+  });
+  await provider.createFields("issue");
+  assert.equal(requests.filter((u) => u.includes("/labels?")).length, 10);
+});
+
 // Catches: a /pull URL is treated as an issue with the same number.
 test("pr_url_resolves_to_item", async () => {
   const { provider, requests } = setup([{ json: fixture("pull") }, { json: fixture("pull-comments") }]);
@@ -208,7 +270,7 @@ test("error_message_carries_the_github_reason", async () => {
 // Catches: a merged PR is listed as Closed because merged_at lives under pull_request in search results.
 test("merged_pull_request_in_search_is_listed_as_merged", async () => {
   const { provider } = setup([{ json: fixture("pull-search") }]);
-  const [pull] = (await provider.list(emptyQuery())).items;
+  const [pull] = (await provider.list({ ...emptyQuery(), search: "is:pr is:merged" })).items;
   assert.equal(pull.state.name, "Merged");
 });
 
@@ -269,7 +331,8 @@ test("normal_comments_preserve_recorded_content_and_cursor", async () => {
 
 // Catches: the host offers a query option that this provider rejects (or omits all declarations).
 test('declared_query_capabilities_never_offer_rejected_options', async () => {
-  const { provider } = setup(Array.from({ length: 50 }, () => ({ json: fixture("search") })));
+  // Unfiltered scopes read the core issues array; qualifier queries read the search object.
+  const provider = createGitHubProvider({ accountId: "a", repository: "demo/widgets", fetch: async ({ url }) => ({ status: 200, headers: {}, json: new URL(url).pathname === "/search/issues" ? fixture("search") : fixture("search").items }) });
   const base = { filters: [], savedFilterId: null, search: '', sort: null, groupBy: null, cursor: null, limit: 20 };
   assert.ok(provider.fields.some((f) => f.sortable), 'must expose a supported sort');
   assert.ok(provider.fields.some((f) => f.groupable), 'must expose a supported group');
@@ -290,7 +353,7 @@ test('declared_query_capabilities_never_offer_rejected_options', async () => {
 test("list_preserves_recorded_search_total", async () => {
  const fixture = JSON.parse(readFileSync(new URL("./fixtures/search.json", import.meta.url), "utf8"));
  const provider = createGitHubProvider({ accountId: "a", repository: "demo/widgets", fetch: async () => ({ status: 200, headers: {}, json: fixture }) });
- const result = await provider.list({ filters: [], search: "", savedFilterId: null, sort: null, groupBy: null, cursor: null, limit: 100 });
+ const result = await provider.list({ filters: [], search: "bug", savedFilterId: null, sort: null, groupBy: null, cursor: null, limit: 100 });
  assert.equal(result.total, fixture.total_count);
 });
 
@@ -327,7 +390,7 @@ test("project_discovery_names_missing_read_project_scope", async () => {
 test("search_rows_retain_declared_created_and_comment_fields_for_local_queries", async () => {
  const payload = fixture("search");
  const { provider } = setup([{ json: payload }]);
- const page = await provider.list(emptyQuery());
+ const page = await provider.list({ ...emptyQuery(), search: "bug" });
  assert.deepEqual(page.items[0].fields.createdAt, { kind: "date", value: payload.items[0].created_at });
  assert.deepEqual(page.items[0].fields.comments, { kind: "number", value: payload.items[0].comments });
 });

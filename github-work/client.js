@@ -22,7 +22,7 @@ export function createClient(fetch, apiUrl = "https://api.github.com") {
       signal?.throwIfAborted();
       const url = new URL(`${root}/${path.replace(/^\//, "")}`);
       if (url.origin !== base.origin) throw new Error("Cross-host GitHub request");
-      const response = await fetch({ url: url.href, method, ...(body === undefined ? {} : { body }) });
+      const response = await fetch({ url: url.href, method, ...(body === undefined ? {} : { body }), ...(signal ? { signal } : {}) });
       signal?.throwIfAborted();
       const headers = Object.fromEntries(Object.entries(response.headers).map(([k, v]) => [k.toLowerCase(), v]));
       // Fine-grained and App tokens do not advertise classic OAuth scopes.
