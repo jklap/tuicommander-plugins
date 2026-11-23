@@ -7,10 +7,10 @@
  * re-embed, compact).
  *
  * All data comes from a single `mdkb --format json status` call plus
- * `mdkb --format json memory list`. The old `status` CLI subcommand was removed
- * upstream (mdkb ≥ 3.x) — `status` now carries index + collections + code +
- * sessions + hooks. Field paths mirror `src/cli/stats_report.rs` in the mdkb
- * repo; keep them in sync if that struct changes.
+ * `mdkb --format json memory list`. mdkb story 093-1e8d renamed `stats` to
+ * `status`; it carries index + collections + code + sessions + hooks. Field
+ * paths mirror `src/cli/stats_report.rs` in the mdkb repo; keep them in sync if
+ * that struct changes.
  *
  * Capabilities required:
  *   - exec:cli     (run `mdkb --format json <cmd>`, incl. mutating update/embed/compact)

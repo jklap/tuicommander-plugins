@@ -58,7 +58,7 @@
     "description": "View mdkb knowledge base status, collections, memories, and configuration in an interactive panel.",
     "author": "sstraus",
     "repo": "sstraus/tuicommander-plugins",
-    "latestVersion": "1.4.1",
+    "latestVersion": "1.5.0",
     "minAppVersion": "1.7.6",
     "capabilities": [
       "exec:cli",
@@ -71,7 +71,7 @@
       "mdkb"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/mdkb-dashboard.zip",
-    "contentSha256": "0bf86aea44cb5f488aefa374c509af9829aa407b4bb90a1b360e746808e0dd7d"
+    "contentSha256": "74c640e92c030bb0822625d60a896de1ab5f0e4feefcdf697556e81adc73389b"
   },
   {
     "id": "tuic-vscode-icons",
@@ -231,7 +231,7 @@
       "net:http"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/github-work.zip",
-    "contentSha256": "6b7caebfd3fc6173d070bb5d7af5f5e8eb61dd5e289c956e169a6575d2a408a0"
+    "contentSha256": "f2463dc9fd2782eeada462bc51e64aec3172801e6240fd82cb72831807b94868"
   },
   {
     "id": "gitlab",
@@ -245,7 +245,7 @@
       "net:http"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/gitlab.zip",
-    "contentSha256": "f1d7f05a6d7d30c182d079e32a513e43d7ca7f513c02f35a508ce842b0a0a983"
+    "contentSha256": "71b64a2f54927035c593e5be9824ed574ee6e62cc429d0c1f5aef79b41f61955"
   },
   {
     "id": "jira",
@@ -259,7 +259,7 @@
       "net:http"
     ],
     "downloadUrl": "https://github.com/sstraus/tuicommander-plugins/releases/latest/download/jira.zip",
-    "contentSha256": "7cc71f638894115e4b6f41ebb62901e2a43c914a99802be054c1eb5848d7d924"
+    "contentSha256": "b774df7f5fbb0d8cc682cd69e46e19a11627721678dddd519cf9b6769386afeb"
   },
   {
     "id": "parquet-preview",

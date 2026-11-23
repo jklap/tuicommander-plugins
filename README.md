@@ -57,9 +57,10 @@ Join [TUICommander & Co on Discord](https://discord.gg/4DQ7Ah6hSh) and use **#pl
 
 The MDKB dashboard shows the selected and stored embedding model identities, and
 warns when vectors are stale or regeneration is incomplete. Its **Re-embed** action
-runs `mdkb --format json embed --reembed` to regenerate with the configured model;
-this can download model weights. Plain `embed` only fills missing vectors and is
-not a model migration. This action requires an mdkb version with `--reembed` support.
+runs `mdkb --format json update --reembed` to regenerate with the configured model;
+this can download model weights. Plain `update` only fills missing vectors and is
+not a model migration. The dashboard requires an mdkb version with the `status`
+command and the `update --code` and `update --reembed` flags.
 
 Repository-aware scanners discard completions from a previous repository or plugin
 lifetime. The MDKB ticker refreshes when the active repository changes; dashboard
